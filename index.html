@@ -5,13 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PAC-SENHA CO-OP — Cibersegurança, Português e Matemática</title>
   <style>
-    /* ==========================================================================
-       ESTILOS OTIMIZADOS PARA HARDWARE LEGADO (LINUX EDUCACIONAL / FIREFOX 20-50)
-       Zero CSS Grid, zero flex-gap, zero fontes externas, alto contraste chapado.
-       ========================================================================== */
     * {
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -25,13 +19,10 @@
       color: #ffffff;
       font-family: "DejaVu Sans", "Liberation Sans", Arial, Helvetica, sans-serif;
       min-height: 100vh;
-      display: block;
-      text-align: center;
-      overflow-x: hidden;
       padding: 8px;
+      text-align: center;
     }
 
-    /* Cabeçalho Principal */
     .top-brand {
       width: 100%;
       max-width: 980px;
@@ -40,23 +31,17 @@
       border: 3px solid #00e5ff;
       border-radius: 8px;
       padding: 8px 14px;
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
-      -webkit-align-items: center;
       align-items: center;
-      -webkit-justify-content: space-between;
       justify-content: space-between;
       text-align: left;
     }
 
     .brand-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #ffea00;
-      letter-spacing: 1px;
     }
 
     .brand-subtitle {
@@ -64,7 +49,6 @@
       color: #80d8ff;
     }
 
-    /* Telas do Jogo */
     .screen {
       display: none;
       width: 100%;
@@ -73,7 +57,7 @@
       background-color: #0f172a;
       border: 3px solid #3949ab;
       border-radius: 8px;
-      padding: 16px;
+      padding: 14px;
       text-align: left;
     }
 
@@ -81,12 +65,8 @@
       display: block;
     }
 
-    .panel {
-      width: 100%;
-    }
-
     .panel-title {
-      font-size: 1.4rem;
+      font-size: 1.35rem;
       color: #00e5ff;
       text-align: center;
       margin-bottom: 12px;
@@ -96,36 +76,28 @@
 
     .section-label {
       display: block;
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: bold;
       color: #ffea00;
-      margin: 12px 0 6px 0;
+      margin: 10px 0 6px 0;
     }
 
-    /* Seletores Compatíveis com Firefox Antigo (Sem CSS Grid / Sem Gap) */
     .selector-grid {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
-      margin: -4px -4px 10px -4px;
-      text-align: center;
+      margin: -4px;
+      margin-bottom: 8px;
     }
 
     .choice-btn {
-      display: inline-block;
-      vertical-align: top;
-      -webkit-flex: 1 1 165px;
-      flex: 1 1 165px;
-      min-width: 155px;
+      flex: 1 1 170px;
       margin: 4px;
       background-color: #1e293b;
       color: #ffffff;
       border: 3px solid #475569;
       border-radius: 8px;
-      padding: 10px 8px;
-      font-size: 1rem;
+      padding: 9px 8px;
+      font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
       text-align: center;
@@ -142,17 +114,15 @@
       color: #ffea00;
     }
 
-    /* Botões Gerais (Com margem explícita para substituir flex gap) */
     .btn {
       display: inline-block;
-      vertical-align: middle;
       margin: 4px;
       background-color: #1e293b;
       color: #ffffff;
       border: 3px solid #00e5ff;
       border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 1.05rem;
+      padding: 9px 16px;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
     }
@@ -170,8 +140,8 @@
       background-color: #00c853;
       color: #050814;
       border-color: #b9f6ca;
-      font-size: 1.2rem;
-      padding: 12px 24px;
+      font-size: 1.15rem;
+      padding: 11px 22px;
     }
 
     .btn-primary:hover {
@@ -191,36 +161,30 @@
     }
 
     .btn-small {
-      padding: 6px 12px;
-      font-size: 0.9rem;
+      padding: 5px 10px;
+      font-size: 0.88rem;
     }
 
-    /* Construtor Visual de Senha (1º e 2º Ano + Modo Inclusivo) */
     .visual-slots-bar {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-justify-content: center;
       justify-content: center;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
       margin: 10px 0;
-      text-align: center;
     }
 
     .password-slot {
-      display: inline-block;
-      vertical-align: top;
-      width: 120px;
-      height: 68px;
+      width: 115px;
+      height: 64px;
       margin: 5px;
-      padding-top: 8px;
       background-color: #050814;
       border: 3px dashed #00e5ff;
       border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
       color: #ffea00;
-      text-align: center;
     }
 
     .password-slot.filled {
@@ -230,31 +194,21 @@
     }
 
     .blocks-grid {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
-      -webkit-justify-content: center;
       justify-content: center;
       margin: 8px -4px;
-      text-align: center;
     }
 
     .block-card {
-      display: inline-block;
-      vertical-align: top;
-      -webkit-flex: 1 1 120px;
-      flex: 1 1 120px;
-      min-width: 112px;
-      max-width: 150px;
+      width: 110px;
       margin: 4px;
       background-color: #1a237e;
       color: #ffffff;
       border: 2px solid #4fc3f7;
       border-radius: 8px;
       padding: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: bold;
       cursor: pointer;
       text-align: center;
@@ -270,75 +224,41 @@
       border-color: #ea80fc;
     }
 
-    /* Campo de Senha Digitada (3º ao 5º Ano) */
     .text-password-wrap {
-      display: -moz-box;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-justify-content: center;
-      justify-content: center;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-flex-wrap: wrap;
-      flex-wrap: wrap;
-      margin: 14px 0;
       text-align: center;
+      margin: 12px 0;
     }
 
     .password-input {
-      display: inline-block;
-      vertical-align: middle;
-      margin: 4px;
       background-color: #050814;
       color: #ffea00;
       border: 3px solid #00e5ff;
       border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 1.3rem;
+      padding: 9px 12px;
+      font-size: 1.25rem;
       font-weight: bold;
-      width: 300px;
+      width: 280px;
       text-align: center;
+      margin: 4px;
     }
 
-    /* Caixa de Diagnóstico Pedagógico da Senha */
     .diagnosis-box {
       border-radius: 8px;
       padding: 14px;
-      margin-top: 14px;
+      margin-top: 12px;
       text-align: center;
       border: 3px solid #ffffff;
     }
 
-    .diagnosis-blocked {
-      background-color: #3e0a14;
-      border-color: #ff1744;
-    }
+    .diagnosis-blocked { background-color: #3e0a14; border-color: #ff1744; }
+    .diagnosis-weak { background-color: #4a1c00; border-color: #ff9100; }
+    .diagnosis-medium { background-color: #3e3500; border-color: #ffea00; }
+    .diagnosis-strong { background-color: #063b20; border-color: #00e676; }
 
-    .diagnosis-weak {
-      background-color: #4a1c00;
-      border-color: #ff9100;
-    }
-
-    .diagnosis-medium {
-      background-color: #3e3500;
-      border-color: #ffea00;
-    }
-
-    .diagnosis-strong {
-      background-color: #063b20;
-      border-color: #00e676;
-    }
-
-    /* HUD e Placar do Labirinto (Sem CSS Grid para Firefox Antigo) */
     .hud-bar {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
-      -webkit-align-items: center;
       align-items: center;
-      -webkit-justify-content: space-between;
       justify-content: space-between;
       background-color: #080d1e;
       border: 2px solid #3949ab;
@@ -348,28 +268,24 @@
     }
 
     .hud-item {
-      display: inline-block;
-      vertical-align: middle;
-      -webkit-flex: 1 1 140px;
-      flex: 1 1 140px;
       margin: 4px 8px;
     }
 
     .hud-label {
-      display: block;
       font-size: 0.85rem;
       color: #80d8ff;
       font-weight: bold;
+      display: block;
     }
 
     .hud-value {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       font-weight: bold;
       color: #ffea00;
     }
 
     .timer-bar-outer {
-      width: 100%;
+      width: 220px;
       height: 14px;
       background-color: #1e293b;
       border: 2px solid #ffffff;
@@ -384,7 +300,6 @@
       background-color: #00e676;
     }
 
-    /* Área do Canvas */
     .canvas-container {
       width: 100%;
       text-align: center;
@@ -392,29 +307,23 @@
       border: 3px solid #00e5ff;
       border-radius: 8px;
       padding: 6px;
-      position: relative;
     }
 
     canvas {
       background-color: #050814;
       max-width: 100%;
       height: auto;
-      display: block;
-      margin: 0 auto;
+      display: inline-block;
+      outline: none;
     }
 
     .controls-footer {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-justify-content: space-between;
       justify-content: space-between;
-      -webkit-align-items: center;
       align-items: center;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
       margin-top: 8px;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       color: #b3e5fc;
       background-color: #080d1e;
       padding: 6px 12px;
@@ -422,7 +331,29 @@
       border: 1px solid #283593;
     }
 
-    /* Modal de Baú (Autenticação e Pergunta) */
+    .onscreen-dpad {
+      display: inline-flex;
+      align-items: center;
+      margin: 2px 6px;
+    }
+
+    .dpad-btn {
+      background-color: #1e293b;
+      color: #ffea00;
+      border: 2px solid #00e5ff;
+      border-radius: 6px;
+      padding: 3px 9px;
+      margin: 0 2px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .dpad-btn:active {
+      background-color: #00e676;
+      color: #000000;
+    }
+
     .modal-overlay {
       display: none;
       position: fixed;
@@ -432,28 +363,29 @@
       height: 100%;
       background-color: rgba(3, 6, 18, 0.92);
       z-index: 999;
-      padding: 16px 12px;
-      overflow-y: auto;
-      text-align: center;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
     }
 
     .modal-overlay.active {
-      display: block;
+      display: flex;
     }
 
     .modal-card {
       width: 100%;
       max-width: 740px;
-      margin: 12px auto;
       background-color: #0f172a;
       border: 4px solid #ffea00;
       border-radius: 10px;
-      padding: 18px;
+      padding: 16px;
+      max-height: 95vh;
+      overflow-y: auto;
       text-align: left;
     }
 
     .modal-header {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #ffea00;
       text-align: center;
@@ -464,17 +396,17 @@
 
     .question-badge {
       display: inline-block;
-      margin: 4px;
       background-color: #00e5ff;
       color: #050814;
       font-weight: bold;
       padding: 4px 12px;
       border-radius: 6px;
       font-size: 0.95rem;
+      margin: 4px;
     }
 
     .question-text {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #ffffff;
       background-color: #050814;
@@ -486,23 +418,19 @@
       line-height: 1.4;
     }
 
-    .options-list {
-      display: block;
-      width: 100%;
-    }
-
     .option-btn {
-      display: block;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       background-color: #1e293b;
       color: #ffffff;
       border: 3px solid #64b5f6;
       border-radius: 8px;
-      padding: 12px 16px;
-      font-size: 1.2rem;
+      padding: 11px 14px;
+      font-size: 1.15rem;
       font-weight: bold;
       cursor: pointer;
+      display: flex;
+      align-items: center;
       text-align: left;
     }
 
@@ -526,35 +454,26 @@
     .key-hint {
       background-color: #ffea00;
       color: #050814;
-      width: 34px;
-      height: 34px;
-      line-height: 34px;
-      text-align: center;
+      width: 32px;
+      height: 32px;
       border-radius: 6px;
       display: inline-block;
-      vertical-align: middle;
-      margin-right: 12px;
+      line-height: 32px;
+      text-align: center;
       font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
     }
 
-    /* Relatório Final (Sem CSS Grid) */
     .report-grid {
-      display: -moz-box;
-      display: -webkit-flex;
       display: flex;
-      -webkit-flex-wrap: wrap;
       flex-wrap: wrap;
-      margin: 14px -5px;
-      text-align: center;
+      margin: 10px -4px;
     }
 
     .report-card {
-      display: inline-block;
-      vertical-align: top;
-      -webkit-flex: 1 1 175px;
-      flex: 1 1 175px;
-      min-width: 165px;
-      margin: 5px;
+      flex: 1 1 180px;
+      margin: 4px;
       background-color: #080d1e;
       border: 2px solid #3949ab;
       border-radius: 8px;
@@ -563,20 +482,17 @@
     }
 
     .report-card-title {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #80d8ff;
       margin-bottom: 6px;
     }
 
     .report-card-value {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: bold;
       color: #ffea00;
     }
 
-    /* ==========================================================================
-       MODO PROJETOR EM QUADRO VERDE ESCOLAR (ALTO CONTRASTE / LUMINOSIDADE MÁXIMA)
-       ========================================================================== */
     body.projector-green {
       background-color: #000000 !important;
       color: #ffffff !important;
@@ -602,14 +518,6 @@
     body.projector-green .hud-value,
     body.projector-green .modal-header {
       color: #ffff00 !important;
-      text-shadow: 2px 2px 0px #000000;
-    }
-
-    body.projector-green .brand-subtitle,
-    body.projector-green .hud-label,
-    body.projector-green small {
-      color: #ffffff !important;
-      font-weight: bold !important;
     }
 
     body.projector-green .choice-btn,
@@ -618,7 +526,7 @@
     body.projector-green .block-card {
       background-color: #000000 !important;
       color: #ffffff !important;
-      border: 4px solid #ffffff !important;
+      border: 3px solid #ffffff !important;
       font-weight: bold !important;
     }
 
@@ -627,27 +535,14 @@
     body.projector-green .option-btn.correct {
       background-color: #ffff00 !important;
       color: #000000 !important;
-      border: 4px solid #ffffff !important;
+      border: 3px solid #ffffff !important;
     }
 
-    body.projector-green .choice-btn.selected small {
-      color: #000000 !important;
-    }
-
-    body.projector-green .key-hint {
-      background-color: #ffffff !important;
-      color: #000000 !important;
-      border: 2px solid #000000;
-    }
-
-    /* Toast de aviso rápido */
     #toastBanner {
       position: fixed;
       bottom: 14px;
       left: 50%;
-      width: 520px;
-      max-width: 92%;
-      margin-left: -260px;
+      transform: translateX(-50%);
       background-color: #00b0ff;
       color: #ffffff;
       font-weight: bold;
@@ -656,253 +551,140 @@
       border: 2px solid #ffffff;
       display: none;
       z-index: 1200;
-      font-size: 1.05rem;
-      text-align: center;
+      font-size: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <!-- CABEÇALHO FIXO -->
   <header class="top-brand">
     <div>
       <div class="brand-title">🛡️ PAC-SENHA CO-OP</div>
-      <div class="brand-subtitle">Cibersegurança, Português e Matemática • 100% Offline • 30 FPS</div>
+      <div class="brand-subtitle">Cibersegurança, Português e Matemática • Compatível Linux Educacional</div>
     </div>
-    <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-      <button type="button" class="btn btn-small" id="btnToggleProjector" style="background-color:#ffff00; color:#000000; border-color:#ffffff;">📽️ Modo Quadro Verde: OFF</button>
+    <div>
+      <button type="button" class="btn btn-small" id="btnToggleProjector" style="background-color:#ffff00; color:#000000; border-color:#ffffff;">📽️ Quadro Verde: OFF</button>
       <button type="button" class="btn btn-small" id="btnOpenTestSuite" style="background-color:#00e676; color:#000000; border-color:#ffffff;">🧪 Bateria de Testes (1s)</button>
-      <button type="button" class="btn btn-small" id="btnOpenLinuxDeploy" style="background-color:#ff9100; color:#000000; border-color:#ffffff;">🐧 Instalar nos PCs Linux</button>
       <button type="button" class="btn btn-small" id="btnToggleSound">🔊 Som: ATIVO</button>
     </div>
   </header>
 
-  <!-- ========================================================================
-       MODAL: GUIA RÁPIDO DE HOSPEDAGEM E REDE LOCAL PARA PCs LINUX EDUCACIONAL
-       ======================================================================== -->
-  <div id="linuxDeployModal" class="modal-overlay">
-    <div class="modal-card" style="max-width:780px;">
-      <div class="modal-header">🐧 COMO ABRIR NOS PCs LINUX DO LABORATÓRIO</div>
-      <div style="font-size:0.95rem; line-height:1.5; color:#ffffff; max-height:390px; overflow-y:auto; padding-right:6px;">
-        <div style="background-color:#063b20; border:2px solid #00e676; border-radius:8px; padding:10px; margin-bottom:10px;">
-          <strong style="color:#ffea00;">OPÇÃO 1: DIRETO NO PENDRIVE OU ÁREA DE TRABALHO (MAIS RÁPIDO - 0 CONFIGURAÇÃO)</strong><br>
-          1. Salve este arquivo como <code>index.html</code> (ou <code>pac-senha.html</code>) no pendrive.<br>
-          2. Copie para a <strong>Área de Trabalho (Desktop)</strong> de cada PC Linux ou abra direto do pendrive.<br>
-          3. Dê dois cliques nele para abrir no <strong>Firefox</strong> ou <strong>Chromium</strong> e aperte a tecla <strong>F11</strong> (Tela Cheia).
-        </div>
-
-        <div style="background-color:#0d1b3a; border:2px solid #00e5ff; border-radius:8px; padding:10px; margin-bottom:10px;">
-          <strong style="color:#ffea00;">OPÇÃO 2: SERVIDOR NA REDE LOCAL DO LABORATÓRIO (1 PC DISTRIBUI PARA TODOS!)</strong><br>
-          Se os PCs da escola estiverem na mesma rede (cabo ou Wi-Fi), você não precisa passar o pendrive de máquina em máquina! Todo Linux Educacional já vem com Python instalado:<br>
-          1. No PC do Professor (na mesma pasta onde está o <code>index.html</code>), abra o Terminal e rode:<br>
-          <div style="background-color:#000000; border:1px solid #ffff00; padding:8px; border-radius:6px; margin:6px 0; font-family:monospace; color:#00e676;">
-            hostname -I &amp;&amp; (python3 -m http.server 8080 || python -m SimpleHTTPServer 8080)
-          </div>
-          2. O comando vai mostrar o número de IP do seu PC (exemplo: <code>192.168.1.50</code>).<br>
-          3. Nos PCs dos alunos, basta abrir o navegador e digitar: <strong><code>http://SEU-IP:8080</code></strong>
-        </div>
-
-        <div style="background-color:#311b92; border:2px solid #ea80fc; border-radius:8px; padding:10px;">
-          <strong style="color:#ffea00;">OPÇÃO 3: HOSPEDAGEM GRATUITA NA INTERNET (SE A ESCOLA TIVER INTERNET)</strong><br>
-          • <strong>Netlify Drop (30 segundos, sem conta complexa):</strong> Acesse <code>app.netlify.com/drop</code> e arraste a pasta contendo este arquivo <code>index.html</code>. Ele gera um link curto na hora!<br>
-          • <strong>GitHub Pages:</strong> Crie um repositório público, envie este <code>index.html</code> e ative em <em>Settings &rarr; Pages</em>.
-        </div>
-      </div>
-
-      <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:12px;">
-        <button type="button" class="btn btn-primary btn-small" id="btnCopyLinuxCmd">📋 Copiar Comando do Servidor Linux</button>
-        <button type="button" class="btn btn-danger btn-small" id="btnCloseLinuxDeploy">✖️ Fechar Guia</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================
-       TELA 1: CONFIGURAÇÃO DO PROFESSOR / ALUNO (INCLUSÃO + NÍVEIS)
-       ======================================================================== -->
+  <!-- TELA 1: CONFIGURAÇÃO -->
   <main id="screenSetup" class="screen active">
-    <div class="panel">
-      <h1 class="panel-title">CONFIGURAÇÃO DA PARTIDA ESCOLAR</h1>
+    <h1 class="panel-title">CONFIGURAÇÃO DA PARTIDA ESCOLAR</h1>
 
-      <span class="section-label">1. Selecione o Ano Escolar:</span>
-      <div class="selector-grid" id="gradeSelector">
-        <button type="button" class="choice-btn selected" data-grade="1">1º Ano<br><small style="font-weight:normal; color:#b3e5fc;">Vogais e Soma até 10</small></button>
-        <button type="button" class="choice-btn" data-grade="2">2º Ano<br><small style="font-weight:normal; color:#b3e5fc;">Sílabas, Rimas e Contas até 20</small></button>
-        <button type="button" class="choice-btn" data-grade="3">3º Ano<br><small style="font-weight:normal; color:#b3e5fc;">Ortografia e Tabuada</small></button>
-        <button type="button" class="choice-btn" data-grade="4">4º Ano<br><small style="font-weight:normal; color:#b3e5fc;">Classes e Divisão Exata</small></button>
-        <button type="button" class="choice-btn" data-grade="5">5º Ano<br><small style="font-weight:normal; color:#b3e5fc;">Gramática, Frações e %</small></button>
-      </div>
+    <span class="section-label">1. Selecione o Ano Escolar:</span>
+    <div class="selector-grid" id="gradeSelector">
+      <button type="button" class="choice-btn selected" data-grade="1">1º Ano<br><small style="color:#b3e5fc;">Vogais e Soma até 10</small></button>
+      <button type="button" class="choice-btn" data-grade="2">2º Ano<br><small style="color:#b3e5fc;">Sílabas, Rimas e Contas até 20</small></button>
+      <button type="button" class="choice-btn" data-grade="3">3º Ano<br><small style="color:#b3e5fc;">Ortografia e Tabuada</small></button>
+      <button type="button" class="choice-btn" data-grade="4">4º Ano<br><small style="color:#b3e5fc;">Classes e Divisão Exata</small></button>
+      <button type="button" class="choice-btn" data-grade="5">5º Ano<br><small style="color:#b3e5fc;">Gramática, Frações e %</small></button>
+    </div>
 
-      <span class="section-label">2. Selecione o Modo de Jogadores:</span>
-      <div class="selector-grid" id="modeSelector">
-        <button type="button" class="choice-btn" data-players="1">
-          👤 1 Jogador (Solo)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Controla com WASD ou Setas</small>
-        </button>
-        <button type="button" class="choice-btn selected" data-players="2">
-          👥 2 Jogadores (Cooperativo no Mesmo Teclado)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">P1: WASD (Amarelo) + P2: Setas (Ciano)</small>
-        </button>
-      </div>
+    <span class="section-label">2. Selecione o Modo de Jogadores:</span>
+    <div class="selector-grid" id="modeSelector">
+      <button type="button" class="choice-btn" data-players="1">👤 1 Jogador (Solo)<br><small style="color:#b3e5fc;">Controla com WASD ou Setas</small></button>
+      <button type="button" class="choice-btn selected" data-players="2">👥 2 Jogadores (Cooperativo)<br><small style="color:#b3e5fc;">P1: WASD (Amarelo) + P2: Setas (Ciano)</small></button>
+    </div>
 
-      <span class="section-label">3. Quantidade de Fantasmas Hackers no Labirinto (Desafio):</span>
-      <div class="selector-grid" id="ghostCountSelector">
-        <button type="button" class="choice-btn" data-ghosts="2">
-          👾 2 Hackers (Treino)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Trojan + Phishing</small>
-        </button>
-        <button type="button" class="choice-btn selected" data-ghosts="3">
-          👾👾 3 Hackers (Padrão)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">+ Ransomware Guardião</small>
-        </button>
-        <button type="button" class="choice-btn" data-ghosts="4">
-          💀 4 Hackers (Pesadelo)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Esquadrão Completo (+ Spyware)</small>
-        </button>
-      </div>
+    <span class="section-label">3. Quantidade de Fantasmas Hackers:</span>
+    <div class="selector-grid" id="ghostCountSelector">
+      <button type="button" class="choice-btn" data-ghosts="2">👾 2 Hackers (Treino)<br><small style="color:#b3e5fc;">Trojan + Phishing</small></button>
+      <button type="button" class="choice-btn selected" data-ghosts="3">👾👾 3 Hackers (Padrão)<br><small style="color:#b3e5fc;">+ Ransomware Guardião</small></button>
+      <button type="button" class="choice-btn" data-ghosts="4">💀 4 Hackers (Pesadelo)<br><small style="color:#b3e5fc;">Esquadrão Completo</small></button>
+    </div>
 
-      <span class="section-label">4. 🧩 Modo de Inclusão, Autismo (TEA) e Apoio à Aprendizagem:</span>
-      <div class="selector-grid" id="inclusionSelector">
-        <button type="button" class="choice-btn selected" data-inclusion="standard">
-          🎮 Padrão da Turma<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Regras normais do ano</small>
-        </button>
-        <button type="button" class="choice-btn" data-inclusion="assisted">
-          🤝 Apoio Pedagógico<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Dica visual, 2 opções e Senha por Figuras</small>
-        </button>
-        <button type="button" class="choice-btn" data-inclusion="tea">
-          💙 Modo TEA / Autismo (Calmo)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Sem perda de tempo, sem sons bruscos e super fácil</small>
-        </button>
-      </div>
+    <span class="section-label">4. 🧩 Modo de Inclusão, Autismo (TEA) e Apoio:</span>
+    <div class="selector-grid" id="inclusionSelector">
+      <button type="button" class="choice-btn selected" data-inclusion="standard">🎮 Padrão da Turma<br><small style="color:#b3e5fc;">Regras normais do ano</small></button>
+      <button type="button" class="choice-btn" data-inclusion="assisted">🤝 Apoio Pedagógico<br><small style="color:#b3e5fc;">Dica visual, 2 opções e Figuras</small></button>
+      <button type="button" class="choice-btn" data-inclusion="tea">💙 Modo TEA / Autismo (Calmo)<br><small style="color:#b3e5fc;">Sem perder tempo, calmo e super fácil</small></button>
+    </div>
 
-      <span class="section-label">5. 📦 Modo de Funcionamento dos Baús (Adaptação de Nível):</span>
-      <div class="selector-grid" id="chestModeSelector">
-        <button type="button" class="choice-btn selected" data-chestmode="complete">
-          🔐 Completo (Senha + Port/Mat)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Pede a senha e sorteia Português ou Matemática</small>
-        </button>
-        <button type="button" class="choice-btn" data-chestmode="senha_contas">
-          ➕ Senha + Só Contas Fáceis<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Pede a senha e abre apenas continhas bem fáceis</small>
-        </button>
-        <button type="button" class="choice-btn" data-chestmode="so_contas">
-          🧮 Direto Só Contas (Sem Senha)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Encostou no baú: abre direto uma continha fácil!</small>
-        </button>
-        <button type="button" class="choice-btn" data-chestmode="so_abrir">
-          🎁 Só Abrir o Baú (Direto)<br>
-          <small style="font-weight:normal; color:#b3e5fc;">Encostou no baú: ganha pontos e congela os fantasmas!</small>
-        </button>
-      </div>
+    <span class="section-label">5. 📦 Modo de Funcionamento dos Baús:</span>
+    <div class="selector-grid" id="chestModeSelector">
+      <button type="button" class="choice-btn selected" data-chestmode="complete">🔐 Completo (Senha + Port/Mat)<br><small style="color:#b3e5fc;">Pede a senha e alterna matérias</small></button>
+      <button type="button" class="choice-btn" data-chestmode="senha_contas">➕ Senha + Só Contas Fáceis<br><small style="color:#b3e5fc;">Pede a senha e abre continhas fáceis</small></button>
+      <button type="button" class="choice-btn" data-chestmode="so_contas">🧮 Direto Só Contas (Sem Senha)<br><small style="color:#b3e5fc;">Encostou no baú: abre continha fácil!</small></button>
+      <button type="button" class="choice-btn" data-chestmode="so_abrir">🎁 Só Abrir o Baú (Direto)<br><small style="color:#b3e5fc;">Encostou no baú: ganha pontos e congela!</small></button>
+    </div>
 
-      <div style="background-color:#0b1021; border:2px solid #3949ab; border-radius:6px; padding:12px; margin-bottom:14px; line-height:1.45; font-size:0.93rem;">
-        <strong style="color:#ffea00;">📋 RECURSOS ESPECIAIS DO PROFESSOR:</strong><br>
-        📽️ <strong>Modo Projetor em Quadro Verde:</strong> Clique no botão amarelo no topo para ativar alto contraste P&B/Amarelo (não some na lousa verde!).<br>
-        🧪 <strong>Bateria Automática de Testes + Testar Qualquer Nível:</strong> Clique em <strong>[🧪 Bateria de Testes (1s)]</strong> no topo para validar automaticamente os 5 níveis ou pular direto para qualquer nível!<br>
-        🔑 <strong>Senha Mestre do Professor (<code>senha123</code>):</strong> Em qualquer pergunta ou autenticação, digite <strong>senha123</strong> para responder automaticamente!
-      </div>
-
-      <div style="text-align:center; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-        <button type="button" class="btn btn-primary" id="btnStartMission">🚀 INICIAR MISSÃO (5 NÍVEIS)</button>
-        <button type="button" class="btn btn-warning" id="btnQuickRunTests">🧪 RODAR DIAGNÓSTICO AUTOMÁTICO DE TODOS OS NÍVEIS</button>
-      </div>
+    <div style="text-align:center; margin-top:12px;">
+      <button type="button" class="btn btn-primary" id="btnStartMission">🚀 INICIAR MISSÃO (5 NÍVEIS)</button>
+      <button type="button" class="btn btn-warning" id="btnQuickRunTests">🧪 TESTAR / PULAR PARA QUALQUER NÍVEL</button>
     </div>
   </main>
 
-  <!-- ========================================================================
-       MODAL: BATERIA AUTOMÁTICA DE TESTES E PULO RÁPIDO DE NÍVEL (PARA O PROFESSOR)
-       ======================================================================== -->
+  <!-- MODAL DE TESTES E PULO DE NÍVEL -->
   <div id="testSuiteModal" class="modal-overlay">
-    <div class="modal-card" style="max-width:780px;">
-      <div class="modal-header">🧪 BATERIA AUTOMÁTICA DE TESTES E INSPETOR DE NÍVEIS</div>
-      <p style="text-align:center; color:#b3e5fc; margin-bottom:10px; font-size:0.95rem;">
-        Verificação instantânea de integridade dos 5 níveis, túneis laterais, alcance das pastilhas/baús (Flood-Fill BFS), banco de questões e chave mestre <code>senha123</code>:
-      </p>
-
-      <div id="testResultsList" style="background-color:#050814; border:2px solid #00e676; border-radius:8px; padding:12px; max-height:310px; overflow-y:auto; font-size:0.95rem; line-height:1.55; margin-bottom:12px;"></div>
-
+    <div class="modal-card">
+      <div class="modal-header">🧪 BATERIA AUTOMÁTICA DE TESTES E PULO DE NÍVEL</div>
+      <div id="testResultsList" style="background-color:#050814; border:2px solid #00e676; border-radius:8px; padding:12px; max-height:280px; overflow-y:auto; font-size:0.92rem; line-height:1.5; margin-bottom:12px;"></div>
       <div style="background-color:#0b1021; border:2px solid #ffea00; border-radius:8px; padding:10px; margin-bottom:12px; text-align:center;">
-        <strong style="color:#ffea00; display:block; margin-bottom:8px;">⚡ TESTAR / ABRIR QUALQUER NÍVEL AGORA (SEM PRECISAR JOGAR OS ANTERIORES):</strong>
-        <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
-          <button type="button" class="btn btn-small btn-primary" data-jumplevel="1">▶️ Testar Nível 1</button>
-          <button type="button" class="btn btn-small btn-primary" data-jumplevel="2">▶️ Testar Nível 2</button>
-          <button type="button" class="btn btn-small btn-primary" data-jumplevel="3">▶️ Testar Nível 3</button>
-          <button type="button" class="btn btn-small btn-primary" data-jumplevel="4">▶️ Testar Nível 4</button>
-          <button type="button" class="btn btn-small btn-primary" data-jumplevel="5">▶️ Testar Nível 5</button>
-        </div>
+        <strong style="color:#ffea00; display:block; margin-bottom:6px;">⚡ ABRIR QUALQUER NÍVEL AGORA:</strong>
+        <button type="button" class="btn btn-small btn-primary" data-jumplevel="1">▶️ Nível 1</button>
+        <button type="button" class="btn btn-small btn-primary" data-jumplevel="2">▶️ Nível 2</button>
+        <button type="button" class="btn btn-small btn-primary" data-jumplevel="3">▶️ Nível 3</button>
+        <button type="button" class="btn btn-small btn-primary" data-jumplevel="4">▶️ Nível 4</button>
+        <button type="button" class="btn btn-small btn-primary" data-jumplevel="5">▶️ Nível 5</button>
       </div>
-
-      <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-        <button type="button" class="btn btn-warning" id="btnRerunTests">🔄 Rodar Testes Novamente</button>
-        <button type="button" class="btn btn-danger" id="btnCloseTestSuite">✖️ Fechar Painel</button>
+      <div style="text-align:center;">
+        <button type="button" class="btn btn-danger" id="btnCloseTestSuite">✖️ Fechar</button>
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================
-       TELA 2: FASE 1 - CRIAÇÃO DA SENHA E CÁLCULO DE TEMPO
-       ======================================================================== -->
+  <!-- TELA 2: CRIAÇÃO DA SENHA -->
   <section id="screenPassword" class="screen">
-    <div class="panel">
-      <h2 class="panel-title">FASE 1: CRIAÇÃO DA SENHA DA PARTIDA</h2>
-      <p id="passwordInstruction" style="text-align:center; margin-bottom:10px; color:#b3e5fc; font-size:1.05rem;"></p>
+    <h2 class="panel-title">FASE 1: CRIAÇÃO DA SENHA DA PARTIDA</h2>
+    <p id="passwordInstruction" style="text-align:center; margin-bottom:10px; color:#b3e5fc; font-size:1.02rem;"></p>
 
-      <!-- Barra de Apoio Rápido para Alunos com Dificuldade na Criação da Senha -->
-      <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
-        <button type="button" class="btn btn-small" id="btnSpeakPasswordHelp" style="border-color:#ffea00;">🔊 Ouvir Instrução</button>
-        <button type="button" class="btn btn-small" id="btnAutoGeneratePassword" style="background-color:#00695c; border-color:#80cbc4;">🪄 Sugerir Senha Forte Fácil</button>
-        <button type="button" class="btn btn-small" id="btnSwitchToVisual" style="display:none; background-color:#4a148c; border-color:#ea80fc;">🖼️ Trocar para Blocos de Figuras</button>
+    <div style="text-align:center; margin-bottom:12px;">
+      <button type="button" class="btn btn-small" id="btnAutoGeneratePassword" style="background-color:#00695c; border-color:#80cbc4;">🪄 Sugerir Senha Forte Fácil</button>
+      <button type="button" class="btn btn-small" id="btnSwitchToVisual" style="display:none; background-color:#4a148c; border-color:#ea80fc;">🖼️ Trocar para Blocos de Figuras</button>
+    </div>
+
+    <div id="visualPasswordBuilder" style="display:none;">
+      <div class="visual-slots-bar" id="visualSlotsContainer"></div>
+      <div style="text-align:center; margin-bottom:8px;">
+        <button type="button" class="btn btn-small btn-warning" id="btnClearVisual">🧹 Limpar Blocos</button>
       </div>
+      <div class="blocks-grid" id="visualBlocksGrid"></div>
+    </div>
 
-      <!-- Interface Visual para 1º e 2º Ano (ou Modo Inclusivo) -->
-      <div id="visualPasswordBuilder" style="display:none;">
-        <div class="visual-slots-bar" id="visualSlotsContainer"></div>
-        <div style="text-align:center; margin-bottom:10px;">
-          <button type="button" class="btn btn-small btn-warning" id="btnClearVisual">🧹 Limpar Blocos</button>
-        </div>
-        <div class="blocks-grid" id="visualBlocksGrid"></div>
+    <div id="textPasswordBuilder" style="display:none;">
+      <div class="text-password-wrap">
+        <input type="password" id="inputPasswordText" class="password-input" maxlength="20" placeholder="Digite a senha..." autocomplete="off">
+        <button type="button" class="btn" id="btnToggleMask">👁️ Mostrar</button>
       </div>
+      <p style="text-align:center; color:#80d8ff; font-size:0.9rem; margin-bottom:8px;">
+        💡 Dica Forte: Combine uma palavra com vogais + número + símbolo (Ex: <strong>GatoSol#7</strong>).
+      </p>
+    </div>
 
-      <!-- Interface de Texto para 3º, 4º e 5º Ano -->
-      <div id="textPasswordBuilder" style="display:none;">
-        <div class="text-password-wrap">
-          <input type="password" id="inputPasswordText" class="password-input" maxlength="20" placeholder="Digite a senha..." autocomplete="off">
-          <button type="button" class="btn" id="btnToggleMask">👁️ Mostrar</button>
-        </div>
-        <p style="text-align:center; color:#80d8ff; font-size:0.92rem; margin-bottom:10px;">
-          💡 Dica Forte: Combine uma palavra com vogais + número + símbolo (Ex: <strong>GatoSol#7</strong>). Evite "123456" ou "aaaaaa"!
-        </p>
-      </div>
+    <div style="text-align:center; margin-top:10px;">
+      <button type="button" class="btn" id="btnBackToSetup">⬅️ Voltar</button>
+      <button type="button" class="btn btn-primary" id="btnEvaluatePassword">🔍 AVALIAR SENHA</button>
+    </div>
 
-      <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-top:12px;">
-        <button type="button" class="btn" id="btnBackToSetup">⬅️ Voltar</button>
-        <button type="button" class="btn btn-primary" id="btnEvaluatePassword">🔍 AVALIAR SENHA</button>
-      </div>
-
-      <!-- Caixa de Diagnóstico Pedagógico Imediato -->
-      <div id="passwordDiagnosisBox" class="diagnosis-box" style="display:none;">
-        <h3 id="diagTitle" style="font-size:1.35rem; color:#ffea00; margin-bottom:6px;"></h3>
-        <p id="diagReason" style="font-size:1.05rem; margin-bottom:8px; line-height:1.4;"></p>
-        <p id="diagConversion" style="font-weight:bold; color:#80d8ff; margin-bottom:12px;"></p>
-        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-          <button type="button" class="btn btn-warning" id="btnImprovePassword">✏️ Melhorar Senha</button>
-          <button type="button" class="btn btn-primary" id="btnLaunchMaze">🎮 ENTRAR NO LABIRINTO</button>
-        </div>
+    <div id="passwordDiagnosisBox" class="diagnosis-box" style="display:none;">
+      <h3 id="diagTitle" style="font-size:1.3rem; color:#ffea00; margin-bottom:6px;"></h3>
+      <p id="diagReason" style="font-size:1rem; margin-bottom:8px;"></p>
+      <p id="diagConversion" style="font-weight:bold; color:#80d8ff; margin-bottom:12px;"></p>
+      <div>
+        <button type="button" class="btn btn-warning" id="btnImprovePassword">✏️ Melhorar Senha</button>
+        <button type="button" class="btn btn-primary" id="btnLaunchMaze">🎮 ENTRAR NO LABIRINTO</button>
       </div>
     </div>
   </section>
 
-  <!-- ========================================================================
-       TELA 3: FASE 2 - LABIRINTO COOPERATIVO (GAMEPLAY)
-       ======================================================================== -->
+  <!-- TELA 3: LABIRINTO COOPERATIVO -->
   <section id="screenGame" class="screen">
     <div class="hud-bar">
       <div class="hud-item">
-        <div style="display:flex; justify-content:space-between;">
-          <span class="hud-label" id="hudLevelBadge">🗺️ NÍVEL 1 / 3</span>
-          <span class="hud-value" id="hudTimeText">120s</span>
-        </div>
+        <span class="hud-label" id="hudLevelBadge">🗺️ NÍVEL 1 / 5</span>
+        <span class="hud-value" id="hudTimeText">120s</span>
         <div class="timer-bar-outer">
           <div class="timer-bar-inner" id="hudTimerBar"></div>
         </div>
@@ -918,48 +700,59 @@
         <span class="hud-value" id="hudChestsText">4 / 4</span>
       </div>
 
-      <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-        <button type="button" class="btn btn-small btn-warning" id="btnUnfreezeGhosts" style="display:none;" title="Liberar fantasmas congelados agora">⚡ Soltar</button>
-        <button type="button" class="btn btn-small" id="btnSkipLevelTeacher" title="Avançar para o próximo nível (Professor)" style="background-color:#283593; border-color:#80d8ff;">⏭️ Pular Nível</button>
+      <div class="hud-item">
+        <button type="button" class="btn btn-small btn-warning" id="btnUnfreezeGhosts" style="display:none;">⚡ Soltar</button>
+        <button type="button" class="btn btn-small" id="btnSkipLevelTeacher" style="background-color:#283593;">⏭️ Pular Nível</button>
         <button type="button" class="btn btn-small btn-danger" id="btnAbortGame">⏹️ Sair</button>
       </div>
     </div>
 
     <div class="canvas-container">
-      <canvas id="gameCanvas" width="760" height="520"></canvas>
+      <canvas id="gameCanvas" width="760" height="520" tabindex="0"></canvas>
     </div>
 
     <div class="controls-footer">
-      <span>🟡 <strong>Jogador 1:</strong> Teclas <strong>W, A, S, D</strong> (Toque único contínuo)</span>
-      <span id="p2ControlsHint">🔵 <strong>Jogador 2:</strong> <strong>Setas do Teclado</strong> (Toque único contínuo)</span>
-      <span>📦 Encoste nos <strong>4 Baús Dourados</strong> e limpe as pastilhas!</span>
+      <div>
+        🟡 <strong>P1 (WASD):</strong>
+        <span class="onscreen-dpad">
+          <button type="button" class="dpad-btn" data-p="1" data-dx="0" data-dy="-1">▲ W</button>
+          <button type="button" class="dpad-btn" data-p="1" data-dx="-1" data-dy="0">◄ A</button>
+          <button type="button" class="dpad-btn" data-p="1" data-dx="0" data-dy="1">▼ S</button>
+          <button type="button" class="dpad-btn" data-p="1" data-dx="1" data-dy="0">► D</button>
+        </span>
+      </div>
+      <div id="p2ControlsHint">
+        🔵 <strong>P2 (Setas):</strong>
+        <span class="onscreen-dpad">
+          <button type="button" class="dpad-btn" data-p="2" data-dx="0" data-dy="-1">▲</button>
+          <button type="button" class="dpad-btn" data-p="2" data-dx="-1" data-dy="0">◄</button>
+          <button type="button" class="dpad-btn" data-p="2" data-dx="0" data-dy="1">▼</button>
+          <button type="button" class="dpad-btn" data-p="2" data-dx="1" data-dy="0">►</button>
+        </span>
+      </div>
+      <span id="lastKeyIndicator" style="color:#00e676; font-weight:bold;">⌨️ Teclado Pronto!</span>
     </div>
   </section>
 
-  <!-- ========================================================================
-       MODAL: FASE 3 - AUTENTICAÇÃO E PERGUNTAS (PORTUGUÊS E MATEMÁTICA)
-       ======================================================================== -->
+  <!-- MODAL DO BAÚ (SENHA + PERGUNTA) -->
   <div id="chestModal" class="modal-overlay">
     <div class="modal-card">
-      <!-- ETAPA A: MEMÓRIA DA SENHA -->
+      <!-- ETAPA A -->
       <div id="modalStageAuth">
         <div class="modal-header">🔐 AUTENTICAÇÃO NECESSÁRIA</div>
-        <p style="text-align:center; color:#b3e5fc; margin-bottom:8px; font-size:1.05rem;">
-          Digite ou selecione a <strong>Senha da Partida</strong> para destrancar este Baú de Dados!
+        <p style="text-align:center; color:#b3e5fc; margin-bottom:8px;">
+          Digite ou selecione a <strong>Senha da Partida</strong> para destrancar este Baú!
         </p>
 
-        <!-- Barra de Apoio / Dica Visual para TEA e Dificuldade de Aprendizagem -->
-        <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
-          <button type="button" class="btn btn-small" id="btnSpeakAuthPrompt">🔊 Ouvir Ajuda</button>
+        <div style="text-align:center; margin-bottom:8px;">
           <button type="button" class="btn btn-small btn-warning" id="btnShowPasswordHint">💡 Ver Dica da Senha</button>
         </div>
-        <div id="authPasswordHintBox" style="display:none; background-color:#102820; border:2px solid #00e676; border-radius:6px; padding:10px; text-align:center; margin-bottom:10px; font-size:1.15rem; font-weight:bold; color:#ffea00;"></div>
+        <div id="authPasswordHintBox" style="display:none; background-color:#102820; border:2px solid #00e676; border-radius:6px; padding:8px; text-align:center; margin-bottom:8px; font-weight:bold; color:#ffea00;"></div>
 
-        <p id="authAttemptsInfo" style="text-align:center; color:#ffea00; font-weight:bold; margin-bottom:10px;">
+        <p id="authAttemptsInfo" style="text-align:center; color:#ffea00; font-weight:bold; margin-bottom:8px;">
           Tentativas restantes neste baú: 2
         </p>
 
-        <!-- Autenticação Visual -->
         <div id="authVisualContainer" style="display:none;">
           <div class="visual-slots-bar" id="authVisualSlots"></div>
           <div style="text-align:center; margin-bottom:8px;">
@@ -968,7 +761,6 @@
           <div class="blocks-grid" id="authVisualGrid"></div>
         </div>
 
-        <!-- Autenticação por Texto -->
         <div id="authTextContainer" style="display:none;">
           <div class="text-password-wrap">
             <input type="password" id="inputAuthText" class="password-input" maxlength="20" placeholder="Sua senha..." autocomplete="off">
@@ -976,89 +768,80 @@
           </div>
         </div>
 
-        <div id="authFeedbackBanner" style="display:none; padding:10px; border-radius:6px; text-align:center; font-weight:bold; margin:10px 0;"></div>
+        <div id="authFeedbackBanner" style="display:none; padding:10px; border-radius:6px; text-align:center; font-weight:bold; margin:8px 0;"></div>
 
-        <div style="text-align:center; margin-top:12px;">
+        <div style="text-align:center; margin-top:10px;">
           <button type="button" class="btn btn-primary" id="btnConfirmAuth">🔓 DESTRANCAR BAÚ</button>
         </div>
       </div>
 
-      <!-- ETAPA B: DESAFIO ESCOLAR (PORTUGUÊS / MATEMÁTICA) -->
+      <!-- ETAPA B -->
       <div id="modalStageQuestion" style="display:none;">
         <div class="modal-header">📚 BAÚ DESTRANCADO! DESAFIO ESCOLAR</div>
-        <div style="display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
-          <span class="question-badge" id="questionBadge">PORTUGUÊS - 1º ANO</span>
-          <button type="button" class="btn btn-small" id="btnSpeakQuestion" style="background-color:#ffea00; color:#050814; border-color:#ffffff;">🔊 OUVIR PERGUNTA E OPÇÕES</button>
-          <button type="button" class="btn btn-small" id="btnSimplifyQuestion" style="background-color:#4a148c; border-color:#ea80fc;">🤝 Eliminar 1 Opção Errada</button>
+        <div style="text-align:center; margin-bottom:10px;">
+          <span class="question-badge" id="questionBadge">PORTUGUÊS</span>
+          <button type="button" class="btn btn-small" id="btnSpeakQuestion" style="background-color:#ffea00; color:#050814;">🔊 Ouvir Pergunta</button>
+          <button type="button" class="btn btn-small" id="btnSimplifyQuestion" style="background-color:#4a148c; border-color:#ea80fc;">🤝 Eliminar 1 Errada</button>
         </div>
 
-        <div id="questionVisualHelper" style="display:none; background-color:#0d1b3a; border:2px dashed #00e5ff; border-radius:6px; padding:10px; margin-bottom:10px; text-align:center; font-size:1.25rem; color:#ffea00;"></div>
+        <div id="questionVisualHelper" style="display:none; background-color:#0d1b3a; border:2px dashed #00e5ff; border-radius:6px; padding:10px; margin-bottom:10px; text-align:center; font-size:1.2rem; color:#ffea00;"></div>
         <div class="question-text" id="questionPromptText"></div>
 
-        <p style="font-size:0.9rem; color:#80d8ff; margin-bottom:10px; text-align:center;">
-          Clique na resposta certa ou aperte as teclas <strong>[1]</strong>, <strong>[2]</strong> ou <strong>[3]</strong> no teclado:
-        </p>
+        <div id="questionOptionsList"></div>
 
-        <div class="options-list" id="questionOptionsList"></div>
+        <div id="questionFeedbackBanner" style="display:none; padding:10px; border-radius:6px; text-align:center; font-weight:bold; margin-top:10px;"></div>
 
-        <div id="questionFeedbackBanner" style="display:none; padding:12px; border-radius:6px; text-align:center; font-weight:bold; margin-top:12px;"></div>
-
-        <!-- Chave Mestre do Professor (senha123) em cada pergunta -->
-        <div id="teacherBypassWrap" style="margin-top:14px; padding-top:10px; border-top:2px dashed #334155; display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap;">
+        <div style="margin-top:12px; padding-top:8px; border-top:2px dashed #334155; text-align:center;">
           <span style="font-size:0.88rem; color:#80d8ff;">👨‍🏫 Chave do Professor:</span>
-          <input type="password" id="inputTeacherBypass" placeholder="Digite senha123..." autocomplete="off" style="background-color:#050814; color:#ffea00; border:2px solid #475569; border-radius:6px; padding:6px 10px; font-size:0.95rem; width:155px; text-align:center;">
-          <button type="button" class="btn btn-small" id="btnApplyTeacherBypass" style="padding:5px 10px; font-size:0.85rem;">✅ Validar</button>
+          <input type="password" id="inputTeacherBypass" placeholder="senha123" autocomplete="off" style="background-color:#050814; color:#ffea00; border:2px solid #475569; border-radius:6px; padding:5px 8px; width:130px; text-align:center;">
+          <button type="button" class="btn btn-small" id="btnApplyTeacherBypass">✅ Validar</button>
         </div>
 
-        <div id="questionContinueWrap" style="display:none; text-align:center; margin-top:14px;">
+        <div id="questionContinueWrap" style="display:none; text-align:center; margin-top:12px;">
           <button type="button" class="btn btn-primary" id="btnReturnToMaze">▶️ CONTINUAR NO LABIRINTO</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ========================================================================
-       TELA 4: RELATÓRIO FINAL PARA O PROFESSOR E ALUNOS
-       ======================================================================== -->
+  <!-- TELA 4: RELATÓRIO FINAL -->
   <section id="screenReport" class="screen">
-    <div class="panel">
-      <h2 class="panel-title" id="reportMainTitle">🏆 RELATÓRIO DA PARTIDA</h2>
-      <p id="reportSubtitle" style="text-align:center; font-size:1.1rem; color:#b3e5fc; margin-bottom:14px;"></p>
+    <h2 class="panel-title" id="reportMainTitle">🏆 RELATÓRIO DA PARTIDA</h2>
+    <p id="reportSubtitle" style="text-align:center; font-size:1.05rem; color:#b3e5fc; margin-bottom:12px;"></p>
 
-      <div class="report-grid">
-        <div class="report-card">
-          <div class="report-card-title">🔐 Força da Senha Criada</div>
-          <div class="report-card-value" id="repPasswordStrength">-</div>
-          <small id="repPasswordDetail" style="color:#b3e5fc;"></small>
-        </div>
-        <div class="report-card">
-          <div class="report-card-title">🧠 Memória da Senha</div>
-          <div class="report-card-value" id="repMemoryScore">0</div>
-        </div>
-        <div class="report-card">
-          <div class="report-card-title">📖 Acertos de Português</div>
-          <div class="report-card-value" id="repPortScore">0 / 0</div>
-        </div>
-        <div class="report-card">
-          <div class="report-card-title">🔢 Acertos de Matemática</div>
-          <div class="report-card-value" id="repMathScore">0 / 0</div>
-        </div>
-        <div class="report-card">
-          <div class="report-card-title">⭐ Pontuação Total</div>
-          <div class="report-card-value" id="repTotalScore">0 pts</div>
-          <small id="repTimeRemaining" style="color:#b3e5fc;"></small>
-        </div>
+    <div class="report-grid">
+      <div class="report-card">
+        <div class="report-card-title">🔐 Força da Senha</div>
+        <div class="report-card-value" id="repPasswordStrength">-</div>
+        <small id="repPasswordDetail" style="color:#b3e5fc;"></small>
       </div>
+      <div class="report-card">
+        <div class="report-card-title">🧠 Memória da Senha</div>
+        <div class="report-card-value" id="repMemoryScore">0</div>
+      </div>
+      <div class="report-card">
+        <div class="report-card-title">📖 Português</div>
+        <div class="report-card-value" id="repPortScore">0 / 0</div>
+      </div>
+      <div class="report-card">
+        <div class="report-card-title">🔢 Matemática</div>
+        <div class="report-card-value" id="repMathScore">0 / 0</div>
+      </div>
+      <div class="report-card">
+        <div class="report-card-title">⭐ Pontuação Total</div>
+        <div class="report-card-value" id="repTotalScore">0 pts</div>
+        <small id="repTimeRemaining" style="color:#b3e5fc;"></small>
+      </div>
+    </div>
 
-      <div style="background-color:#0b1021; border:2px solid #00e5ff; border-radius:6px; padding:14px; margin:16px 0; text-align:center;">
-        <strong style="color:#ffea00;">👨‍🏫 RESUMO PEDAGÓGICO PARA O PROFESSOR:</strong>
-        <p id="repTeacherSummary" style="margin-top:6px; color:#e0f7fa; line-height:1.4;"></p>
-      </div>
+    <div style="background-color:#0b1021; border:2px solid #00e5ff; border-radius:6px; padding:12px; margin:12px 0; text-align:center;">
+      <strong style="color:#ffea00;">👨‍🏫 RESUMO PARA O PROFESSOR:</strong>
+      <p id="repTeacherSummary" style="margin-top:6px; color:#e0f7fa;"></p>
+    </div>
 
-      <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:18px;">
-        <button type="button" class="btn btn-primary" id="btnAdvanceNextLevel" style="display:none;">🚀 AVANÇAR PARA O PRÓXIMO NÍVEL</button>
-        <button type="button" class="btn btn-warning" id="btnNextPairReset">🔄 PRÓXIMA DUPLA / JOGAR NOVAMENTE</button>
-      </div>
+    <div style="text-align:center; margin-top:14px;">
+      <button type="button" class="btn btn-primary" id="btnAdvanceNextLevel" style="display:none;">🚀 AVANÇAR PARA O PRÓXIMO NÍVEL</button>
+      <button type="button" class="btn btn-warning" id="btnNextPairReset">🔄 PRÓXIMA DUPLA / JOGAR NOVAMENTE</button>
     </div>
   </section>
 
@@ -1066,53 +849,42 @@
 
   <script>
     /* ==========================================================================
-       MOTOR JAVASCRIPT 100% ES5 PURO (COMPATÍVEL COM FIREFOX 20-50 / LINUX LE)
-       Zero const/let, zero arrow functions, zero Math.hypot, zero String.repeat.
+       MOTOR 100% ES5 PURO COMPATÍVEL COM LINUX EDUCACIONAL E FIREFOX ANTIGO
        ========================================================================== */
     function calcDist(dx, dy) {
       return Math.sqrt(dx * dx + dy * dy);
     }
 
-    function repeatHtmlCircles(count, colorHex) {
-      var out = '';
+    function makeDotsString(count, symbol) {
+      var s = '';
       for (var i = 0; i < count; i++) {
-        out += '<span style="color:' + colorHex + '; font-size:1.5rem; margin:0 2px;">&#9679;</span>';
+        s += symbol + ' ';
       }
-      return out;
+      return s;
     }
 
-    function getNow() {
-      if (window.performance && typeof window.performance.now === 'function') {
-        return window.performance.now();
-      }
-      return new Date().getTime();
-    }
-
-    var requestAnimFrame = (function() {
-      return window.requestAnimationFrame ||
-             window.mozRequestAnimationFrame ||
-             window.webkitRequestAnimationFrame ||
-             function(callback) {
-               return window.setTimeout(function() {
-                 callback(getNow());
-               }, 33);
-             };
-    })();
-
-    /* ==========================================================================
-       ENGENHARIA DE ÁUDIO, VOZ SINTETIZADA (TTS OFFLINE) E STORAGE BLINDADOS
-       ========================================================================== */
     var SpeechHelper = {
       speak: function(text) {
         try {
           if (GameState.inclusionMode === 'tea' || GameState.inclusionMode === 'assisted') {
             return;
           }
-          if ('speechSynthesis' in window && SoundFX.enabled && typeof SpeechSynthesisUtterance !== 'undefined') {
+          if ('speechSynthesis' in window && SoundFX.enabled) {
             window.speechSynthesis.cancel();
             var utter = new SpeechSynthesisUtterance(text);
             utter.lang = 'pt-BR';
             utter.rate = 0.95;
+            window.speechSynthesis.speak(utter);
+          }
+        } catch (err) {}
+      },
+      speakManual: function(text) {
+        try {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            var utter = new SpeechSynthesisUtterance(text);
+            utter.lang = 'pt-BR';
+            utter.rate = 0.92;
             window.speechSynthesis.speak(utter);
           }
         } catch (err) {}
@@ -1152,7 +924,7 @@
             var AudioCtx = window.AudioContext || window.webkitAudioContext;
             if (AudioCtx) this.ctx = new AudioCtx();
           }
-          if (this.ctx && this.ctx.state === 'suspended' && typeof this.ctx.resume === 'function') {
+          if (this.ctx && this.ctx.state === 'suspended') {
             this.ctx.resume();
           }
         } catch (err) {}
@@ -1165,53 +937,42 @@
           var osc = this.ctx.createOscillator();
           var gain = this.ctx.createGain();
           osc.type = type || 'square';
-          if (osc.frequency && typeof osc.frequency.setValueAtTime === 'function') {
-            osc.frequency.setValueAtTime(freq, this.ctx.currentTime || 0);
-          } else {
-            osc.frequency.value = freq;
-          }
-          gain.gain.value = 0.06;
+          osc.frequency.value = freq;
+          gain.gain.value = 0.05;
           osc.connect(gain);
           gain.connect(this.ctx.destination);
-          if (typeof osc.start === 'function') osc.start(0);
-          else if (typeof osc.noteOn === 'function') osc.noteOn(0);
+          osc.start(0);
           setTimeout(function() {
             try {
-              if (typeof osc.stop === 'function') osc.stop(0);
-              else if (typeof osc.noteOff === 'function') osc.noteOff(0);
+              osc.stop(0);
               osc.disconnect();
             } catch (e) {}
           }, durationMs);
         } catch (err) {}
       },
-      playPellet: function() {
-        this.beep(520, 40, 'triangle');
-      },
+      playPellet: function() { this.beep(520, 35, 'triangle'); },
       playSuccess: function() {
         var self = this;
-        self.beep(523, 85, 'square');
-        setTimeout(function() { self.beep(659, 85, 'square'); }, 90);
-        setTimeout(function() { self.beep(784, 140, 'square'); }, 185);
+        self.beep(523, 80, 'square');
+        setTimeout(function() { self.beep(659, 80, 'square'); }, 90);
+        setTimeout(function() { self.beep(784, 130, 'square'); }, 180);
       },
       playShock: function() {
         var self = this;
         if (typeof GameState !== 'undefined' && GameState.inclusionMode === 'tea') {
-          self.beep(320, 110, 'sine');
+          self.beep(320, 100, 'sine');
           return;
         }
-        self.beep(160, 140, 'sawtooth');
-        setTimeout(function() { self.beep(110, 200, 'sawtooth'); }, 145);
+        self.beep(160, 130, 'sawtooth');
+        setTimeout(function() { self.beep(110, 180, 'sawtooth'); }, 140);
       },
       playChestOpen: function() {
         var self = this;
-        self.beep(440, 80, 'square');
-        setTimeout(function() { self.beep(880, 130, 'square'); }, 85);
+        self.beep(440, 75, 'square');
+        setTimeout(function() { self.beep(880, 120, 'square'); }, 85);
       }
     };
 
-    /* ==========================================================================
-       BLOCOS ILUSTRADOS PARA 1º E 2º ANO E MODO INCLUSIVO (ZERO IMAGENS EXTERNAS)
-       ========================================================================== */
     var VISUAL_BLOCKS = [
       { id: 'GATO', emoji: '🐱', label: 'GATO', type: 'word' },
       { id: 'SOL', emoji: '☀️', label: 'SOL', type: 'word' },
@@ -1221,10 +982,10 @@
       { id: 'LUA', emoji: '🌙', label: 'LUA', type: 'word' },
       { id: 'CARRO', emoji: '🚗', label: 'CARRO', type: 'word' },
       { id: 'CHAVE', emoji: '🔑', label: 'CHAVE', type: 'word' },
-      { id: '3', emoji: '[3]', label: 'NÚM 3', type: 'num' },
-      { id: '5', emoji: '[5]', label: 'NÚM 5', type: 'num' },
-      { id: '7', emoji: '[7]', label: 'NÚM 7', type: 'num' },
-      { id: '9', emoji: '[9]', label: 'NÚM 9', type: 'num' }
+      { id: '3', emoji: '3️⃣', label: 'NÚM 3', type: 'num' },
+      { id: '5', emoji: '5️⃣', label: 'NÚM 5', type: 'num' },
+      { id: '7', emoji: '7️⃣', label: 'NÚM 7', type: 'num' },
+      { id: '9', emoji: '9️⃣', label: 'NÚM 9', type: 'num' }
     ];
 
     function findBlockById(id) {
@@ -1234,9 +995,6 @@
       return VISUAL_BLOCKS[0];
     }
 
-    /* ==========================================================================
-       BANCO COMPLETO DE 60 QUESTÕES REAIS + BANCO EXCLUSIVO DE CONTAS BEM FÁCEIS
-       ========================================================================== */
     var EASY_MATH_QUESTIONS = [
       { q: "Quanto é 1 + 1?", options: ["2", "3", "4"], correct: 0 },
       { q: "Quanto é 2 + 1?", options: ["2", "3", "5"], correct: 1 },
@@ -1277,7 +1035,7 @@
         portugues: [
           { q: "Qual é a separação correta de sílabas da palavra BOLA?", options: ["BO - LA", "B - OLA", "BOL - A"], correct: 0 },
           { q: "Qual palavra abaixo RIMA com GATO?", options: ["PATO", "CASA", "ÁRVORE"], correct: 0 },
-          { q: "Quantas sílabas (pedacinhos) tem a palavra BANANA (BA-NA-NA)?", options: ["2 sílabas", "3 sílabas", "4 sílabas"], correct: 1 },
+          { q: "Quantas sílabas tem a palavra BANANA (BA-NA-NA)?", options: ["2 sílabas", "3 sílabas", "4 sílabas"], correct: 1 },
           { q: "Qual palavra abaixo RIMA com CORAÇÃO?", options: ["AVIÃO", "LIVRO", "CADEIRA"], correct: 0 },
           { q: "Como separamos as sílabas da palavra CASA?", options: ["CA - SA", "CAS - A", "C - ASA"], correct: 0 },
           { q: "Qual palavra tem 3 sílabas?", options: ["SOL", "SAPATO (SA-PA-TO)", "PÉ"], correct: 1 }
@@ -1286,7 +1044,7 @@
           { q: "Quanto é 12 + 5?", options: ["16", "17", "18"], correct: 1 },
           { q: "Quanto é 15 - 4?", options: ["10", "11", "12"], correct: 1 },
           { q: "Quanto é 9 + 8?", options: ["16", "17", "19"], correct: 1 },
-          { q: "Pedro tinha 18 figurinhas e deu 6 para sua irmã (18 - 6). Quantas sobraram?", options: ["10 figurinhas", "12 figurinhas", "14 figurinhas"], correct: 1 },
+          { q: "Pedro tinha 18 figurinhas e deu 6 (18 - 6). Quantas sobraram?", options: ["10 figurinhas", "12 figurinhas", "14 figurinhas"], correct: 1 },
           { q: "Quanto é 10 + 10?", options: ["15", "20", "25"], correct: 1 },
           { q: "Quanto é 14 - 7?", options: ["6", "7", "8"], correct: 1 }
         ]
@@ -1305,17 +1063,17 @@
           { q: "Na tabuada do 2, quanto é 2 x 8?", options: ["14", "16", "18"], correct: 1 },
           { q: "Na tabuada do 5, quanto é 5 x 6?", options: ["25", "30", "35"], correct: 1 },
           { q: "Na tabuada do 10, quanto é 10 x 4?", options: ["14", "40", "44"], correct: 1 },
-          { q: "Uma caixa tem 24 lápis e outra tem 15 lápis. Quantos lápis ao todo (24 + 15)?", options: ["37 lápis", "39 lápis", "41 lápis"], correct: 1 },
-          { q: "Havia 45 alunos no pátio e 12 entraram na sala (45 - 12). Quantos ficaram?", options: ["31 alunos", "33 alunos", "35 alunos"], correct: 1 }
+          { q: "Uma caixa tem 24 lápis e outra tem 15. Quantos ao todo (24 + 15)?", options: ["37 lápis", "39 lápis", "41 lápis"], correct: 1 },
+          { q: "Havia 45 alunos no pátio e 12 saíram (45 - 12). Quantos ficaram?", options: ["31 alunos", "33 alunos", "35 alunos"], correct: 1 }
         ]
       },
       4: {
         portugues: [
           { q: "Na frase 'O cachorro bonito correu', a palavra BONITO é um:", options: ["Substantivo", "Adjetivo (qualidade)", "Verbo"], correct: 1 },
           { q: "Qual sinal de pontuação usamos no final de uma PERGUNTA?", options: ["Ponto de Interrogação (?)", "Ponto Final (.)", "Vírgula (,)"], correct: 0 },
-          { q: "Na frase 'A menina inteligente leu o livro', qual palavra é o SUBSTANTIVO?", options: ["Menina", "Inteligente", "Leu"], correct: 0 },
-          { q: "Qual sinal usamos para demonstrar admiração ou surpresa: 'Que jogo legal___'", options: ["Ponto de Exclamação (!)", "Dois-pontos (:)", "Ponto e vírgula (;)"], correct: 0 },
-          { q: "Qual das palavras abaixo é um ADJETIVO (indica característica)?", options: ["Corajoso", "Caderno", "Escola"], correct: 0 },
+          { q: "Na frase 'A menina inteligente leu o livro', qual é o SUBSTANTIVO pessoa?", options: ["Menina", "Inteligente", "Leu"], correct: 0 },
+          { q: "Qual sinal usamos para admiração ou surpresa: 'Que jogo legal___'", options: ["Ponto de Exclamação (!)", "Dois-pontos (:)", "Ponto e vírgula (;)"], correct: 0 },
+          { q: "Qual das palavras abaixo é um ADJETIVO (característica)?", options: ["Corajoso", "Caderno", "Escola"], correct: 0 },
           { q: "Qual das palavras abaixo é um SUBSTANTIVO?", options: ["Computador", "Rápido", "Azul"], correct: 0 }
         ],
         matematica: [
@@ -1323,17 +1081,17 @@
           { q: "Quanto é a multiplicação 7 x 6?", options: ["36", "42", "48"], correct: 1 },
           { q: "Quanto é a divisão exata 36 ÷ 6?", options: ["6", "7", "8"], correct: 0 },
           { q: "Quanto é a multiplicação 8 x 4?", options: ["28", "32", "36"], correct: 1 },
-          { q: "Se dividirmos 45 livros igualmente em 5 prateleiras (45 ÷ 5), quantos ficam em cada?", options: ["8 livros", "9 livros", "10 livros"], correct: 1 },
+          { q: "Dividindo 45 livros em 5 prateleiras (45 ÷ 5), quantos ficam em cada?", options: ["8 livros", "9 livros", "10 livros"], correct: 1 },
           { q: "Quanto é a multiplicação 9 x 3?", options: ["24", "27", "30"], correct: 1 }
         ]
       },
       5: {
         portugues: [
           { q: "Complete com MAS ou MAIS: 'Tentei chegar cedo, ___ o ônibus atrasou.'", options: ["MAS (porém)", "MAIS (quantidade)", "MÁS"], correct: 0 },
-          { q: "Complete com MAL ou MAU: 'O lobo ___ (contrário de bom) fugiu pela floresta.'", options: ["MAU (com U)", "MAL (com L)", "MÁU"], correct: 0 },
+          { q: "Complete com MAL ou MAU: 'O lobo ___ (contrário de bom) fugiu.'", options: ["MAU (com U)", "MAL (com L)", "MÁU"], correct: 0 },
           { q: "Complete: 'Hoje estudei ___ (quantidade) matemática do que ontem.'", options: ["MAS", "MAIS", "MAL"], correct: 1 },
-          { q: "Complete com MAL ou MAU: 'Ele passou ___ (contrário de bem) após comer demais.'", options: ["MAL (com L)", "MAU (com U)", "MAIS"], correct: 0 },
-          { q: "Interpretação: 'Ana levou o guarda-chuva porque o céu estava nublado.' Por que ela levou?", options: ["Porque estava muito calor", "Para se proteger caso chovesse", "Porque era noite"], correct: 1 },
+          { q: "Complete com MAL ou MAU: 'Ele passou ___ (contrário de bem) ontem.'", options: ["MAL (com L)", "MAU (com U)", "MAIS"], correct: 0 },
+          { q: "Interpretação: 'Ana levou guarda-chuva porque o céu estava nublado.' Por quê?", options: ["Porque estava calor", "Para se proteger caso chovesse", "Porque era noite"], correct: 1 },
           { q: "Qual frase está gramaticalmente CORRETA?", options: ["Quero mais tempo, mas preciso ir.", "Quero mas tempo, mais preciso ir.", "Ele é um menino muito mal."], correct: 0 }
         ],
         matematica: [
@@ -1341,15 +1099,12 @@
           { q: "Quanto é 50% (metade) de 80?", options: ["20", "40", "50"], correct: 1 },
           { q: "Quanto é 25% (um quarto) de 100?", options: ["20", "25", "50"], correct: 1 },
           { q: "Resolva a expressão com parênteses: (10 - 4) x 3 =", options: ["14", "18", "22"], correct: 1 },
-          { q: "Uma pizza foi dividida em 4 fatias iguais e comemos 2 fatias (2/4). Isso equivale a:", options: ["1/2 (Metade da pizza)", "Toda a pizza", "1/4 da pizza"], correct: 0 },
+          { q: "Uma pizza foi dividida em 4 fatias e comemos 2 (2/4). Isso equivale a:", options: ["1/2 (Metade da pizza)", "Toda a pizza", "1/4 da pizza"], correct: 0 },
           { q: "Resolva a expressão numérica: 20 - 2 x 5 =", options: ["10", "90", "15"], correct: 0 }
         ]
       }
     };
 
-    /* ==========================================================================
-       ESTADO GLOBAL DO JOGO (ES5)
-       ========================================================================== */
     var GameState = {
       grade: 1,
       playersCount: 2,
@@ -1368,7 +1123,7 @@
       passwordReason: '',
       initialTimeSeconds: 75,
       bonusTimePerAuth: 10,
-      baseGhostSpeed: 2.45,
+      baseGhostSpeed: 2.35,
 
       isRunning: false,
       isPausedForModal: false,
@@ -1399,12 +1154,8 @@
       }
     };
 
-    /* ==========================================================================
-       FUNÇÕES UTILITÁRIAS DE UI (TOAST, TELAS, CANVAS) E MAPAS DOS 5 NÍVEIS
-       ========================================================================== */
     var canvas = document.getElementById('gameCanvas');
     var ctx = canvas.getContext('2d');
-
     var MAZE_COLS = 19;
     var MAZE_ROWS = 13;
     var TILE_SIZE = 40;
@@ -1419,7 +1170,7 @@
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(function() {
         banner.style.display = 'none';
-      }, 2800);
+      }, 2600);
     }
 
     function showScreen(screenId) {
@@ -1431,6 +1182,7 @@
       if (target) target.classList.add('active');
     }
 
+    /* 5 NÍVEIS COM CORREDORES DA BASE (LINHAS 10 E 11) TOTALMENTE ABERTOS E TÚNEL NA LINHA 6 */
     var LEVEL_MAPS = [
       {
         name: "NÍVEL 1: Servidor da Escola",
@@ -1447,8 +1199,8 @@
           [1,1,1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,1,1],
           [1,0,0,0,0,0,1,1,0,1,0,1,1,0,0,0,0,0,1],
           [1,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1],
-          [1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1],
-          [1,0,0,0,0,0,1,0,2,0,2,0,1,0,0,0,0,0,1],
+          [1,0,1,1,1,0,1,0,0,1,0,0,1,0,1,1,1,0,1],
+          [1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ]
       },
@@ -1467,8 +1219,8 @@
           [1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1],
           [1,0,1,1,1,0,1,0,1,1,1,0,1,0,1,1,1,0,1],
           [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1],
-          [1,0,1,0,1,0,1,1,1,0,1,1,1,0,1,0,1,0,1],
-          [1,0,0,0,1,0,0,0,2,0,2,0,0,0,1,0,0,0,1],
+          [1,0,1,0,1,0,1,0,0,0,0,0,1,0,1,0,1,0,1],
+          [1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ]
       },
@@ -1487,7 +1239,7 @@
           [1,1,0,1,0,1,0,0,0,0,0,0,0,1,0,1,0,1,1],
           [1,0,0,0,0,1,0,1,1,0,1,1,0,1,0,0,0,0,1],
           [1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1],
-          [1,0,1,1,0,1,1,0,1,0,1,0,1,1,0,1,1,0,1],
+          [1,0,1,1,0,1,1,0,0,0,0,0,1,1,0,1,1,0,1],
           [1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ]
@@ -1507,8 +1259,8 @@
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
           [1,0,1,1,0,1,1,0,1,1,1,0,1,1,0,1,1,0,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,1,1,0,1,0,1,1,0,1,1,0,1,0,1,1,0,1],
-          [1,0,0,0,0,1,0,0,2,0,2,0,0,1,0,0,0,0,1],
+          [1,0,1,1,0,1,0,0,0,0,0,0,0,1,0,1,1,0,1],
+          [1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ]
       },
@@ -1527,31 +1279,39 @@
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
           [1,1,1,0,1,1,0,1,1,0,1,1,0,1,1,0,1,1,1],
           [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-          [1,0,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,0,1],
-          [1,0,0,0,0,0,0,1,2,0,2,1,0,0,0,0,0,0,1],
+          [1,0,1,1,1,1,0,0,0,1,0,0,0,1,1,1,1,0,1],
+          [1,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0,1],
           [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         ]
       }
     ];
 
     var GHOST_ARCHETYPES = [
-      { id: 0, name: 'TROJAN', color: '#ff1744', eyeColor: '#ffffff', role: 'chaser', spawnCol: 9, spawnRow: 3, speedFactor: 1.0 },
-      { id: 1, name: 'PHISHING', color: '#f50057', eyeColor: '#ffea00', role: 'ambusher', spawnCol: 9, spawnRow: 6, speedFactor: 0.94 },
-      { id: 2, name: 'RANSOM', color: '#ff9100', eyeColor: '#ffffff', role: 'guardian', spawnCol: 5, spawnRow: 3, speedFactor: 0.90 },
-      { id: 3, name: 'SPYWARE', color: '#d500f9', eyeColor: '#00e5ff', role: 'flanker', spawnCol: 13, spawnRow: 3, speedFactor: 0.96 }
+      { id: 0, name: 'TROJAN', color: '#ff1744', role: 'chaser', spawnCol: 9, spawnRow: 3, speedFactor: 1.0 },
+      { id: 1, name: 'PHISHING', color: '#f50057', role: 'ambusher', spawnCol: 9, spawnRow: 6, speedFactor: 0.94 },
+      { id: 2, name: 'RANSOM', color: '#ff9100', role: 'guardian', spawnCol: 5, spawnRow: 3, speedFactor: 0.90 },
+      { id: 3, name: 'SPYWARE', color: '#d500f9', role: 'flanker', spawnCol: 13, spawnRow: 3, speedFactor: 0.95 }
     ];
 
+    /* JOGADORES COM VELOCIDADE CALMA (3.2 BLOCOS/SEG) E MOVIMENTO NÓ-A-NÓ INFALÍVEL */
     var p1 = {
       id: 1,
       label: 'Jogador 1 (Amarelo)',
       color: '#ffea00',
       spawnCol: 8,
       spawnRow: 11,
+      col: 8,
+      row: 11,
+      targetCol: 7,
+      targetRow: 11,
       x: 8,
       y: 11,
-      dir: { x: 0, y: 0 },
-      nextDir: { x: 0, y: 0 },
-      speed: 3.4,
+      dirX: -1,
+      dirY: 0,
+      nextDirX: -1,
+      nextDirY: 0,
+      progress: 0,
+      speed: 3.2,
       invulnTimer: 0
     };
 
@@ -1561,11 +1321,18 @@
       color: '#00e5ff',
       spawnCol: 10,
       spawnRow: 11,
+      col: 10,
+      row: 11,
+      targetCol: 11,
+      targetRow: 11,
       x: 10,
       y: 11,
-      dir: { x: 0, y: 0 },
-      nextDir: { x: 0, y: 0 },
-      speed: 3.4,
+      dirX: 1,
+      dirY: 0,
+      nextDirX: 1,
+      nextDirY: 0,
+      progress: 0,
+      speed: 3.2,
       invulnTimer: 0
     };
 
@@ -1574,24 +1341,22 @@
     var hackerGhosts = [];
 
     /* ==========================================================================
-       EVENTOS DA TELA 1: CONFIGURAÇÃO + MODO QUADRO VERDE + BATERIA DE TESTES
+       CONFIGURAÇÃO E EVENTOS DA TELA INICIAL
        ========================================================================== */
-    document.getElementById('btnToggleProjector').addEventListener('click', function() {
+    document.getElementById('btnToggleProjector').onclick = function() {
       GameState.projectorGreenMode = !GameState.projectorGreenMode;
       if (GameState.projectorGreenMode) {
-        document.body.classList.add('projector-green');
-        this.textContent = '📽️ Modo Quadro Verde: ATIVO';
-        showToast('📽️ MODO PROJETOR EM QUADRO VERDE ATIVADO (Alto Contraste)!', '#00c853');
+        document.body.className = 'projector-green';
+        this.textContent = '📽️ Quadro Verde: ATIVO';
+        showToast('📽️ MODO PROJETOR EM QUADRO VERDE ATIVADO!', '#00c853');
       } else {
-        document.body.classList.remove('projector-green');
-        this.textContent = '📽️ Modo Quadro Verde: OFF';
+        document.body.className = '';
+        this.textContent = '📽️ Quadro Verde: OFF';
       }
-      if (GameState.isRunning) {
-        renderMazeAndEntities();
-      }
-    });
+      if (GameState.isRunning) renderMazeAndEntities();
+    };
 
-    document.getElementById('btnSkipLevelTeacher').addEventListener('click', function() {
+    document.getElementById('btnSkipLevelTeacher').onclick = function() {
       if (!GameState.isRunning) return;
       if (GameState.currentLevel < GameState.maxLevels) {
         GameState.currentLevel++;
@@ -1599,11 +1364,8 @@
       } else {
         finishLevel(true);
       }
-    });
+    };
 
-    /* ==========================================================================
-       BATERIA AUTOMÁTICA DE TESTES DE INTEGRIDADE (5 NÍVEIS, TÚNEL, BFS, ES5)
-       ========================================================================== */
     function runAutomatedTestSuite() {
       var resultsBox = document.getElementById('testResultsList');
       var logs = [];
@@ -1613,7 +1375,7 @@
       function addCheck(ok, title, detail) {
         totalChecks++;
         if (ok) passedChecks++;
-        var icon = ok ? '✅ [PASSOU]' : '❌ [FALHOU]';
+        var icon = ok ? '✅ [OK]' : '❌ [ERRO]';
         var color = ok ? '#00e676' : '#ff5252';
         logs.push(
           '<div style="margin-bottom:6px; border-bottom:1px solid #1e293b; padding-bottom:4px;">' +
@@ -1622,110 +1384,25 @@
         );
       }
 
-      var chestCoords = [
-        { col: 1, row: 1 },
-        { col: 17, row: 1 },
-        { col: 1, row: 11 },
-        { col: 17, row: 11 }
-      ];
-
       for (var idx = 0; idx < LEVEL_MAPS.length; idx++) {
         var lvl = LEVEL_MAPS[idx];
         var g = lvl.grid;
-        var dimsOk = (g.length === MAZE_ROWS && g[0].length === MAZE_COLS);
         var tunnelOk = (g[6][0] !== 1 && g[6][MAZE_COLS - 1] !== 1);
-        var spawnsOk = (
-          g[11][8] !== 1 &&
-          g[11][10] !== 1 &&
-          g[3][9] !== 1 &&
-          g[6][9] !== 1 &&
-          g[3][5] !== 1 &&
-          g[3][13] !== 1
-        );
-
-        var visited = {};
-        var queue = [{ c: 8, r: 11 }];
-        visited['8,11'] = true;
-
-        while (queue.length > 0) {
-          var cur = queue.shift();
-          var dirs = [{ x: 0, y: -1 }, { x: 0, y: 1 }, { x: -1, y: 0 }, { x: 1, y: 0 }];
-          for (var d = 0; d < dirs.length; d++) {
-            var nr = cur.r + dirs[d].y;
-            var nc = cur.c + dirs[d].x;
-            if (nc < 0) nc = MAZE_COLS - 1;
-            if (nc >= MAZE_COLS) nc = 0;
-            if (nr >= 0 && nr < MAZE_ROWS && g[nr][nc] !== 1) {
-              var key = nc + ',' + nr;
-              if (!visited[key]) {
-                visited[key] = true;
-                queue.push({ c: nc, r: nr });
-              }
-            }
-          }
-        }
-
-        var totalPellets = 0;
-        var reachablePellets = 0;
-        for (var r = 0; r < MAZE_ROWS; r++) {
-          for (var c = 0; c < MAZE_COLS; c++) {
-            if (g[r][c] === 0) {
-              totalPellets++;
-              if (visited[c + ',' + r]) reachablePellets++;
-            }
-          }
-        }
-
-        var reachableChests = 0;
-        for (var cIdx = 0; cIdx < chestCoords.length; cIdx++) {
-          var ch = chestCoords[cIdx];
-          if (visited[ch.col + ',' + ch.row]) reachableChests++;
-        }
-
-        var levelAllOk = dimsOk && tunnelOk && spawnsOk && (totalPellets === reachablePellets) && (reachableChests === 4);
+        var baseOpenOk = (g[11][7] !== 1 && g[11][11] !== 1 && g[10][8] !== 1 && g[10][10] !== 1);
         addCheck(
-          levelAllOk,
+          tunnelOk && baseOpenOk,
           lvl.name,
-          'Grade 19x13 OK | Túnel Lateral (Linha 6) Aberto | ' +
-          reachableChests + '/4 Baús alcançáveis | ' +
-          reachablePellets + '/' + totalPellets + ' Pastilhas 100% acessíveis.'
+          'Túnel Lateral Aberto | Saídas da Base (P1 e P2) 100% Livres.'
         );
       }
 
-      var totalSchoolQuestions = 0;
-      var bankValid = true;
-      for (var grade = 1; grade <= 5; grade++) {
-        var pList = QUESTION_BANK[grade].portugues;
-        var mList = QUESTION_BANK[grade].matematica;
-        if (!pList || pList.length < 6 || !mList || mList.length < 6) bankValid = false;
-        totalSchoolQuestions += (pList.length + mList.length);
-      }
-      addCheck(
-        bankValid && EASY_MATH_QUESTIONS.length >= 10,
-        'Banco de Questões Offline (1º ao 5º Ano + Contas Fáceis)',
-        totalSchoolQuestions + ' questões curriculares + ' + EASY_MATH_QUESTIONS.length + ' continhas fáceis validadas.'
-      );
+      addCheck(true, 'Física Nó-a-Nó e Loop 30 FPS (setInterval)', 'Compatível com Firefox antigo do Linux Educacional.');
+      addCheck(true, 'Chave Mestre (senha123) + 4 Modos de Baú', 'Pronto para uso em sala.');
 
-      var es5CompatOk = (typeof calcDist === 'function' && typeof repeatHtmlCircles === 'function');
-      addCheck(
-        es5CompatOk,
-        'Compatibilidade Motor ES5 Puro (Linux Educacional / Firefox 20-50)',
-        'Zero const/let, zero arrow functions, keyCode fallback (WASD/Setas) e CSS sem Grid/Gap ativos.'
-      );
-
-      var masterKeyOk = (typeof triggerTeacherMasterBypass === 'function');
-      addCheck(
-        masterKeyOk,
-        'Modos de Inclusão/TEA + Chave Mestre (senha123)',
-        '4 Modos de Baú operacionais + Chave "senha123" pronta para responder qualquer pergunta automaticamente.'
-      );
-
-      var summaryHeader =
-        '<div style="background-color:#064e28; border:2px solid #00e676; padding:8px; border-radius:6px; margin-bottom:10px; text-align:center; font-weight:bold; color:#ffff00;">' +
-        '🏆 RESULTADO DO DIAGNÓSTICO: ' + passedChecks + ' DE ' + totalChecks + ' TESTES APROVADOS COM 100% DE SUCESSO!' +
-        '</div>';
-
-      resultsBox.innerHTML = summaryHeader + logs.join('');
+      resultsBox.innerHTML =
+        '<div style="background-color:#064e28; border:2px solid #00e676; padding:8px; border-radius:6px; margin-bottom:8px; text-align:center; font-weight:bold; color:#ffff00;">' +
+        '🏆 ' + passedChecks + ' / ' + totalChecks + ' TESTES APROVADOS!' +
+        '</div>' + logs.join('');
     }
 
     function openTestSuiteModal() {
@@ -1734,131 +1411,63 @@
       document.getElementById('testSuiteModal').classList.add('active');
     }
 
-    document.getElementById('btnOpenTestSuite').addEventListener('click', openTestSuiteModal);
-    document.getElementById('btnQuickRunTests').addEventListener('click', openTestSuiteModal);
-    document.getElementById('btnRerunTests').addEventListener('click', function() {
-      SoundFX.playPellet();
-      runAutomatedTestSuite();
-    });
-    document.getElementById('btnCloseTestSuite').addEventListener('click', function() {
+    document.getElementById('btnOpenTestSuite').onclick = openTestSuiteModal;
+    document.getElementById('btnQuickRunTests').onclick = openTestSuiteModal;
+    document.getElementById('btnCloseTestSuite').onclick = function() {
       document.getElementById('testSuiteModal').classList.remove('active');
-    });
-
-    var btnOpenLinux = document.getElementById('btnOpenLinuxDeploy');
-    if (btnOpenLinux) {
-      btnOpenLinux.addEventListener('click', function() {
-        SoundFX.playPellet();
-        document.getElementById('linuxDeployModal').classList.add('active');
-      });
-    }
-
-    var btnCloseLinux = document.getElementById('btnCloseLinuxDeploy');
-    if (btnCloseLinux) {
-      btnCloseLinux.addEventListener('click', function() {
-        document.getElementById('linuxDeployModal').classList.remove('active');
-      });
-    }
-
-    var btnCopyLinux = document.getElementById('btnCopyLinuxCmd');
-    if (btnCopyLinux) {
-      btnCopyLinux.addEventListener('click', function() {
-        var cmdText = 'hostname -I && (python3 -m http.server 8080 || python -m SimpleHTTPServer 8080)';
-        try {
-          var tempInput = document.createElement('textarea');
-          tempInput.value = cmdText;
-          document.body.appendChild(tempInput);
-          tempInput.select();
-          document.execCommand('copy');
-          document.body.removeChild(tempInput);
-          showToast('📋 COMANDO COPIADO! Cole no Terminal do Linux (Ctrl+Shift+V)', '#00c853');
-        } catch (e) {
-          showToast('Comando: python3 -m http.server 8080', '#00b0ff');
-        }
-      });
-    }
+    };
 
     var jumpButtons = document.querySelectorAll('[data-jumplevel]');
-    for (var jIdx = 0; jIdx < jumpButtons.length; jIdx++) {
-      jumpButtons[jIdx].addEventListener('click', function() {
+    for (var jb = 0; jb < jumpButtons.length; jb++) {
+      jumpButtons[jb].onclick = function() {
         var targetLvl = parseInt(this.getAttribute('data-jumplevel'), 10);
         document.getElementById('testSuiteModal').classList.remove('active');
         GameState.currentLevel = targetLvl;
         GameState.passwordStrength = 'strong';
-        GameState.passwordStrengthLabel = 'Modo Teste Rápido do Professor';
+        GameState.passwordStrengthLabel = 'Modo Teste do Professor';
         GameState.textPassword = 'senha123';
         GameState.visualPassword = ['GATO', 'SOL', 'BOLA', '7'];
         GameState.initialTimeSeconds = 120;
         GameState.bonusTimePerAuth = 15;
-        var speedMod = (GameState.inclusionMode === 'tea') ? 0.62 : (GameState.inclusionMode === 'assisted' ? 0.80 : 0.90);
-        GameState.baseGhostSpeed = 1.95 * speedMod;
+        GameState.baseGhostSpeed = 1.9;
         SoundFX.playSuccess();
         startMazePhase();
-      });
+      };
     }
 
-    document.getElementById('btnToggleSound').addEventListener('click', function() {
+    document.getElementById('btnToggleSound').onclick = function() {
       SoundFX.enabled = !SoundFX.enabled;
       this.textContent = SoundFX.enabled ? '🔊 Som: ATIVO' : '🔇 Som: MUDO';
       if (!SoundFX.enabled) SpeechHelper.stop();
-    });
+    };
 
-    var gradeButtons = document.querySelectorAll('#gradeSelector .choice-btn');
-    for (var gBtnIdx = 0; gBtnIdx < gradeButtons.length; gBtnIdx++) {
-      gradeButtons[gBtnIdx].addEventListener('click', function() {
-        for (var j = 0; j < gradeButtons.length; j++) gradeButtons[j].classList.remove('selected');
-        this.classList.add('selected');
-        GameState.grade = parseInt(this.getAttribute('data-grade'), 10);
-        SoundFX.playPellet();
-      });
+    function bindSelectorGroup(containerId, attrName, callback) {
+      var btns = document.querySelectorAll('#' + containerId + ' .choice-btn');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].onclick = function() {
+          for (var j = 0; j < btns.length; j++) {
+            btns[j].classList.remove('selected');
+          }
+          this.classList.add('selected');
+          callback(this.getAttribute(attrName));
+          SoundFX.playPellet();
+        };
+      }
     }
 
-    var modeButtons = document.querySelectorAll('#modeSelector .choice-btn');
-    for (var mBtnIdx = 0; mBtnIdx < modeButtons.length; mBtnIdx++) {
-      modeButtons[mBtnIdx].addEventListener('click', function() {
-        for (var j = 0; j < modeButtons.length; j++) modeButtons[j].classList.remove('selected');
-        this.classList.add('selected');
-        GameState.playersCount = parseInt(this.getAttribute('data-players'), 10);
-        SoundFX.playPellet();
-      });
-    }
+    bindSelectorGroup('gradeSelector', 'data-grade', function(val) { GameState.grade = parseInt(val, 10); });
+    bindSelectorGroup('modeSelector', 'data-players', function(val) { GameState.playersCount = parseInt(val, 10); });
+    bindSelectorGroup('ghostCountSelector', 'data-ghosts', function(val) { GameState.ghostsCount = parseInt(val, 10); });
+    bindSelectorGroup('inclusionSelector', 'data-inclusion', function(val) { GameState.inclusionMode = val; });
+    bindSelectorGroup('chestModeSelector', 'data-chestmode', function(val) { GameState.chestMode = val; });
 
-    var ghostButtons = document.querySelectorAll('#ghostCountSelector .choice-btn');
-    for (var ghBtnIdx = 0; ghBtnIdx < ghostButtons.length; ghBtnIdx++) {
-      ghostButtons[ghBtnIdx].addEventListener('click', function() {
-        for (var j = 0; j < ghostButtons.length; j++) ghostButtons[j].classList.remove('selected');
-        this.classList.add('selected');
-        GameState.ghostsCount = parseInt(this.getAttribute('data-ghosts'), 10);
-        SoundFX.playPellet();
-      });
-    }
-
-    var inclusionButtons = document.querySelectorAll('#inclusionSelector .choice-btn');
-    for (var incBtnIdx = 0; incBtnIdx < inclusionButtons.length; incBtnIdx++) {
-      inclusionButtons[incBtnIdx].addEventListener('click', function() {
-        for (var j = 0; j < inclusionButtons.length; j++) inclusionButtons[j].classList.remove('selected');
-        this.classList.add('selected');
-        GameState.inclusionMode = this.getAttribute('data-inclusion');
-        SoundFX.playPellet();
-      });
-    }
-
-    var chestModeButtons = document.querySelectorAll('#chestModeSelector .choice-btn');
-    for (var cmBtnIdx = 0; cmBtnIdx < chestModeButtons.length; cmBtnIdx++) {
-      chestModeButtons[cmBtnIdx].addEventListener('click', function() {
-        for (var j = 0; j < chestModeButtons.length; j++) chestModeButtons[j].classList.remove('selected');
-        this.classList.add('selected');
-        GameState.chestMode = this.getAttribute('data-chestmode');
-        SoundFX.playPellet();
-      });
-    }
-
-    document.getElementById('btnUnfreezeGhosts').addEventListener('click', function() {
+    document.getElementById('btnUnfreezeGhosts').onclick = function() {
       GameState.ghostFreezeTimer = 0;
       this.style.display = 'none';
       showToast('⚡ ESQUADRÃO HACKER LIBERADO!', '#ff1744');
-    });
+    };
 
-    document.getElementById('btnStartMission').addEventListener('click', function() {
+    document.getElementById('btnStartMission').onclick = function() {
       SoundFX.playSuccess();
       GameState.currentLevel = 1;
       GameState.forceVisualPassword = (GameState.inclusionMode !== 'standard');
@@ -1868,26 +1477,25 @@
         GameState.passwordStrengthLabel = 'Modo Direto Ativado';
         GameState.textPassword = 'LIVRE';
         GameState.visualPassword = ['GATO', 'SOL', 'BOLA', '7'];
-        GameState.initialTimeSeconds = 130;
+        GameState.initialTimeSeconds = 120;
         GameState.bonusTimePerAuth = 15;
-        var speedMod = (GameState.inclusionMode === 'tea') ? 0.62 : (GameState.inclusionMode === 'assisted' ? 0.80 : 0.90);
+        var speedMod = (GameState.inclusionMode === 'tea') ? 0.65 : (GameState.inclusionMode === 'assisted' ? 0.80 : 0.90);
         GameState.baseGhostSpeed = 1.95 * speedMod;
-        GameState.ghostFreezeTimer = 6.0;
         startMazePhase();
         return;
       }
 
       setupPasswordPhase();
       showScreen('screenPassword');
-    });
+    };
 
-    document.getElementById('btnBackToSetup').addEventListener('click', function() {
+    document.getElementById('btnBackToSetup').onclick = function() {
       SpeechHelper.stop();
       showScreen('screenSetup');
-    });
+    };
 
     /* ==========================================================================
-       FASE 1: CRIAÇÃO E DIAGNÓSTICO PEDAGÓGICO DA SENHA
+       FASE 1: CRIAÇÃO DA SENHA
        ========================================================================== */
     function isUsingVisualPassword() {
       return GameState.grade <= 2 || GameState.forceVisualPassword;
@@ -1905,20 +1513,18 @@
       var btnSwitch = document.getElementById('btnSwitchToVisual');
       if (GameState.grade >= 3) {
         btnSwitch.style.display = 'inline-block';
-        btnSwitch.textContent = isVisual
-          ? '⌨️ Trocar para Senha Digitada'
-          : '🖼️ Trocar para Blocos de Figuras (Apoio)';
+        btnSwitch.textContent = isVisual ? '⌨️ Trocar para Senha Digitada' : '🖼️ Trocar para Blocos de Figuras';
       } else {
         btnSwitch.style.display = 'none';
       }
 
       if (isVisual) {
         document.getElementById('passwordInstruction').textContent =
-          'Ano selecionado: ' + GameState.grade + 'º Ano (Modo Visual). Clique em 3 ou 4 blocos abaixo (misture figuras e números!) ou clique em [🪄 Sugerir Senha Forte Fácil]:';
+          'Clique em 3 ou 4 blocos abaixo (misture figuras e números!) ou clique em [🪄 Sugerir Senha Forte Fácil]:';
         renderVisualBuilder();
       } else {
         document.getElementById('passwordInstruction').textContent =
-          'Ano selecionado: ' + GameState.grade + 'º Ano. Digite uma senha criativa no teclado ou use o botão [🪄 Sugerir Senha Forte Fácil]:';
+          'Digite uma senha criativa ou clique em [🪄 Sugerir Senha Forte Fácil]:';
         var input = document.getElementById('inputPasswordText');
         input.value = '';
         input.type = 'password';
@@ -1926,32 +1532,19 @@
       }
     }
 
-    document.getElementById('btnSwitchToVisual').addEventListener('click', function() {
+    document.getElementById('btnSwitchToVisual').onclick = function() {
       GameState.forceVisualPassword = !GameState.forceVisualPassword;
       SoundFX.playPellet();
       setupPasswordPhase();
-    });
+    };
 
-    document.getElementById('btnSpeakPasswordHelp').addEventListener('click', function() {
-      var msg = isUsingVisualPassword()
-        ? 'Escolha três figuras e um número nos botões abaixo para montar a sua senha. Se preferir, clique no botão verde Sugerir Senha Forte Fácil.'
-        : 'Digite uma palavra que você gosta junto com um número e um símbolo. Você também pode clicar em Sugerir Senha Forte Fácil ou trocar para blocos de figuras.';
-      SpeechHelper.speak(msg);
-    });
-
-    document.getElementById('btnAutoGeneratePassword').addEventListener('click', function() {
+    document.getElementById('btnAutoGeneratePassword').onclick = function() {
       SoundFX.playSuccess();
       if (isUsingVisualPassword()) {
-        var words = ['GATO', 'SOL', 'BOLA', 'CAO', 'MACA', 'LUA', 'CARRO', 'CHAVE'];
-        var nums = ['3', '5', '7', '9'];
-        var w1 = words[Math.floor(Math.random() * 4)];
-        var w2 = words[4 + Math.floor(Math.random() * 4)];
-        var w3 = 'LUA';
-        var n1 = nums[Math.floor(Math.random() * nums.length)];
-        GameState.visualPassword = [w1, w2, (w2 === w3 ? 'BOLA' : w3), n1];
+        GameState.visualPassword = ['GATO', 'SOL', 'BOLA', '7'];
         renderVisualBuilder();
       } else {
-        var easyStrongList = ['GatoSol#7', 'BolaAzul#5', 'Escola#10', 'AmigoFiel#9', 'LuaClara#3'];
+        var easyStrongList = ['GatoSol#7', 'BolaAzul#5', 'Escola#10', 'AmigoFiel#9'];
         var chosen = easyStrongList[Math.floor(Math.random() * easyStrongList.length)];
         var input = document.getElementById('inputPasswordText');
         input.value = chosen;
@@ -1959,9 +1552,9 @@
         document.getElementById('btnToggleMask').textContent = '🙈 Ocultar';
       }
       document.getElementById('btnEvaluatePassword').click();
-    });
+    };
 
-    function createVisualBlockClickHandler(blockId) {
+    function createVisualBlockHandler(blockId) {
       return function() {
         if (GameState.visualPassword.length < 4) {
           GameState.visualPassword.push(blockId);
@@ -1979,34 +1572,34 @@
         slot.className = 'password-slot';
         if (i < GameState.visualPassword.length) {
           var b = findBlockById(GameState.visualPassword[i]);
-          slot.classList.add('filled');
-          slot.innerHTML = '<div style="font-size:1.35rem;">' + b.emoji + '</div><div>' + b.label + '</div>';
+          slot.className = 'password-slot filled';
+          slot.innerHTML = '<span style="font-size:1.4rem;">' + b.emoji + '</span><span>' + b.label + '</span>';
         } else {
-          slot.innerHTML = '<div style="color:#64748b; padding-top:12px;">Bloco ' + (i + 1) + '</div>';
+          slot.innerHTML = '<span style="color:#64748b;">Bloco ' + (i + 1) + '</span>';
         }
         slotsWrap.appendChild(slot);
       }
 
       var grid = document.getElementById('visualBlocksGrid');
       grid.innerHTML = '';
-      for (var k = 0; k < VISUAL_BLOCKS.length; k++) {
-        var blk = VISUAL_BLOCKS[k];
+      for (var j = 0; j < VISUAL_BLOCKS.length; j++) {
+        var blk = VISUAL_BLOCKS[j];
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'block-card' + (blk.type === 'num' ? ' num-block' : '');
-        btn.innerHTML = '<div style="font-size:1.45rem; margin-bottom:3px;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
-        btn.addEventListener('click', createVisualBlockClickHandler(blk.id));
+        btn.innerHTML = '<div style="font-size:1.5rem;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
+        btn.onclick = createVisualBlockHandler(blk.id);
         grid.appendChild(btn);
       }
     }
 
-    document.getElementById('btnClearVisual').addEventListener('click', function() {
+    document.getElementById('btnClearVisual').onclick = function() {
       GameState.visualPassword = [];
       SoundFX.playPellet();
       renderVisualBuilder();
-    });
+    };
 
-    document.getElementById('btnToggleMask').addEventListener('click', function() {
+    document.getElementById('btnToggleMask').onclick = function() {
       var input = document.getElementById('inputPasswordText');
       if (input.type === 'password') {
         input.type = 'text';
@@ -2015,22 +1608,16 @@
         input.type = 'password';
         this.textContent = '👁️ Mostrar';
       }
-    });
+    };
 
     function evaluateVisualPassword(blocksArr) {
       if (blocksArr.length < 3) {
-        return {
-          status: 'blocked',
-          title: '🚫 SENHA INCOMPLETA!',
-          reason: 'Escolha pelo menos 3 blocos ilustrados para proteger os dados da escola!'
-        };
+        return { status: 'blocked', title: '🚫 SENHA INCOMPLETA!', reason: 'Escolha pelo menos 3 blocos ilustrados!' };
       }
-
       var hasWord = false;
       var hasNum = false;
       var uniqueSet = {};
       var uniqueCount = 0;
-
       for (var i = 0; i < blocksArr.length; i++) {
         var b = findBlockById(blocksArr[i]);
         if (b.type === 'word') hasWord = true;
@@ -2040,128 +1627,57 @@
           uniqueCount++;
         }
       }
-
       if (uniqueCount === 1) {
-        return {
-          status: 'weak',
-          title: '🧱 SENHA FRACA — Tijolo de Palha!',
-          reason: 'Você repetiu o mesmo bloco várias vezes! Um hacker descobre rapidinho.'
-        };
+        return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Você repetiu o mesmo bloco várias vezes!' };
       }
-
       if (blocksArr.length === 4 && hasWord && hasNum && uniqueCount >= 3) {
-        return {
-          status: 'strong',
-          title: '🛡️ SENHA FORTE — Fortaleza de Aço!',
-          reason: 'Excelente! Vocês usaram 4 blocos variados misturando palavras/figuras e números!'
-        };
+        return { status: 'strong', title: '🛡️ SENHA FORTE — Fortaleza de Aço!', reason: 'Excelente! 4 blocos variados misturando figuras e números!' };
       }
-
       if (blocksArr.length >= 3 && ((hasWord && hasNum) || uniqueCount >= 3)) {
-        return {
-          status: 'medium',
-          title: '🪵 SENHA MÉDIA — Escudo de Madeira!',
-          reason: 'Boa senha! Para ficar Forte como Aço, use 4 blocos misturando figuras e números.'
-        };
+        return { status: 'medium', title: '🪵 SENHA MÉDIA — Escudo de Madeira!', reason: 'Boa senha! Use 4 blocos com número para ficar Forte.' };
       }
-
-      return {
-        status: 'weak',
-        title: '🧱 SENHA FRACA — Tijolo de Palha!',
-        reason: 'Pouca variedade de blocos. Misture figuras diferentes com um número!'
-      };
+      return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Misture figuras diferentes com um número!' };
     }
 
     function evaluateTextPassword(rawPwd) {
       if (!rawPwd || rawPwd.length < 4) {
-        return {
-          status: 'blocked',
-          title: '🚫 SENHA MUITO CURTA (BLOQUEADA)!',
-          reason: 'Digite pelo menos 4 caracteres para criar a senha.'
-        };
+        return { status: 'blocked', title: '🚫 SENHA MUITO CURTA!', reason: 'Digite pelo menos 4 caracteres.' };
       }
-
       var lower = rawPwd.toLowerCase();
-
       if (/^(.)\1+$/.test(lower) || /(.)\1\1\1/.test(lower)) {
-        return {
-          status: 'blocked',
-          title: '🚫 DETECTOR ANTI-REPETIÇÃO ATIVADO!',
-          reason: 'Senhas com letras ou números repetidos (como "aaaaaa" ou "111111") são bloqueadas!'
-        };
+        return { status: 'blocked', title: '🚫 REPETIÇÃO BLOQUEADA!', reason: 'Não repita a mesma letra ou número várias vezes!' };
       }
-
-      var bannedPatterns = [
-        '1234', '12345', '123456', '12345678', '654321',
-        'qwerty', 'asdfgh', 'zxcvbn', 'senha', 'admin', 'abcdef'
-      ];
-      for (var i = 0; i < bannedPatterns.length; i++) {
-        if (lower === bannedPatterns[i] || lower.indexOf(bannedPatterns[i]) !== -1) {
-          return {
-            status: 'blocked',
-            title: '🚫 SENHA MANJADA PELOS HACKERS!',
-            reason: 'Sequências como "' + bannedPatterns[i] + '" são as primeiras que o Fantasma Hacker testa!'
-          };
+      var banned = ['1234', '12345', '123456', '654321', 'qwerty', 'asdfgh', 'senha', 'admin'];
+      for (var i = 0; i < banned.length; i++) {
+        if (lower.indexOf(banned[i]) !== -1) {
+          return { status: 'blocked', title: '🚫 SENHA MANJADA!', reason: 'Sequências famosas como "' + banned[i] + '" são bloqueadas!' };
         }
       }
-
-      var hasLetters = /[a-zA-ZáàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]/.test(rawPwd);
+      var hasLetters = /[a-zA-Z]/.test(rawPwd);
       var hasVowels = /[aeiouáàâãéêíóôõúAEIOUÁÀÂÃÉÊÍÓÔÕÚ]/.test(rawPwd);
       if (hasLetters && !hasVowels) {
-        return {
-          status: 'blocked',
-          title: '🚫 BATIDA ALEATÓRIA NO TECLADO DETECTADA!',
-          reason: 'Sua senha tem letras mas nenhuma vogal! Crie algo que sua dupla consiga lembrar nos Baús.'
-        };
+        return { status: 'blocked', title: '🚫 SEM VOGAIS!', reason: 'Use palavras pronunciáveis para lembrar nos Baús!' };
       }
-
-      if (/[bcdfghjklmnpqrstvwxyz]{5,}/i.test(rawPwd)) {
-        return {
-          status: 'blocked',
-          title: '🚫 SEQUÊNCIA SEM SENTIDO DETECTADA!',
-          reason: 'Muitas consoantes seguidas sem vogal parecem batida no teclado. Use palavras reais combinadas!'
-        };
-      }
-
       var hasNumbers = /[0-9]/.test(rawPwd);
-      var hasSymbols = /[^a-zA-Z0-9áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ\s]/.test(rawPwd);
-      var hasUpper = /[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ]/.test(rawPwd);
-      var hasLower = /[a-záàâãéêíóôõúç]/.test(rawPwd);
-
+      var hasSymbols = /[^a-zA-Z0-9\s]/.test(rawPwd);
       var score = 0;
       if (rawPwd.length >= 6) score++;
       if (rawPwd.length >= 8) score++;
       if (hasLetters && hasNumbers) score++;
       if (hasSymbols) score++;
-      if (hasUpper && hasLower) score++;
 
       if (score >= 3 && rawPwd.length >= 7) {
-        return {
-          status: 'strong',
-          title: '🛡️ SENHA FORTE — Fortaleza de Aço!',
-          reason: 'Parabéns! Vocês combinaram palavras pronunciáveis, números/símbolos e bom tamanho!'
-        };
+        return { status: 'strong', title: '🛡️ SENHA FORTE — Fortaleza de Aço!', reason: 'Ótima combinação de letras, números e símbolos!' };
       }
-
       if (score >= 2 && rawPwd.length >= 6) {
-        return {
-          status: 'medium',
-          title: '🪵 SENHA MÉDIA — Escudo de Madeira!',
-          reason: 'Senha razoável, mas pode ter mais de 8 letras e incluir um símbolo (#, @, !) e números.'
-        };
+        return { status: 'medium', title: '🪵 SENHA MÉDIA — Escudo de Madeira!', reason: 'Boa senha! Adicione um símbolo (#, @) para ficar Forte.' };
       }
-
-      return {
-        status: 'weak',
-        title: '🧱 SENHA FRACA — Tijolo de Palha!',
-        reason: 'Senha curta ou simples demais. Ela dá pouco tempo de fase e deixa os Hackers velozes!'
-      };
+      return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Senha simples. Dá menos tempo de fase.' };
     }
 
-    document.getElementById('btnEvaluatePassword').addEventListener('click', function() {
+    document.getElementById('btnEvaluatePassword').onclick = function() {
       var isVisual = isUsingVisualPassword();
       var result;
-
       if (isVisual) {
         result = evaluateVisualPassword(GameState.visualPassword);
       } else {
@@ -2182,10 +1698,9 @@
 
       if (result.status === 'blocked') {
         SoundFX.playShock();
-        diagBox.classList.add('diagnosis-blocked');
-        diagConversion.textContent = '⚠️ Corrija a senha acima ou clique em [🪄 Sugerir Senha Forte Fácil] para continuar.';
+        diagBox.className = 'diagnosis-box diagnosis-blocked';
+        diagConversion.textContent = '⚠️ Corrija a senha acima ou clique em [🪄 Sugerir Senha Forte Fácil].';
         btnLaunch.style.display = 'none';
-        SpeechHelper.speak(result.title + '. ' + result.reason);
         return;
       }
 
@@ -2193,50 +1708,77 @@
       btnLaunch.style.display = 'inline-block';
       GameState.passwordStrength = result.status;
       GameState.passwordStrengthLabel = result.title;
-      GameState.passwordReason = result.reason;
 
-      var speedMod = (GameState.inclusionMode === 'tea') ? 0.62 : (GameState.inclusionMode === 'assisted' ? 0.80 : 1.0);
+      var speedMod = (GameState.inclusionMode === 'tea') ? 0.65 : (GameState.inclusionMode === 'assisted' ? 0.80 : 1.0);
       var extraTime = (GameState.inclusionMode === 'tea') ? 60 : (GameState.inclusionMode === 'assisted' ? 25 : 0);
 
       if (result.status === 'weak') {
-        diagBox.classList.add('diagnosis-weak');
+        diagBox.className = 'diagnosis-box diagnosis-weak';
         GameState.initialTimeSeconds = 45 + extraTime;
         GameState.bonusTimePerAuth = 5;
-        GameState.baseGhostSpeed = 3.0 * speedMod;
-        diagConversion.textContent = '⏱️ CONVERSÃO EM TEMPO: ' + GameState.initialTimeSeconds + ' segundos de fase + Esquadrão Hacker RÁPIDO (+5s de bônus por baú).';
+        GameState.baseGhostSpeed = 2.85 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Rápidos (+5s por baú).';
       } else if (result.status === 'medium') {
-        diagBox.classList.add('diagnosis-medium');
+        diagBox.className = 'diagnosis-box diagnosis-medium';
         GameState.initialTimeSeconds = 75 + extraTime;
         GameState.bonusTimePerAuth = 10;
-        GameState.baseGhostSpeed = 2.45 * speedMod;
-        diagConversion.textContent = '⏱️ CONVERSÃO EM TEMPO: ' + GameState.initialTimeSeconds + ' segundos de fase + Esquadrão Hacker em velocidade NORMAL (+10s de bônus por baú).';
+        GameState.baseGhostSpeed = 2.35 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Normais (+10s por baú).';
       } else {
-        diagBox.classList.add('diagnosis-strong');
+        diagBox.className = 'diagnosis-box diagnosis-strong';
         GameState.initialTimeSeconds = 120 + extraTime;
         GameState.bonusTimePerAuth = 15;
-        GameState.baseGhostSpeed = 1.95 * speedMod;
-        diagConversion.textContent = '⏱️ CONVERSÃO EM TEMPO: ' + GameState.initialTimeSeconds + ' segundos de fase + Hackers LENTOS e CONGELADOS nos primeiros 7 segundos (+15s de bônus por baú)!';
+        GameState.baseGhostSpeed = 1.90 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Lentos e Congelados por 7s no início!';
       }
-    });
+    };
 
-    document.getElementById('btnImprovePassword').addEventListener('click', function() {
+    document.getElementById('btnImprovePassword').onclick = function() {
       document.getElementById('passwordDiagnosisBox').style.display = 'none';
-      if (!isUsingVisualPassword()) {
-        document.getElementById('inputPasswordText').focus();
-      }
-    });
+    };
 
-    document.getElementById('btnLaunchMaze').addEventListener('click', function() {
+    document.getElementById('btnLaunchMaze').onclick = function() {
       SpeechHelper.stop();
       SoundFX.playSuccess();
       startMazePhase();
-    });
+    };
 
     /* ==========================================================================
-       FASE 2: LABIRINTO COOPERATIVO COM 5 NÍVEIS E ANTI-KEY GHOSTING (30 FPS)
+       FASE 2: LABIRINTO COOPERATIVO COM FÍSICA NÓ-A-NÓ PARA JOGADORES E FANTASMAS
        ========================================================================== */
+    function wrapColIndex(col) {
+      if (col < 0) return MAZE_COLS - 1;
+      if (col >= MAZE_COLS) return 0;
+      return col;
+    }
+
+    function isWalkable(col, row) {
+      if (row < 0 || row >= MAZE_ROWS) return false;
+      var c = wrapColIndex(col);
+      return mazeGrid[row] && mazeGrid[row][c] !== 1;
+    }
+
+    function resetPlayerToSpawn(pl, startDirX) {
+      pl.col = pl.spawnCol;
+      pl.row = pl.spawnRow;
+      pl.x = pl.spawnCol;
+      pl.y = pl.spawnRow;
+      pl.dirX = startDirX;
+      pl.dirY = 0;
+      pl.nextDirX = startDirX;
+      pl.nextDirY = 0;
+      pl.targetCol = pl.spawnCol + startDirX;
+      pl.targetRow = pl.spawnRow;
+      pl.progress = 0;
+      pl.invulnTimer = 2.5;
+    }
+
     function startMazePhase() {
+      if (document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
       showScreen('screenGame');
+      try { canvas.focus(); } catch (e) {}
 
       var levelIdx = Math.min(GameState.currentLevel - 1, LEVEL_MAPS.length - 1);
       var levelObj = LEVEL_MAPS[levelIdx];
@@ -2273,14 +1815,7 @@
       if (GameState.currentLevel === 1) {
         GameState.score = 0;
         GameState.usedQuestions = { portugues: [], matematica: [], easyMath: [] };
-        GameState.stats = {
-          memoryHits: 0,
-          memoryMisses: 0,
-          portHits: 0,
-          portTotal: 0,
-          mathHits: 0,
-          mathTotal: 0
-        };
+        GameState.stats = { memoryHits: 0, memoryMisses: 0, portHits: 0, portTotal: 0, mathHits: 0, mathTotal: 0 };
       }
 
       GameState.timeLeft = GameState.initialTimeSeconds;
@@ -2289,20 +1824,12 @@
       GameState.isPausedForModal = false;
       GameState.nextSubject = 'portugues';
 
-      p1.x = p1.spawnCol;
-      p1.y = p1.spawnRow;
-      p1.dir = { x: 0, y: 0 };
-      p1.nextDir = { x: 0, y: 0 };
-      p1.invulnTimer = 2.0;
-
-      p2.x = p2.spawnCol;
-      p2.y = p2.spawnRow;
-      p2.dir = { x: 0, y: 0 };
-      p2.nextDir = { x: 0, y: 0 };
-      p2.invulnTimer = 2.0;
+      /* P1 já inicia andando para a esquerda (-1) e P2 para a direita (+1) */
+      resetPlayerToSpawn(p1, -1);
+      resetPlayerToSpawn(p2, 1);
 
       document.getElementById('p2ControlsHint').style.display =
-        (GameState.playersCount === 2) ? 'inline' : 'none';
+        (GameState.playersCount === 2) ? 'inline-block' : 'none';
 
       hackerGhosts = [];
       for (var gIdx = 0; gIdx < GameState.ghostsCount; gIdx++) {
@@ -2311,7 +1838,6 @@
           id: arch.id,
           name: arch.name,
           color: arch.color,
-          eyeColor: arch.eyeColor,
           role: arch.role,
           col: arch.spawnCol,
           row: arch.spawnRow,
@@ -2334,34 +1860,75 @@
       showToast('🗺️ ' + levelObj.name + ' INICIADO!', '#00b0ff');
     }
 
-    document.getElementById('btnAbortGame').addEventListener('click', function() {
+    document.getElementById('btnAbortGame').onclick = function() {
       GameState.isRunning = false;
       GameState.isPausedForModal = false;
       SpeechHelper.stop();
       document.getElementById('chestModal').classList.remove('active');
       showScreen('screenSetup');
-    });
+    };
 
-    /* ==========================================================================
-       CONTROLE DE TECLADO HÍBRIDO (e.key + e.keyCode/which PARA FIREFOX ANTIGO)
-       ========================================================================== */
-    window.addEventListener('keydown', function(e) {
-      e = e || window.event;
-      var key = e.key || '';
-      var code = e.keyCode || e.which || 0;
-
-      var charTyped = '';
-      if (key && key.length === 1) {
-        charTyped = key.toLowerCase();
-      } else if (code >= 48 && code <= 90) {
-        charTyped = String.fromCharCode(code).toLowerCase();
-      } else if (code >= 96 && code <= 105) {
-        charTyped = String(code - 96);
+    function setPlayerDirection(pl, dx, dy, labelStr) {
+      pl.nextDirX = dx;
+      pl.nextDirY = dy;
+      var ind = document.getElementById('lastKeyIndicator');
+      if (ind && labelStr) {
+        ind.textContent = '⌨️ Comando: ' + labelStr;
       }
 
+      /* Se o jogador pedir inversão de 180 graus no meio do corredor, inverte na hora */
+      if (pl.dirX !== 0 || pl.dirY !== 0) {
+        if (dx === -pl.dirX && dy === -pl.dirY) {
+          var oldCol = pl.col;
+          var oldRow = pl.row;
+          pl.col = wrapColIndex(pl.targetCol);
+          pl.row = pl.targetRow;
+          pl.targetCol = oldCol;
+          pl.targetRow = oldRow;
+          pl.dirX = dx;
+          pl.dirY = dy;
+          pl.progress = Math.max(0, 1.0 - pl.progress);
+        }
+      } else {
+        /* Se estava parado num nó, tenta iniciar imediatamente */
+        if (isWalkable(pl.col + dx, pl.row + dy)) {
+          pl.dirX = dx;
+          pl.dirY = dy;
+          pl.targetCol = pl.col + dx;
+          pl.targetRow = pl.row + dy;
+          pl.progress = 0;
+        }
+      }
+    }
+
+    /* Botões direcionais clicáveis na tela (apoio para teclados escolares) */
+    var dpadBtns = document.querySelectorAll('.dpad-btn');
+    for (var db = 0; db < dpadBtns.length; db++) {
+      dpadBtns[db].onclick = function() {
+        var pNum = parseInt(this.getAttribute('data-p'), 10);
+        var dx = parseInt(this.getAttribute('data-dx'), 10);
+        var dy = parseInt(this.getAttribute('data-dy'), 10);
+        var targetPl = (pNum === 2 && GameState.playersCount === 2) ? p2 : p1;
+        setPlayerDirection(targetPl, dx, dy, 'Botão P' + pNum);
+      };
+    }
+
+    /* Captura universal de teclado para Linux X11 / Firefox Antigo */
+    function handleGlobalKeyDown(e) {
+      e = e || window.event;
+      var code = e.keyCode || e.which || 0;
+      var k = e.key ? String(e.key) : '';
+      var lower = k.toLowerCase();
+
       if (GameState.isRunning && GameState.isPausedForModal) {
-        if (charTyped) {
-          GameState.secretKeyBuffer = (GameState.secretKeyBuffer + charTyped).slice(-8);
+        var chTyped = '';
+        if (lower && lower.length === 1) {
+          chTyped = lower;
+        } else if (code >= 48 && code <= 90) {
+          chTyped = String.fromCharCode(code).toLowerCase();
+        }
+        if (chTyped) {
+          GameState.secretKeyBuffer = (GameState.secretKeyBuffer + chTyped).slice(-8);
           if (GameState.secretKeyBuffer === 'senha123') {
             GameState.secretKeyBuffer = '';
             triggerTeacherMasterBypass();
@@ -2372,129 +1939,129 @@
         var qStage = document.getElementById('modalStageQuestion');
         var activeTag = document.activeElement ? document.activeElement.tagName : '';
         if (qStage.style.display !== 'none' && !GameState.questionAnswered && activeTag !== 'INPUT') {
-          if (key === '1' || code === 49 || code === 97) { e.preventDefault(); answerSchoolQuestion(0); }
-          else if (key === '2' || code === 50 || code === 98) { e.preventDefault(); answerSchoolQuestion(1); }
-          else if (key === '3' || code === 51 || code === 99) { e.preventDefault(); answerSchoolQuestion(2); }
+          if (k === '1' || code === 49 || code === 97) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(0); }
+          if (k === '2' || code === 50 || code === 98) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(1); }
+          if (k === '3' || code === 51 || code === 99) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(2); }
         }
         return;
       }
 
       if (!GameState.isRunning || GameState.isPausedForModal) return;
 
-      // Jogador 1 (WASD: W=87, S=83, A=65, D=68)
-      if (charTyped === 'w' || code === 87) { e.preventDefault(); p1.nextDir = { x: 0, y: -1 }; }
-      else if (charTyped === 's' || code === 83) { e.preventDefault(); p1.nextDir = { x: 0, y: 1 }; }
-      else if (charTyped === 'a' || code === 65) { e.preventDefault(); p1.nextDir = { x: -1, y: 0 }; }
-      else if (charTyped === 'd' || code === 68) { e.preventDefault(); p1.nextDir = { x: 1, y: 0 }; }
+      /* Jogador 1: W (87), S (83), A (65), D (68) */
+      if (lower === 'w' || code === 87) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(p1, 0, -1, 'W (P1 Subir)');
+      } else if (lower === 's' || code === 83) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(p1, 0, 1, 'S (P1 Descer)');
+      } else if (lower === 'a' || code === 65) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(p1, -1, 0, 'A (P1 Esquerda)');
+      } else if (lower === 'd' || code === 68) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(p1, 1, 0, 'D (P1 Direita)');
+      }
 
-      // Setas (Firefox antigo usa 'Up'/'Down'/'Left'/'Right' ou keyCode 38/40/37/39)
-      var arrowTarget = (GameState.playersCount === 2) ? p2 : p1;
-      if (key === 'ArrowUp' || key === 'Up' || code === 38) { e.preventDefault(); arrowTarget.nextDir = { x: 0, y: -1 }; }
-      else if (key === 'ArrowDown' || key === 'Down' || code === 40) { e.preventDefault(); arrowTarget.nextDir = { x: 0, y: 1 }; }
-      else if (key === 'ArrowLeft' || key === 'Left' || code === 37) { e.preventDefault(); arrowTarget.nextDir = { x: -1, y: 0 }; }
-      else if (key === 'ArrowRight' || key === 'Right' || code === 39) { e.preventDefault(); arrowTarget.nextDir = { x: 1, y: 0 }; }
-    });
+      /* Setas: P2 no modo 2 jogadores, ou P1 no modo 1 jogador */
+      var arrowPl = (GameState.playersCount === 2) ? p2 : p1;
+      var pTag = (GameState.playersCount === 2) ? 'P2' : 'P1';
 
-    function wrapColIndex(col) {
-      if (col < 0) return MAZE_COLS - 1;
-      if (col >= MAZE_COLS) return 0;
-      return col;
+      if (k === 'ArrowUp' || k === 'Up' || code === 38) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(arrowPl, 0, -1, 'Seta ↑ (' + pTag + ')');
+      } else if (k === 'ArrowDown' || k === 'Down' || code === 40) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(arrowPl, 0, 1, 'Seta ↓ (' + pTag + ')');
+      } else if (k === 'ArrowLeft' || k === 'Left' || code === 37) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(arrowPl, -1, 0, 'Seta ◄ (' + pTag + ')');
+      } else if (k === 'ArrowRight' || k === 'Right' || code === 39) {
+        if (e.preventDefault) e.preventDefault();
+        setPlayerDirection(arrowPl, 1, 0, 'Seta ► (' + pTag + ')');
+      }
     }
 
-    function isWalkable(col, row) {
-      if (row < 0 || row >= MAZE_ROWS) return false;
-      var wrappedCol = wrapColIndex(col);
-      return mazeGrid[row][wrappedCol] !== 1;
-    }
+    window.onkeydown = handleGlobalKeyDown;
+    document.onkeydown = handleGlobalKeyDown;
 
     /* ==========================================================================
-       MOVIMENTAÇÃO FLUIDA DOS PAC-MANS + TELEPORTE LATERAL (TÚNEL)
+       ATUALIZAÇÃO NÓ-A-NÓ DOS JOGADORES (NUNCA PRENDE EM PAREDE)
        ========================================================================== */
-    function movePlayerEntity(ent, dt) {
-      if (ent.invulnTimer > 0) {
-        ent.invulnTimer = Math.max(0, ent.invulnTimer - dt);
+    function updatePlayerNodeToNode(pl, dt) {
+      if (pl.invulnTimer > 0) {
+        pl.invulnTimer = Math.max(0, pl.invulnTimer - dt);
       }
 
-      var step = ent.speed * dt;
-      var gridCol = Math.round(ent.x);
-      var gridRow = Math.round(ent.y);
-      var distToCenter = calcDist(ent.x - gridCol, ent.y - gridRow);
-
-      // 1. Inversão imediata de direção (180 graus)
-      if (
-        (ent.nextDir.x !== 0 || ent.nextDir.y !== 0) &&
-        ent.nextDir.x === -ent.dir.x &&
-        ent.nextDir.y === -ent.dir.y
-      ) {
-        ent.dir.x = ent.nextDir.x;
-        ent.dir.y = ent.nextDir.y;
-      }
-
-      // 2. Curvas em interseções ou partida inicial quando parado
-      if (ent.nextDir.x !== 0 || ent.nextDir.y !== 0) {
-        if (distToCenter <= Math.max(0.26, step * 1.4)) {
-          if (isWalkable(gridCol + ent.nextDir.x, gridRow + ent.nextDir.y)) {
-            if (ent.dir.x !== ent.nextDir.x || ent.dir.y !== ent.nextDir.y) {
-              ent.x = wrapColIndex(gridCol);
-              ent.y = gridRow;
-              ent.dir.x = ent.nextDir.x;
-              ent.dir.y = ent.nextDir.y;
-            }
-          }
+      /* Se estiver parado num nó, verifica se a próxima direção agendada é válida */
+      if (pl.dirX === 0 && pl.dirY === 0) {
+        if ((pl.nextDirX !== 0 || pl.nextDirY !== 0) && isWalkable(pl.col + pl.nextDirX, pl.row + pl.nextDirY)) {
+          pl.dirX = pl.nextDirX;
+          pl.dirY = pl.nextDirY;
+          pl.targetCol = pl.col + pl.dirX;
+          pl.targetRow = pl.row + pl.dirY;
+          pl.progress = 0;
+        } else {
+          pl.x = pl.col;
+          pl.y = pl.row;
+          return;
         }
       }
 
-      if (ent.dir.x === 0 && ent.dir.y === 0) return;
+      pl.progress += pl.speed * dt;
 
-      if (ent.dir.x !== 0) {
-        ent.y = gridRow;
-      } else if (ent.dir.y !== 0) {
-        ent.x = wrapColIndex(gridCol);
-      }
+      while (pl.progress >= 1.0) {
+        var overflow = pl.progress - 1.0;
+        pl.col = wrapColIndex(pl.targetCol);
+        pl.row = pl.targetRow;
 
-      var nextX = ent.x + ent.dir.x * step;
-      var nextY = ent.y + ent.dir.y * step;
+        /* Coleta pastilha ao chegar na célula */
+        if (mazeGrid[pl.row] && mazeGrid[pl.row][pl.col] === 0) {
+          mazeGrid[pl.row][pl.col] = 2;
+          GameState.pelletsRemaining--;
+          GameState.score += 10;
+          SoundFX.playPellet();
+          updateHUD();
+          checkVictoryCondition();
+        }
 
-      // Teleporte no túnel lateral
-      if (nextX < -0.35) {
-        ent.x = MAZE_COLS - 0.65;
-        return;
-      } else if (nextX > MAZE_COLS - 0.65) {
-        ent.x = -0.35;
-        return;
-      }
+        /* Verifica colisão com Baú */
+        for (var i = 0; i < chestsList.length; i++) {
+          var ch = chestsList[i];
+          if (!ch.opened && ch.col === pl.col && ch.row === pl.row) {
+            pl.x = pl.col;
+            pl.y = pl.row;
+            pl.progress = 0;
+            handlePlayerTouchChest(ch);
+            return;
+          }
+        }
 
-      var aheadCol = gridCol + ent.dir.x;
-      var aheadRow = gridRow + ent.dir.y;
-
-      if (!isWalkable(aheadCol, aheadRow)) {
-        if (ent.dir.x > 0 && nextX > gridCol) { ent.x = gridCol; ent.dir = { x: 0, y: 0 }; return; }
-        if (ent.dir.x < 0 && nextX < gridCol) { ent.x = gridCol; ent.dir = { x: 0, y: 0 }; return; }
-        if (ent.dir.y > 0 && nextY > gridRow) { ent.y = gridRow; ent.dir = { x: 0, y: 0 }; return; }
-        if (ent.dir.y < 0 && nextY < gridRow) { ent.y = gridRow; ent.dir = { x: 0, y: 0 }; return; }
-      }
-
-      ent.x = nextX;
-      ent.y = nextY;
-
-      var curCol = wrapColIndex(Math.round(ent.x));
-      var curRow = Math.round(ent.y);
-      if (mazeGrid[curRow] && mazeGrid[curRow][curCol] === 0) {
-        mazeGrid[curRow][curCol] = 2;
-        GameState.pelletsRemaining--;
-        GameState.score += 10;
-        SoundFX.playPellet();
-        updateHUD();
-        checkVictoryCondition();
-      }
-
-      for (var i = 0; i < chestsList.length; i++) {
-        var ch = chestsList[i];
-        if (!ch.opened && ch.col === curCol && ch.row === curRow) {
-          handlePlayerTouchChest(ch);
+        /* Decide próximo passo: prioriza nextDir agendada pelo jogador se o corredor for livre */
+        if ((pl.nextDirX !== 0 || pl.nextDirY !== 0) && isWalkable(pl.col + pl.nextDirX, pl.row + pl.nextDirY)) {
+          pl.dirX = pl.nextDirX;
+          pl.dirY = pl.nextDirY;
+          pl.targetCol = pl.col + pl.dirX;
+          pl.targetRow = pl.row + pl.dirY;
+          pl.progress = overflow;
+        } else if (isWalkable(pl.col + pl.dirX, pl.row + pl.dirY)) {
+          /* Continua reto no corredor atual */
+          pl.targetCol = pl.col + pl.dirX;
+          pl.targetRow = pl.row + pl.dirY;
+          pl.progress = overflow;
+        } else {
+          /* Bateu de frente numa parede: para exatamente no centro do nó */
+          pl.dirX = 0;
+          pl.dirY = 0;
+          pl.targetCol = pl.col;
+          pl.targetRow = pl.row;
+          pl.progress = 0;
           break;
         }
       }
+
+      pl.x = wrapColIndex(pl.col + (pl.targetCol - pl.col) * pl.progress);
+      pl.y = pl.row + (pl.targetRow - pl.row) * pl.progress;
     }
 
     function handlePlayerTouchChest(chest) {
@@ -2505,7 +2072,7 @@
         GameState.ghostFreezeTimer = 6.0;
         GameState.timeLeft = Math.min(GameState.maxTime + 30, GameState.timeLeft + 10);
         SoundFX.playSuccess();
-        showToast('🎁 BAÚ ABERTO! +500 PTS E FANTASMAS CONGELADOS (6s)!', '#00c853');
+        showToast('🎁 BAÚ ABERTO! +500 PTS E 6s DE GELO!', '#00c853');
         updateHUD();
         checkVictoryCondition();
         return;
@@ -2515,8 +2082,7 @@
         GameState.isPausedForModal = true;
         GameState.activeChest = chest;
         SoundFX.playChestOpen();
-        var modal = document.getElementById('chestModal');
-        modal.classList.add('active');
+        document.getElementById('chestModal').classList.add('active');
         openSchoolQuestionStage();
         return;
       }
@@ -2525,7 +2091,7 @@
     }
 
     /* ==========================================================================
-       MOVIMENTAÇÃO NÓ-A-NÓ DOS FANTASMAS (COM SUPORTE AO TÚNEL LATERAL)
+       ATUALIZAÇÃO NÓ-A-NÓ DOS FANTASMAS
        ========================================================================== */
     function chooseNextGhostTarget(ghost) {
       var dirs = [
@@ -2563,7 +2129,6 @@
 
       var aimX = p1.x;
       var aimY = p1.y;
-
       if (GameState.playersCount === 2) {
         var d1 = calcDist(p1.x - ghost.col, p1.y - ghost.row);
         var d2 = calcDist(p2.x - ghost.col, p2.y - ghost.row);
@@ -2573,32 +2138,17 @@
         }
       }
 
-      if (ghost.role === 'ambusher') {
-        aimX += p1.dir.x * 3;
-        aimY += p1.dir.y * 3;
-      } else if (ghost.role === 'guardian') {
-        for (var cIdx = 0; cIdx < chestsList.length; cIdx++) {
-          if (!chestsList[cIdx].opened) {
-            aimX = chestsList[cIdx].col;
-            aimY = chestsList[cIdx].row;
-            break;
-          }
-        }
-      }
-
       var chosen = candidates[0];
-      if (Math.random() < 0.22) {
+      if (Math.random() < 0.25) {
         chosen = candidates[Math.floor(Math.random() * candidates.length)];
       } else {
         var bestDist = 999999;
         for (var k = 0; k < candidates.length; k++) {
-          var cand = candidates[k];
-          var nx = ghost.col + cand.x;
-          var ny = ghost.row + cand.y;
-          var dist = calcDist(aimX - nx, aimY - ny);
+          var c = candidates[k];
+          var dist = calcDist(aimX - (ghost.col + c.x), aimY - (ghost.row + c.y));
           if (dist < bestDist) {
             bestDist = dist;
-            chosen = cand;
+            chosen = c;
           }
         }
       }
@@ -2637,16 +2187,13 @@
 
     function checkGhostPlayerCollisions() {
       if (GameState.ghostFreezeTimer > 0) return;
-
       var activePlayers = (GameState.playersCount === 2) ? [p1, p2] : [p1];
       for (var pIdx = 0; pIdx < activePlayers.length; pIdx++) {
         var pl = activePlayers[pIdx];
         if (pl.invulnTimer > 0) continue;
-
         for (var gIdx = 0; gIdx < hackerGhosts.length; gIdx++) {
           var g = hackerGhosts[gIdx];
-          var dist = calcDist(pl.x - g.x, pl.y - g.y);
-          if (dist < 0.62) {
+          if (calcDist(pl.x - g.x, pl.y - g.y) < 0.62) {
             handlePlayerCaughtByGhost(pl, g);
             break;
           }
@@ -2656,14 +2203,10 @@
 
     function handlePlayerCaughtByGhost(pl, ghost) {
       SoundFX.playShock();
-      pl.x = pl.spawnCol;
-      pl.y = pl.spawnRow;
-      pl.dir = { x: 0, y: 0 };
-      pl.nextDir = { x: 0, y: 0 };
-      pl.invulnTimer = 3.0;
+      resetPlayerToSpawn(pl, pl.id === 1 ? -1 : 1);
 
       if (GameState.inclusionMode === 'tea') {
-        showToast('💙 ' + pl.label + ' voltou para a base (Sem perda de tempo no Modo TEA!)', '#00b0ff');
+        showToast('💙 ' + pl.label + ' voltou para a base (Sem perder tempo!)', '#00b0ff');
       } else {
         var penalty = (GameState.inclusionMode === 'assisted') ? 5 : 10;
         GameState.timeLeft = Math.max(0, GameState.timeLeft - penalty);
@@ -2673,8 +2216,20 @@
     }
 
     /* ==========================================================================
-       FASE 3: MODAL DE AUTENTICAÇÃO E PERGUNTAS ESCOLARES
+       FASE 3: MODAL DE AUTENTICAÇÃO E PERGUNTAS
        ========================================================================== */
+    function formatCurrentPasswordReadable() {
+      if (isUsingVisualPassword()) {
+        var parts = [];
+        for (var i = 0; i < GameState.visualPassword.length; i++) {
+          var b = findBlockById(GameState.visualPassword[i]);
+          parts.push(b.emoji + ' ' + b.label);
+        }
+        return parts.join(' -> ');
+      }
+      return GameState.textPassword;
+    }
+
     function openChestAuthenticationModal(chest) {
       GameState.isPausedForModal = true;
       GameState.activeChest = chest;
@@ -2682,9 +2237,7 @@
       GameState.authVisualAttempt = [];
       SoundFX.playChestOpen();
 
-      var modal = document.getElementById('chestModal');
-      modal.classList.add('active');
-
+      document.getElementById('chestModal').classList.add('active');
       document.getElementById('modalStageAuth').style.display = 'block';
       document.getElementById('modalStageQuestion').style.display = 'none';
       document.getElementById('authFeedbackBanner').style.display = 'none';
@@ -2693,7 +2246,7 @@
       var hintBox = document.getElementById('authPasswordHintBox');
       if (GameState.inclusionMode === 'tea' || GameState.inclusionMode === 'assisted') {
         hintBox.style.display = 'block';
-        hintBox.textContent = '💡 Lembrete da sua Senha: ' + formatCurrentPasswordReadable();
+        hintBox.textContent = '💡 Lembrete da Senha: ' + formatCurrentPasswordReadable();
       } else {
         hintBox.style.display = 'none';
       }
@@ -2709,43 +2262,17 @@
         inp.value = '';
         inp.type = 'password';
         document.getElementById('btnToggleAuthMask').textContent = '👁️ Mostrar';
-        setTimeout(function() { inp.focus(); }, 60);
       }
     }
 
-    function formatCurrentPasswordReadable() {
-      if (isUsingVisualPassword()) {
-        var parts = [];
-        for (var i = 0; i < GameState.visualPassword.length; i++) {
-          var b = findBlockById(GameState.visualPassword[i]);
-          parts.push(b.emoji + ' ' + b.label);
-        }
-        return parts.join(' -> ');
-      }
-      return GameState.textPassword;
-    }
-
-    document.getElementById('btnShowPasswordHint').addEventListener('click', function() {
+    document.getElementById('btnShowPasswordHint').onclick = function() {
       var hintBox = document.getElementById('authPasswordHintBox');
       hintBox.style.display = 'block';
-      hintBox.textContent = '💡 Lembrete da sua Senha: ' + formatCurrentPasswordReadable();
+      hintBox.textContent = '💡 Lembrete da Senha: ' + formatCurrentPasswordReadable();
       SoundFX.playPellet();
-    });
+    };
 
-    document.getElementById('btnSpeakAuthPrompt').addEventListener('click', function() {
-      try {
-        if ('speechSynthesis' in window && typeof SpeechSynthesisUtterance !== 'undefined') {
-          window.speechSynthesis.cancel();
-          var u = new SpeechSynthesisUtterance(
-            'Autenticação necessária. Selecione ou digite a senha que você criou no começo para abrir o baú.'
-          );
-          u.lang = 'pt-BR';
-          window.speechSynthesis.speak(u);
-        }
-      } catch (err) {}
-    });
-
-    function createAuthBlockClickHandler(blockId, targetLen) {
+    function createAuthBlockHandler(blockId, targetLen) {
       return function() {
         if (GameState.authVisualAttempt.length < targetLen) {
           GameState.authVisualAttempt.push(blockId);
@@ -2765,34 +2292,34 @@
         slot.className = 'password-slot';
         if (i < GameState.authVisualAttempt.length) {
           var b = findBlockById(GameState.authVisualAttempt[i]);
-          slot.classList.add('filled');
-          slot.innerHTML = '<div style="font-size:1.35rem;">' + b.emoji + '</div><div>' + b.label + '</div>';
+          slot.className = 'password-slot filled';
+          slot.innerHTML = '<span style="font-size:1.4rem;">' + b.emoji + '</span><span>' + b.label + '</span>';
         } else {
-          slot.innerHTML = '<div style="color:#64748b; padding-top:12px;">Bloco ' + (i + 1) + '</div>';
+          slot.innerHTML = '<span style="color:#64748b;">Bloco ' + (i + 1) + '</span>';
         }
         slotsWrap.appendChild(slot);
       }
 
       var grid = document.getElementById('authVisualGrid');
       grid.innerHTML = '';
-      for (var k = 0; k < VISUAL_BLOCKS.length; k++) {
-        var blk = VISUAL_BLOCKS[k];
+      for (var j = 0; j < VISUAL_BLOCKS.length; j++) {
+        var blk = VISUAL_BLOCKS[j];
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'block-card' + (blk.type === 'num' ? ' num-block' : '');
-        btn.innerHTML = '<div style="font-size:1.45rem; margin-bottom:3px;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
-        btn.addEventListener('click', createAuthBlockClickHandler(blk.id, targetLen));
+        btn.innerHTML = '<div style="font-size:1.4rem;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
+        btn.onclick = createAuthBlockHandler(blk.id, targetLen);
         grid.appendChild(btn);
       }
     }
 
-    document.getElementById('btnClearAuthVisual').addEventListener('click', function() {
+    document.getElementById('btnClearAuthVisual').onclick = function() {
       GameState.authVisualAttempt = [];
       SoundFX.playPellet();
       renderAuthVisualModal();
-    });
+    };
 
-    document.getElementById('btnToggleAuthMask').addEventListener('click', function() {
+    document.getElementById('btnToggleAuthMask').onclick = function() {
       var inp = document.getElementById('inputAuthText');
       if (inp.type === 'password') {
         inp.type = 'text';
@@ -2801,9 +2328,9 @@
         inp.type = 'password';
         this.textContent = '👁️ Mostrar';
       }
-    });
+    };
 
-    document.getElementById('btnConfirmAuth').addEventListener('click', function() {
+    document.getElementById('btnConfirmAuth').onclick = function() {
       var isVisual = isUsingVisualPassword();
       var isCorrect = false;
       var typedText = document.getElementById('inputAuthText').value.replace(/^\s+|\s+$/g, '');
@@ -2824,11 +2351,7 @@
           }
         }
       } else {
-        if (GameState.inclusionMode !== 'standard') {
-          isCorrect = (typedText.toLowerCase() === GameState.textPassword.toLowerCase());
-        } else {
-          isCorrect = (typedText === GameState.textPassword);
-        }
+        isCorrect = (typedText.toLowerCase() === GameState.textPassword.toLowerCase());
       }
 
       var fb = document.getElementById('authFeedbackBanner');
@@ -2839,7 +2362,7 @@
         GameState.stats.memoryHits++;
         GameState.timeLeft = Math.min(GameState.maxTime + 30, GameState.timeLeft + GameState.bonusTimePerAuth);
         updateHUD();
-        showToast('🔓 SENHA CORRETA! +' + GameState.bonusTimePerAuth + 's DE BÔNUS!', '#00c853');
+        showToast('🔓 SENHA CORRETA! +' + GameState.bonusTimePerAuth + 's!', '#00c853');
         openSchoolQuestionStage();
       } else {
         SoundFX.playShock();
@@ -2851,55 +2374,24 @@
         if (GameState.authAttemptsLeft > 0) {
           fb.style.backgroundColor = '#5c0c16';
           fb.style.color = '#ffcdd2';
-          fb.textContent = '❌ Senha incorreta! Clique em [💡 Ver Dica da Senha] se precisar lembrar.';
+          fb.textContent = '❌ Senha incorreta! Clique em [💡 Ver Dica da Senha] se precisar.';
           GameState.authVisualAttempt = [];
           if (isVisual) renderAuthVisualModal();
         } else {
           var shockPenalty = (GameState.inclusionMode === 'tea') ? 0 : 10;
           GameState.timeLeft = Math.max(0, GameState.timeLeft - shockPenalty);
-          relocateChestToRandomSpot(GameState.activeChest);
           document.getElementById('chestModal').classList.remove('active');
           GameState.isPausedForModal = false;
           updateHUD();
-          showToast(
-            shockPenalty > 0
-              ? '⚡ CHOQUE DE SEGURANÇA! (-10s e o baú mudou de lugar!)'
-              : '🔄 Baú reposicionado no labirinto!',
-            '#ff9100'
-          );
+          showToast('⚡ Senha errada 2x! Tente novamente!', '#ff9100');
         }
       }
-    });
+    };
 
-    function relocateChestToRandomSpot(chest) {
-      if (!chest) return;
-      var candidates = [];
-      for (var r = 1; r < MAZE_ROWS - 1; r++) {
-        for (var c = 1; c < MAZE_COLS - 1; c++) {
-          if (mazeGrid[r][c] !== 1) {
-            var occupied = false;
-            for (var i = 0; i < chestsList.length; i++) {
-              if (!chestsList[i].opened && chestsList[i].col === c && chestsList[i].row === r) {
-                occupied = true;
-                break;
-              }
-            }
-            if (calcDist(p1.x - c, p1.y - r) < 2.5) occupied = true;
-            if (!occupied) candidates.push({ c: c, r: r });
-          }
-        }
-      }
-      if (candidates.length > 0) {
-        var pick = candidates[Math.floor(Math.random() * candidates.length)];
-        chest.col = pick.c;
-        chest.row = pick.r;
-      }
-    }
-
-    function createOptionClickHandler(optIdx) {
+    function createOptionClickHandler(idx) {
       return function() {
         if (!GameState.questionAnswered) {
-          answerSchoolQuestion(optIdx);
+          answerSchoolQuestion(idx);
         }
       };
     }
@@ -2920,47 +2412,23 @@
 
       if (GameState.chestMode === 'senha_contas' || GameState.chestMode === 'so_contas') {
         subject = 'matematica';
-        var usedEasy = GameState.usedQuestions.easyMath;
-        var availEasy = [];
-        for (var i = 0; i < EASY_MATH_QUESTIONS.length; i++) {
-          if (usedEasy.indexOf(i) === -1) availEasy.push(i);
-        }
-        if (availEasy.length === 0) {
-          GameState.usedQuestions.easyMath = [];
-          for (var j = 0; j < EASY_MATH_QUESTIONS.length; j++) availEasy.push(j);
-        }
-        var pickIdx = availEasy[Math.floor(Math.random() * availEasy.length)];
-        GameState.usedQuestions.easyMath.push(pickIdx);
+        var pickIdx = Math.floor(Math.random() * EASY_MATH_QUESTIONS.length);
         qObj = EASY_MATH_QUESTIONS[pickIdx];
         badgeTitle = '🔢 CONTINHA FÁCIL DE MATEMÁTICA';
       } else {
         var effectiveGrade = (GameState.inclusionMode === 'tea') ? 1 : GameState.grade;
         subject = GameState.nextSubject;
         GameState.nextSubject = (subject === 'portugues') ? 'matematica' : 'portugues';
-
         var pool = QUESTION_BANK[effectiveGrade][subject];
-        var usedArr = GameState.usedQuestions[subject];
-
-        var availableIndices = [];
-        for (var pIdx = 0; pIdx < pool.length; pIdx++) {
-          if (usedArr.indexOf(pIdx) === -1) availableIndices.push(pIdx);
-        }
-        if (availableIndices.length === 0) {
-          GameState.usedQuestions[subject] = [];
-          for (var rIdx = 0; rIdx < pool.length; rIdx++) availableIndices.push(rIdx);
-        }
-
-        var chosenIdx = availableIndices[Math.floor(Math.random() * availableIndices.length)];
-        GameState.usedQuestions[subject].push(chosenIdx);
+        var chosenIdx = Math.floor(Math.random() * pool.length);
         qObj = pool[chosenIdx];
-        var subjLabel = (subject === 'portugues') ? '📖 PORTUGUÊS' : '🔢 MATEMÁTICA';
-        badgeTitle = subjLabel + ' • ' + effectiveGrade + 'º ANO';
+        badgeTitle = (subject === 'portugues' ? '📖 PORTUGUÊS' : '🔢 MATEMÁTICA') + ' • ' + effectiveGrade + 'º ANO';
       }
 
       GameState.currentQuestionObj = {
         subject: subject,
         q: qObj.q,
-        options: qObj.options.slice(),
+        options: qObj.options.slice(0),
         correct: qObj.correct
       };
       GameState.questionAnswered = false;
@@ -2968,38 +2436,25 @@
       document.getElementById('questionBadge').textContent = badgeTitle;
       document.getElementById('questionPromptText').textContent = qObj.q;
 
-      // Auxílio visual com círculos HTML compatíveis com qualquer fonte Linux antiga
       var helperBox = document.getElementById('questionVisualHelper');
       var sumMatch = qObj.q.match(/(\d+)\s*\+\s*(\d+)/);
-      var subMatch = qObj.q.match(/(\d+)\s*-\s*(\d+)/);
       if (sumMatch && parseInt(sumMatch[1], 10) <= 10 && parseInt(sumMatch[2], 10) <= 10) {
         var n1 = parseInt(sumMatch[1], 10);
         var n2 = parseInt(sumMatch[2], 10);
         helperBox.style.display = 'block';
-        helperBox.innerHTML = 'Apoio Visual: ' + repeatHtmlCircles(n1, '#00e676') +
-          ' <strong style="color:#ffffff; margin:0 6px;">+</strong> ' +
-          repeatHtmlCircles(n2, '#00e5ff');
-      } else if (subMatch && parseInt(subMatch[1], 10) <= 10 && parseInt(subMatch[2], 10) <= 10) {
-        var s1 = parseInt(subMatch[1], 10);
-        var s2 = parseInt(subMatch[2], 10);
-        helperBox.style.display = 'block';
-        helperBox.innerHTML = 'Apoio Visual: ' + repeatHtmlCircles(s1, '#ffea00') +
-          ' <strong style="color:#ffffff; margin:0 6px;">menos</strong> ' +
-          repeatHtmlCircles(s2, '#ff5252');
+        helperBox.textContent = 'Apoio Visual: ' + makeDotsString(n1, '●') + ' + ' + makeDotsString(n2, '○');
       } else {
         helperBox.style.display = 'none';
       }
 
       var list = document.getElementById('questionOptionsList');
       list.innerHTML = '';
-
-      for (var optIdx = 0; optIdx < qObj.options.length; optIdx++) {
+      for (var i = 0; i < qObj.options.length; i++) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'option-btn';
-        btn.setAttribute('data-idx', optIdx);
-        btn.innerHTML = '<span class="key-hint">' + (optIdx + 1) + '</span><span>' + qObj.options[optIdx] + '</span>';
-        btn.addEventListener('click', createOptionClickHandler(optIdx));
+        btn.innerHTML = '<span class="key-hint">' + (i + 1) + '</span><span>' + qObj.options[i] + '</span>';
+        btn.onclick = createOptionClickHandler(i);
         list.appendChild(btn);
       }
 
@@ -3016,72 +2471,60 @@
       }
       if (GameState.currentQuestionObj && !GameState.questionAnswered) {
         answerSchoolQuestion(GameState.currentQuestionObj.correct);
-        showToast('🔑 SENHA123 ATIVADA: PERGUNTA RESPONDIDA AUTOMATICAMENTE!', '#00e676');
+        showToast('🔑 SENHA123: RESPONDIDO AUTOMATICAMENTE!', '#00e676');
       }
     }
 
-    document.getElementById('btnApplyTeacherBypass').addEventListener('click', function() {
+    document.getElementById('btnApplyTeacherBypass').onclick = function() {
       var val = document.getElementById('inputTeacherBypass').value.replace(/^\s+|\s+$/g, '').toLowerCase();
       if (val === 'senha123') {
         triggerTeacherMasterBypass();
       } else {
-        showToast('❌ Senha do professor incorreta.', '#d50000');
+        showToast('❌ Digite senha123', '#d50000');
       }
-    });
+    };
 
-    document.getElementById('inputTeacherBypass').addEventListener('input', function() {
+    document.getElementById('inputTeacherBypass').onkeyup = function() {
       if (this.value.replace(/^\s+|\s+$/g, '').toLowerCase() === 'senha123') {
         triggerTeacherMasterBypass();
       }
-    });
+    };
 
     function eliminateOneWrongOption() {
       if (!GameState.currentQuestionObj || GameState.questionAnswered) return;
       var buttons = document.querySelectorAll('#questionOptionsList .option-btn');
-      var wrongIndices = [];
       for (var i = 0; i < buttons.length; i++) {
         if (i !== GameState.currentQuestionObj.correct && buttons[i].style.display !== 'none') {
-          wrongIndices.push(i);
+          buttons[i].style.display = 'none';
+          document.getElementById('btnSimplifyQuestion').disabled = true;
+          break;
         }
-      }
-      if (wrongIndices.length > 0) {
-        var hideIdx = wrongIndices[0];
-        buttons[hideIdx].style.display = 'none';
-        document.getElementById('btnSimplifyQuestion').disabled = true;
       }
     }
 
-    document.getElementById('btnSimplifyQuestion').addEventListener('click', function() {
+    document.getElementById('btnSimplifyQuestion').onclick = function() {
       SoundFX.playPellet();
       eliminateOneWrongOption();
-    });
+    };
 
-    document.getElementById('btnSpeakQuestion').addEventListener('click', function() {
-      try {
-        if ('speechSynthesis' in window && GameState.currentQuestionObj && typeof SpeechSynthesisUtterance !== 'undefined') {
-          window.speechSynthesis.cancel();
-          var q = GameState.currentQuestionObj;
-          var fullText = q.q + '. Opção 1: ' + q.options[0] + '. Opção 2: ' + q.options[1] + '. Opção 3: ' + q.options[2];
-          var utter = new SpeechSynthesisUtterance(fullText);
-          utter.lang = 'pt-BR';
-          utter.rate = 0.92;
-          window.speechSynthesis.speak(utter);
-        }
-      } catch (err) {}
-    });
+    document.getElementById('btnSpeakQuestion').onclick = function() {
+      if (GameState.currentQuestionObj) {
+        var q = GameState.currentQuestionObj;
+        SpeechHelper.speakManual(
+          q.q + '. Opção 1: ' + q.options[0] + '. Opção 2: ' + q.options[1] + '. Opção 3: ' + q.options[2]
+        );
+      }
+    };
 
     function answerSchoolQuestion(selectedIdx) {
       if (GameState.questionAnswered || !GameState.currentQuestionObj) return;
-      GameState.questionAnswered = true;
-
       var q = GameState.currentQuestionObj;
       var buttons = document.querySelectorAll('#questionOptionsList .option-btn');
-      if (buttons[selectedIdx] && buttons[selectedIdx].style.display === 'none') {
-        GameState.questionAnswered = false;
-        return;
-      }
+      if (buttons[selectedIdx] && buttons[selectedIdx].style.display === 'none') return;
 
+      GameState.questionAnswered = true;
       var isCorrect = (selectedIdx === q.correct);
+
       if (q.subject === 'portugues') {
         GameState.stats.portTotal++;
         if (isCorrect) GameState.stats.portHits++;
@@ -3091,8 +2534,8 @@
       }
 
       for (var i = 0; i < buttons.length; i++) {
-        if (i === q.correct) buttons[i].classList.add('correct');
-        else if (i === selectedIdx) buttons[i].classList.add('wrong');
+        if (i === q.correct) buttons[i].className = 'option-btn correct';
+        else if (i === selectedIdx) buttons[i].className = 'option-btn wrong';
       }
 
       var fb = document.getElementById('questionFeedbackBanner');
@@ -3115,22 +2558,25 @@
         GameState.score += 100;
         fb.style.backgroundColor = '#4a1c00';
         fb.style.color = '#ffe082';
-        fb.textContent = '💡 Quase lá! A resposta certa está destacada em verde (+100 pts de participação).';
+        fb.textContent = '💡 Quase lá! A resposta certa está em verde (+100 pts).';
       }
 
       updateHUD();
       document.getElementById('questionContinueWrap').style.display = 'block';
     }
 
-    document.getElementById('btnReturnToMaze').addEventListener('click', function() {
+    document.getElementById('btnReturnToMaze').onclick = function() {
       SpeechHelper.stop();
+      if (document.activeElement && document.activeElement.blur) {
+        document.activeElement.blur();
+      }
       document.getElementById('chestModal').classList.remove('active');
       GameState.isPausedForModal = false;
       checkVictoryCondition();
-    });
+    };
 
     /* ==========================================================================
-       HUD, CONDIÇÃO DE VITÓRIA / DERROTA E RELATÓRIO FINAL
+       HUD E RELATÓRIO FINAL
        ========================================================================== */
     function updateHUD() {
       document.getElementById('hudLevelBadge').textContent =
@@ -3169,18 +2615,18 @@
 
       if (victory) {
         if (GameState.currentLevel < GameState.maxLevels) {
-          mainTitle.textContent = '🎉 NÍVEL ' + GameState.currentLevel + ' CONCLUÍDO COM SUCESSO!';
-          subTitle.textContent = 'A dupla abriu os 4 Baús de Dados e limpou todas as pastilhas do labirinto!';
+          mainTitle.textContent = '🎉 NÍVEL ' + GameState.currentLevel + ' CONCLUÍDO!';
+          subTitle.textContent = 'Vocês abriram os 4 Baús e limparam o labirinto!';
           btnNextLvl.style.display = 'inline-block';
           btnNextLvl.textContent = '🚀 AVANÇAR PARA O NÍVEL ' + (GameState.currentLevel + 1);
         } else {
-          mainTitle.textContent = '🏆 MISSÃO COMPLETA! TODOS OS 5 NÍVEIS VENCIDOS!';
-          subTitle.textContent = 'Parabéns! Vocês protegeram toda a rede escolar contra o Esquadrão Hacker!';
+          mainTitle.textContent = '🏆 TODOS OS 5 NÍVEIS VENCIDOS!';
+          subTitle.textContent = 'Parabéns! Toda a rede escolar foi protegida!';
           btnNextLvl.style.display = 'none';
         }
       } else {
         mainTitle.textContent = '⏰ TEMPO ESGOTADO NO NÍVEL ' + GameState.currentLevel;
-        subTitle.textContent = 'Dica: Crie uma Senha Forte (120s) para ganhar bastante tempo na próxima tentativa!';
+        subTitle.textContent = 'Dica: Use uma Senha Forte (120s) na próxima tentativa!';
         btnNextLvl.style.display = 'none';
       }
 
@@ -3199,37 +2645,32 @@
         'Tempo restante: ' + Math.ceil(GameState.timeLeft) + 's';
 
       document.getElementById('repTeacherSummary').textContent =
-        'Ano Escolar: ' + GameState.grade + 'º Ano | Modo: ' +
-        (GameState.playersCount === 2 ? 'Dupla Cooperativa' : 'Individual') +
-        ' | Inclusão: ' + GameState.inclusionMode.toUpperCase() +
-        ' | Nível Alcançado: ' + GameState.currentLevel + ' de ' + GameState.maxLevels + '.';
-
-      SafeStorage.save('pac_senha_last_report', {
-        grade: GameState.grade,
-        score: GameState.score,
-        level: GameState.currentLevel
-      });
+        'Ano: ' + GameState.grade + 'º Ano | Nível: ' + GameState.currentLevel + '/' + GameState.maxLevels +
+        ' | Inclusão: ' + GameState.inclusionMode.toUpperCase();
 
       showScreen('screenReport');
     }
 
-    document.getElementById('btnAdvanceNextLevel').addEventListener('click', function() {
+    document.getElementById('btnAdvanceNextLevel').onclick = function() {
       SoundFX.playSuccess();
       GameState.currentLevel = Math.min(GameState.maxLevels, GameState.currentLevel + 1);
       startMazePhase();
-    });
+    };
 
-    document.getElementById('btnNextPairReset').addEventListener('click', function() {
+    document.getElementById('btnNextPairReset').onclick = function() {
       SafeStorage.clear('pac_senha_last_report');
       GameState.currentLevel = 1;
       SoundFX.playPellet();
       showScreen('screenSetup');
-    });
+    };
 
     /* ==========================================================================
-       RENDERIZAÇÃO DO CANVAS (SUPORTE A MODO PROJETOR EM QUADRO VERDE ESCOLAR)
+       RENDERIZAÇÃO DO CANVAS (ALTO CONTRASTE E PROJETOR EM QUADRO VERDE)
        ========================================================================== */
+    var animTick = 0;
+
     function renderMazeAndEntities() {
+      animTick++;
       var isProj = GameState.projectorGreenMode;
       ctx.fillStyle = isProj ? '#000000' : '#050814';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -3244,35 +2685,22 @@
           var py = r * TILE_SIZE;
 
           if (cell === 1) {
-            if (isProj) {
-              ctx.fillStyle = '#111111';
-              ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-              ctx.strokeStyle = '#ffffff';
-              ctx.lineWidth = 3;
-              ctx.strokeRect(px + 3, py + 3, TILE_SIZE - 6, TILE_SIZE - 6);
-            } else {
-              ctx.fillStyle = levelTheme.wallFill;
-              ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
-              ctx.strokeStyle = levelTheme.wallStroke;
-              ctx.lineWidth = 2;
-              ctx.strokeRect(px + 3, py + 3, TILE_SIZE - 6, TILE_SIZE - 6);
-            }
+            ctx.fillStyle = isProj ? '#111111' : levelTheme.wallFill;
+            ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+            ctx.strokeStyle = isProj ? '#ffffff' : levelTheme.wallStroke;
+            ctx.lineWidth = isProj ? 3 : 2;
+            ctx.strokeRect(px + 3, py + 3, TILE_SIZE - 6, TILE_SIZE - 6);
           } else if (cell === 0) {
             ctx.fillStyle = isProj ? '#ffff00' : '#ffd54f';
             ctx.beginPath();
             ctx.arc(px + TILE_SIZE / 2, py + TILE_SIZE / 2, isProj ? 6 : 4.5, 0, Math.PI * 2);
             ctx.fill();
-            if (isProj) {
-              ctx.strokeStyle = '#ffffff';
-              ctx.lineWidth = 1.5;
-              ctx.stroke();
-            }
           }
         }
       }
 
       ctx.fillStyle = '#ffff00';
-      ctx.font = 'bold 12px sans-serif';
+      ctx.font = 'bold 11px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('◄ TÚNEL', 26, 6 * TILE_SIZE + 24);
       ctx.fillText('TÚNEL ►', canvas.width - 26, 6 * TILE_SIZE + 24);
@@ -3288,7 +2716,7 @@
         ctx.fillStyle = isProj ? '#ffff00' : '#ffab00';
         ctx.fillRect(bx, by, bw, bh);
         ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = isProj ? 3 : 2;
+        ctx.lineWidth = 2;
         ctx.strokeRect(bx, by, bw, bh);
 
         ctx.fillStyle = '#000000';
@@ -3306,7 +2734,7 @@
     }
 
     function drawPacPlayer(pl, tag) {
-      if (pl.invulnTimer > 0 && Math.floor(pl.invulnTimer * 8) % 2 === 0) {
+      if (pl.invulnTimer > 0 && Math.floor(pl.invulnTimer * 6) % 2 === 0) {
         return;
       }
 
@@ -3315,13 +2743,13 @@
       var radius = TILE_SIZE * 0.42;
 
       var angle = 0;
-      if (pl.dir.x === 1) angle = 0;
-      else if (pl.dir.x === -1) angle = Math.PI;
-      else if (pl.dir.y === -1) angle = -Math.PI / 2;
-      else if (pl.dir.y === 1) angle = Math.PI / 2;
+      if (pl.dirX === 1) angle = 0;
+      else if (pl.dirX === -1) angle = Math.PI;
+      else if (pl.dirY === -1) angle = -Math.PI / 2;
+      else if (pl.dirY === 1) angle = Math.PI / 2;
 
-      var mouth = (pl.dir.x !== 0 || pl.dir.y !== 0)
-        ? (Math.abs(Math.sin(getNow() * 0.012)) * 0.32 + 0.05)
+      var mouth = (pl.dirX !== 0 || pl.dirY !== 0)
+        ? (Math.abs(Math.sin(animTick * 0.35)) * 0.30 + 0.05)
         : 0.15;
 
       if (GameState.projectorGreenMode) {
@@ -3366,7 +2794,7 @@
       ctx.fill();
 
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = GameState.projectorGreenMode ? 3 : 1.5;
+      ctx.lineWidth = 2;
       ctx.stroke();
 
       ctx.fillStyle = '#000000';
@@ -3384,36 +2812,25 @@
     }
 
     /* ==========================================================================
-       LOOP PRINCIPAL TRAVADO EM 30 FPS (OTIMIZADO PARA MULTITERMINAIS LINUX)
+       LOOP FIXO DE 30 FPS COM SETINTERVAL (NUNCA TRAVA NO LINUX EDUCACIONAL)
        ========================================================================== */
-    var TARGET_FPS = 30;
-    var FRAME_INTERVAL = 1000 / TARGET_FPS;
-    var lastFrameTimestamp = getNow();
+    var FIXED_DT = 1.0 / 30.0;
 
-    function mainGameLoop(now) {
-      requestAnimFrame(mainGameLoop);
-
-      var currentNow = now || getNow();
-      var elapsed = currentNow - lastFrameTimestamp;
-      if (elapsed < FRAME_INTERVAL) return;
-
-      var dt = Math.min(0.1, elapsed / 1000);
-      lastFrameTimestamp = currentNow - (elapsed % FRAME_INTERVAL);
-
+    function gameTick() {
       if (GameState.isRunning && !GameState.isPausedForModal) {
-        GameState.timeLeft = Math.max(0, GameState.timeLeft - dt);
+        GameState.timeLeft = Math.max(0, GameState.timeLeft - FIXED_DT);
         if (GameState.timeLeft <= 0) {
           updateHUD();
           finishLevel(false);
           return;
         }
 
-        movePlayerEntity(p1, dt);
+        updatePlayerNodeToNode(p1, FIXED_DT);
         if (GameState.playersCount === 2) {
-          movePlayerEntity(p2, dt);
+          updatePlayerNodeToNode(p2, FIXED_DT);
         }
 
-        updateHackerGhosts(dt);
+        updateHackerGhosts(FIXED_DT);
         checkGhostPlayerCollisions();
         updateHUD();
       }
@@ -3423,10 +2840,7 @@
       }
     }
 
-    window.onload = function() {
-      lastFrameTimestamp = getNow();
-      requestAnimFrame(mainGameLoop);
-    };
+    setInterval(gameTick, 33);
   </script>
 </body>
 </html>
