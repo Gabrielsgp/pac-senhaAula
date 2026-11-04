@@ -1478,3 +1478,1415 @@
     };
 
     document.getElementById('btnBackToSetup').onclick = function() {
+      SpeechHelper.stop();
+      showScreen('screenSetup');
+    };
+
+    /* ==========================================================================
+       FASE 1: CRIAÇÃO DA SENHA
+       ========================================================================== */
+    function isUsingVisualPassword() {
+      return GameState.grade <= 2 || GameState.forceVisualPassword;
+    }
+
+    function setupPasswordPhase() {
+      GameState.visualPassword = [];
+      GameState.textPassword = '';
+      document.getElementById('passwordDiagnosisBox').style.display = 'none';
+
+      var isVisual = isUsingVisualPassword();
+      document.getElementById('visualPasswordBuilder').style.display = isVisual ? 'block' : 'none';
+      document.getElementById('textPasswordBuilder').style.display = isVisual ? 'none' : 'block';
+
+      var btnSwitch = document.getElementById('btnSwitchToVisual');
+      if (GameState.grade >= 3) {
+        btnSwitch.style.display = 'inline-block';
+        btnSwitch.textContent = isVisual ? '⌨️ Trocar para Senha Digitada' : '🖼️ Trocar para Blocos de Figuras';
+      } else {
+        btnSwitch.style.display = 'none';
+      }
+
+      if (isVisual) {
+        document.getElementById('passwordInstruction').textContent =
+          'Clique em 3 ou 4 blocos abaixo (misture figuras e números!) ou clique em [🪄 Sugerir Senha Forte Fácil]:';
+        renderVisualBuilder();
+      } else {
+        document.getElementById('passwordInstruction').textContent =
+          'Digite uma senha criativa ou clique em [🪄 Sugerir Senha Forte Fácil]:';
+        var input = document.getElementById('inputPasswordText');
+        input.value = '';
+        input.type = 'password';
+        document.getElementById('btnToggleMask').textContent = '👁️ Mostrar';
+      }
+    }
+
+    document.getElementById('btnSwitchToVisual').onclick = function() {
+      GameState.forceVisualPassword = !GameState.forceVisualPassword;
+      SoundFX.playPellet();
+      setupPasswordPhase();
+    };
+
+    document.getElementById('btnAutoGeneratePassword').onclick = function() {
+      SoundFX.playSuccess();
+      if (isUsingVisualPassword()) {
+        GameState.visualPassword = ['GATO', 'SOL', 'BOLA', '7'];
+        renderVisualBuilder();
+      } else {
+        var easyStrongList = ['GatoSol#7', 'BolaAzul#5', 'Escola#10', 'AmigoFiel#9'];
+        var chosen = easyStrongList[Math.floor(Math.random() * easyStrongList.length)];
+        var input = document.getElementById('inputPasswordText');
+        input.value = chosen;
+        input.type = 'text';
+        document.getElementById('btnToggleMask').textContent = '🙈 Ocultar';
+      }
+      document.getElementById('btnEvaluatePassword').click();
+    };
+
+    function createVisualBlockHandler(blockId) {
+      return function() {
+        if (GameState.visualPassword.length < 4) {
+          GameState.visualPassword.push(blockId);
+          SoundFX.playPellet();
+          renderVisualBuilder();
+        }
+      };
+    }
+
+    function renderVisualBuilder() {
+      var slotsWrap = document.getElementById('visualSlotsContainer');
+      slotsWrap.innerHTML = '';
+      for (var i = 0; i < 4; i++) {
+        var slot = document.createElement('div');
+        slot.className = 'password-slot';
+        if (i < GameState.visualPassword.length) {
+          var b = findBlockById(GameState.visualPassword[i]);
+          slot.className = 'password-slot filled';
+          slot.innerHTML = '<span style="font-size:1.4rem;">' + b.emoji + '</span><span>' + b.label + '</span>';
+        } else {
+          slot.innerHTML = '<span style="color:#64748b;">Bloco ' + (i + 1) + '</span>';
+        }
+        slotsWrap.appendChild(slot);
+      }
+
+      var grid = document.getElementById('visualBlocksGrid');
+      grid.innerHTML = '';
+      for (var j = 0; j < VISUAL_BLOCKS.length; j++) {
+        var blk = VISUAL_BLOCKS[j];
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'block-card' + (blk.type === 'num' ? ' num-block' : '');
+        btn.innerHTML = '<div style="font-size:1.5rem;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
+        btn.onclick = createVisualBlockHandler(blk.id);
+        grid.appendChild(btn);
+      }
+    }
+
+    document.getElementById('btnClearVisual').onclick = function() {
+      GameState.visualPassword = [];
+      SoundFX.playPellet();
+      renderVisualBuilder();
+    };
+
+    document.getElementById('btnToggleMask').onclick = function() {
+      var input = document.getElementById('inputPasswordText');
+      if (input.type === 'password') {
+        input.type = 'text';
+        this.textContent = '🙈 Ocultar';
+      } else {
+        input.type = 'password';
+        this.textContent = '👁️ Mostrar';
+      }
+    };
+
+    function evaluateVisualPassword(blocksArr) {
+      if (blocksArr.length < 3) {
+        return { status: 'blocked', title: '🚫 SENHA INCOMPLETA!', reason: 'Escolha pelo menos 3 blocos ilustrados!' };
+      }
+      var hasWord = false;
+      var hasNum = false;
+      var uniqueSet = {};
+      var uniqueCount = 0;
+      for (var i = 0; i < blocksArr.length; i++) {
+        var b = findBlockById(blocksArr[i]);
+        if (b.type === 'word') hasWord = true;
+        if (b.type === 'num') hasNum = true;
+        if (!uniqueSet[b.id]) {
+          uniqueSet[b.id] = true;
+          uniqueCount++;
+        }
+      }
+      if (uniqueCount === 1) {
+        return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Você repetiu o mesmo bloco várias vezes!' };
+      }
+      if (blocksArr.length === 4 && hasWord && hasNum && uniqueCount >= 3) {
+        return { status: 'strong', title: '🛡️ SENHA FORTE — Fortaleza de Aço!', reason: 'Excelente! 4 blocos variados misturando figuras e números!' };
+      }
+      if (blocksArr.length >= 3 && ((hasWord && hasNum) || uniqueCount >= 3)) {
+        return { status: 'medium', title: '🪵 SENHA MÉDIA — Escudo de Madeira!', reason: 'Boa senha! Use 4 blocos com número para ficar Forte.' };
+      }
+      return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Misture figuras diferentes com um número!' };
+    }
+
+    function evaluateTextPassword(rawPwd) {
+      if (!rawPwd || rawPwd.length < 4) {
+        return { status: 'blocked', title: '🚫 SENHA MUITO CURTA!', reason: 'Digite pelo menos 4 caracteres.' };
+      }
+      var lower = rawPwd.toLowerCase();
+      if (/^(.)\1+$/.test(lower) || /(.)\1\1\1/.test(lower)) {
+        return { status: 'blocked', title: '🚫 REPETIÇÃO BLOQUEADA!', reason: 'Não repita a mesma letra ou número várias vezes!' };
+      }
+      var banned = ['1234', '12345', '123456', '654321', 'qwerty', 'asdfgh', 'senha', 'admin'];
+      for (var i = 0; i < banned.length; i++) {
+        if (lower.indexOf(banned[i]) !== -1) {
+          return { status: 'blocked', title: '🚫 SENHA MANJADA!', reason: 'Sequências famosas como "' + banned[i] + '" são bloqueadas!' };
+        }
+      }
+      var hasLetters = /[a-zA-Z]/.test(rawPwd);
+      var hasVowels = /[aeiouáàâãéêíóôõúAEIOUÁÀÂÃÉÊÍÓÔÕÚ]/.test(rawPwd);
+      if (hasLetters && !hasVowels) {
+        return { status: 'blocked', title: '🚫 SEM VOGAIS!', reason: 'Use palavras pronunciáveis para lembrar nos Baús!' };
+      }
+      var hasNumbers = /[0-9]/.test(rawPwd);
+      var hasSymbols = /[^a-zA-Z0-9\s]/.test(rawPwd);
+      var score = 0;
+      if (rawPwd.length >= 6) score++;
+      if (rawPwd.length >= 8) score++;
+      if (hasLetters && hasNumbers) score++;
+      if (hasSymbols) score++;
+
+      if (score >= 3 && rawPwd.length >= 7) {
+        return { status: 'strong', title: '🛡️ SENHA FORTE — Fortaleza de Aço!', reason: 'Ótima combinação de letras, números e símbolos!' };
+      }
+      if (score >= 2 && rawPwd.length >= 6) {
+        return { status: 'medium', title: '🪵 SENHA MÉDIA — Escudo de Madeira!', reason: 'Boa senha! Adicione um símbolo (#, @) para ficar Forte.' };
+      }
+      return { status: 'weak', title: '🧱 SENHA FRACA — Tijolo de Palha!', reason: 'Senha simples. Dá menos tempo de fase.' };
+    }
+
+    document.getElementById('btnEvaluatePassword').onclick = function() {
+      var isVisual = isUsingVisualPassword();
+      var result;
+      if (isVisual) {
+        result = evaluateVisualPassword(GameState.visualPassword);
+      } else {
+        GameState.textPassword = document.getElementById('inputPasswordText').value.replace(/^\s+|\s+$/g, '');
+        result = evaluateTextPassword(GameState.textPassword);
+      }
+
+      var diagBox = document.getElementById('passwordDiagnosisBox');
+      var diagTitle = document.getElementById('diagTitle');
+      var diagReason = document.getElementById('diagReason');
+      var diagConversion = document.getElementById('diagConversion');
+      var btnLaunch = document.getElementById('btnLaunchMaze');
+
+      diagBox.style.display = 'block';
+      diagBox.className = 'diagnosis-box';
+      diagTitle.textContent = result.title;
+      diagReason.textContent = result.reason;
+
+      if (result.status === 'blocked') {
+        SoundFX.playShock();
+        diagBox.className = 'diagnosis-box diagnosis-blocked';
+        diagConversion.textContent = '⚠️ Corrija a senha acima ou clique em [🪄 Sugerir Senha Forte Fácil].';
+        btnLaunch.style.display = 'none';
+        return;
+      }
+
+      SoundFX.playSuccess();
+      btnLaunch.style.display = 'inline-block';
+      GameState.passwordStrength = result.status;
+      GameState.passwordStrengthLabel = result.title;
+
+      var speedMod = (GameState.inclusionMode === 'tea') ? 0.65 : (GameState.inclusionMode === 'assisted' ? 0.80 : 1.0);
+      var extraTime = (GameState.inclusionMode === 'tea') ? 60 : (GameState.inclusionMode === 'assisted' ? 25 : 0);
+
+      if (result.status === 'weak') {
+        diagBox.className = 'diagnosis-box diagnosis-weak';
+        GameState.initialTimeSeconds = 45 + extraTime;
+        GameState.bonusTimePerAuth = 5;
+        GameState.baseGhostSpeed = 2.75 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Rápidos (+5s por baú).';
+      } else if (result.status === 'medium') {
+        diagBox.className = 'diagnosis-box diagnosis-medium';
+        GameState.initialTimeSeconds = 75 + extraTime;
+        GameState.bonusTimePerAuth = 10;
+        GameState.baseGhostSpeed = 2.25 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Normais (+10s por baú).';
+      } else {
+        diagBox.className = 'diagnosis-box diagnosis-strong';
+        GameState.initialTimeSeconds = 120 + extraTime;
+        GameState.bonusTimePerAuth = 15;
+        GameState.baseGhostSpeed = 1.85 * speedMod;
+        diagConversion.textContent = '⏱️ TEMPO: ' + GameState.initialTimeSeconds + 's | Fantasmas Lentos e Congelados por 7s no início!';
+      }
+    };
+
+    document.getElementById('btnImprovePassword').onclick = function() {
+      document.getElementById('passwordDiagnosisBox').style.display = 'none';
+    };
+
+    document.getElementById('btnLaunchMaze').onclick = function() {
+      SpeechHelper.stop();
+      SoundFX.playSuccess();
+      startMazePhase();
+    };
+
+    /* ==========================================================================
+       FASE 2: MOTOR ARCADE COM DESLIZAMENTO SUAVE DE ESQUINA (CORNER SLIDING)
+       ========================================================================== */
+    function wrapColIndex(col) {
+      if (col < 0) return MAZE_COLS - 1;
+      if (col >= MAZE_COLS) return 0;
+      return col;
+    }
+
+    function isWalkable(col, row) {
+      if (row < 0 || row >= MAZE_ROWS) return false;
+      var c = wrapColIndex(col);
+      return mazeGrid[row] && mazeGrid[row][c] !== 1;
+    }
+
+    function resetPlayerToSpawn(pl) {
+      pl.x = pl.spawnCol;
+      pl.y = pl.spawnRow;
+      pl.dirX = 0;
+      pl.dirY = 0;
+      pl.nextDirX = 0;
+      pl.nextDirY = 0;
+      pl.invulnTimer = 2.5;
+    }
+
+    function startMazePhase() {
+      showScreen('screenGame');
+
+      var levelIdx = Math.min(GameState.currentLevel - 1, LEVEL_MAPS.length - 1);
+      var levelObj = LEVEL_MAPS[levelIdx];
+
+      mazeGrid = [];
+      var pellets = 0;
+      for (var r = 0; r < MAZE_ROWS; r++) {
+        var rowArr = [];
+        for (var c = 0; c < MAZE_COLS; c++) {
+          var val = levelObj.grid[r][c];
+          rowArr.push(val);
+          if (val === 0) pellets++;
+        }
+        mazeGrid.push(rowArr);
+      }
+
+      chestsList = [
+        { id: 0, col: 1, row: 1, opened: false, cooldown: 0 },
+        { id: 1, col: 17, row: 1, opened: false, cooldown: 0 },
+        { id: 2, col: 1, row: 11, opened: false, cooldown: 0 },
+        { id: 3, col: 17, row: 11, opened: false, cooldown: 0 }
+      ];
+
+      for (var i = 0; i < chestsList.length; i++) {
+        var ch = chestsList[i];
+        if (mazeGrid[ch.row][ch.col] === 0) {
+          mazeGrid[ch.row][ch.col] = 2;
+          pellets--;
+        }
+      }
+
+      GameState.pelletsRemaining = pellets;
+      GameState.chestsOpened = 0;
+      if (GameState.currentLevel === 1) {
+        GameState.score = 0;
+        GameState.stats = { memoryHits: 0, memoryMisses: 0, portHits: 0, portTotal: 0, mathHits: 0, mathTotal: 0 };
+      }
+
+      GameState.timeLeft = GameState.initialTimeSeconds;
+      GameState.maxTime = GameState.initialTimeSeconds;
+      GameState.ghostFreezeTimer = (GameState.passwordStrength === 'strong') ? 7.0 : 0.0;
+      GameState.isPausedForModal = false;
+      GameState.nextSubject = 'portugues';
+
+      resetPlayerToSpawn(p1);
+      resetPlayerToSpawn(p2);
+
+      document.getElementById('p2ControlsHint').style.display =
+        (GameState.playersCount === 2) ? 'inline-block' : 'none';
+
+      hackerGhosts = [];
+      for (var gIdx = 0; gIdx < GameState.ghostsCount; gIdx++) {
+        var arch = GHOST_ARCHETYPES[gIdx];
+        var ghostObj = {
+          id: arch.id,
+          name: arch.name,
+          color: arch.color,
+          role: arch.role,
+          x: arch.spawnCol,
+          y: arch.spawnRow,
+          dirX: (gIdx % 2 === 0) ? -1 : 1,
+          dirY: 0,
+          speed: GameState.baseGhostSpeed * arch.speedFactor,
+          lastTurnCol: -1,
+          lastTurnRow: -1
+        };
+        hackerGhosts.push(ghostObj);
+      }
+
+      updateHUD();
+      GameState.isRunning = true;
+      lastTickTimeMs = new Date().getTime();
+      focusGameCanvas();
+      renderMazeAndEntities();
+      showToast('🗺️ ' + levelObj.name + ' — APERTE WASD OU SETAS!', '#00b0ff');
+    }
+
+    document.getElementById('btnAbortGame').onclick = function() {
+      GameState.isRunning = false;
+      GameState.isPausedForModal = false;
+      SpeechHelper.stop();
+      removeClass(document.getElementById('chestModal'), 'active');
+      showScreen('screenSetup');
+    };
+
+    function queuePlayerDirection(pl, dx, dy, labelStr) {
+      pl.nextDirX = dx;
+      pl.nextDirY = dy;
+
+      var cx = wrapColIndex(Math.round(pl.x));
+      var cy = Math.round(pl.y);
+
+      /* Inversão imediata de 180 graus em qualquer ponto */
+      if (pl.dirX === -dx && pl.dirY === -dy && (dx !== 0 || dy !== 0)) {
+        pl.dirX = dx;
+        pl.dirY = dy;
+      } else if (pl.dirX === 0 && pl.dirY === 0) {
+        /* Se está parado e o caminho desejado é livre, sai andando imediatamente */
+        if (isWalkable(cx + dx, cy + dy)) {
+          pl.dirX = dx;
+          pl.dirY = dy;
+        }
+      }
+
+      var ind = document.getElementById('lastKeyIndicator');
+      if (ind && labelStr) {
+        ind.textContent = '⌨️ Comando: ' + labelStr;
+      }
+    }
+
+    var dpadBtns = document.querySelectorAll('.dpad-btn');
+    for (var db = 0; db < dpadBtns.length; db++) {
+      dpadBtns[db].onclick = function() {
+        var pNum = parseInt(this.getAttribute('data-p'), 10);
+        var dx = parseInt(this.getAttribute('data-dx'), 10);
+        var dy = parseInt(this.getAttribute('data-dy'), 10);
+        var targetPl = (pNum === 2 && GameState.playersCount === 2) ? p2 : p1;
+        queuePlayerDirection(targetPl, dx, dy, 'Botão P' + pNum);
+        focusGameCanvas();
+      };
+    }
+
+    /* CAPTURA DE TECLADO NA FASE DE CAPTURA (IMPEDE QUICK-FIND DO FIREFOX LINUX) */
+    function handleLinuxKeyCapture(e) {
+      e = e || window.event;
+      var code = e.keyCode || e.which || e.charCode || 0;
+      var k = (e.key && e.key !== 'MozPrintableKey') ? String(e.key) : '';
+      var lower = k.toLowerCase();
+
+      if (GameState.isRunning && GameState.isPausedForModal) {
+        var chTyped = '';
+        if (lower && lower.length === 1) {
+          chTyped = lower;
+        } else if (code >= 48 && code <= 122) {
+          chTyped = String.fromCharCode(code).toLowerCase();
+        }
+        if (chTyped) {
+          GameState.secretKeyBuffer = (GameState.secretKeyBuffer + chTyped).slice(-8);
+          if (GameState.secretKeyBuffer === 'senha123') {
+            GameState.secretKeyBuffer = '';
+            triggerTeacherMasterBypass();
+            return;
+          }
+        }
+
+        var qStage = document.getElementById('modalStageQuestion');
+        var activeTag = document.activeElement ? document.activeElement.tagName : '';
+        if (qStage.style.display !== 'none' && !GameState.questionAnswered && activeTag !== 'INPUT') {
+          if (k === '1' || code === 49 || code === 97) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(0); }
+          if (k === '2' || code === 50 || code === 98) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(1); }
+          if (k === '3' || code === 51 || code === 99) { if (e.preventDefault) e.preventDefault(); answerSchoolQuestion(2); }
+        }
+        return;
+      }
+
+      if (!GameState.isRunning || GameState.isPausedForModal) return;
+
+      var handled = false;
+
+      /* Jogador 1: W (87/119), S (83/115), A (65/97), D (68/100) */
+      if (lower === 'w' || code === 87 || code === 119) {
+        queuePlayerDirection(p1, 0, -1, 'W (P1 ▲)');
+        handled = true;
+      } else if (lower === 's' || code === 83 || code === 115) {
+        queuePlayerDirection(p1, 0, 1, 'S (P1 ▼)');
+        handled = true;
+      } else if (lower === 'a' || code === 65 || code === 97) {
+        queuePlayerDirection(p1, -1, 0, 'A (P1 ◄)');
+        handled = true;
+      } else if (lower === 'd' || code === 68 || code === 100) {
+        queuePlayerDirection(p1, 1, 0, 'D (P1 ►)');
+        handled = true;
+      }
+
+      /* Setas: P2 no modo 2 jogadores, ou P1 no modo 1 jogador */
+      var arrowPl = (GameState.playersCount === 2) ? p2 : p1;
+      var pTag = (GameState.playersCount === 2) ? 'P2' : 'P1';
+
+      if (k === 'ArrowUp' || k === 'Up' || code === 38) {
+        queuePlayerDirection(arrowPl, 0, -1, 'Seta ▲ (' + pTag + ')');
+        handled = true;
+      } else if (k === 'ArrowDown' || k === 'Down' || code === 40) {
+        queuePlayerDirection(arrowPl, 0, 1, 'Seta ▼ (' + pTag + ')');
+        handled = true;
+      } else if (k === 'ArrowLeft' || k === 'Left' || code === 37) {
+        queuePlayerDirection(arrowPl, -1, 0, 'Seta ◄ (' + pTag + ')');
+        handled = true;
+      } else if (k === 'ArrowRight' || k === 'Right' || code === 39) {
+        queuePlayerDirection(arrowPl, 1, 0, 'Seta ► (' + pTag + ')');
+        handled = true;
+      }
+
+      if (handled) {
+        if (e.preventDefault) e.preventDefault();
+        if (e.stopPropagation) e.stopPropagation();
+        return false;
+      }
+    }
+
+    if (window.addEventListener) {
+      window.addEventListener('keydown', handleLinuxKeyCapture, true);
+    } else {
+      document.onkeydown = handleLinuxKeyCapture;
+    }
+
+    /* ==========================================================================
+       MOVIMENTAÇÃO SUAVE COM CORNER SLIDING (SEM TELEPORTE DE COORDENADA)
+       ========================================================================== */
+    function moveTowardsValue(current, target, maxDelta) {
+      var diff = target - current;
+      if (Math.abs(diff) <= maxDelta) return target;
+      return current + (diff > 0 ? maxDelta : -maxDelta);
+    }
+
+    function movePacManSmooth(pl, dt) {
+      if (pl.invulnTimer > 0) {
+        pl.invulnTimer = Math.max(0, pl.invulnTimer - dt);
+      }
+
+      if (isNaN(pl.x) || isNaN(pl.y)) {
+        pl.x = pl.spawnCol;
+        pl.y = pl.spawnRow;
+      }
+
+      var rawRoundX = Math.round(pl.x);
+      var cx = wrapColIndex(rawRoundX);
+      var cy = Math.round(pl.y);
+      if (cy < 1) cy = 1;
+      if (cy > MAZE_ROWS - 2) cy = MAZE_ROWS - 2;
+
+      var step = pl.speed * dt;
+      var distX = Math.abs(pl.x - rawRoundX);
+      var distY = Math.abs(pl.y - cy);
+
+      /* 1. Tenta virar para a direção agendada (nextDirX, nextDirY) com janela generosa (0.42) */
+      if (pl.nextDirX !== 0 || pl.nextDirY !== 0) {
+        if (pl.nextDirX === -pl.dirX && pl.nextDirY === -pl.dirY) {
+          pl.dirX = pl.nextDirX;
+          pl.dirY = pl.nextDirY;
+        } else if (pl.dirX !== pl.nextDirX || pl.dirY !== pl.nextDirY) {
+          var canTurn = false;
+          if (pl.dirX === 0 && pl.dirY === 0) {
+            canTurn = isWalkable(cx + pl.nextDirX, cy + pl.nextDirY);
+          } else if (pl.nextDirX !== 0 && distY <= 0.42) {
+            canTurn = isWalkable(cx + pl.nextDirX, cy);
+          } else if (pl.nextDirY !== 0 && distX <= 0.42) {
+            canTurn = isWalkable(cx, cy + pl.nextDirY);
+          }
+
+          if (canTurn) {
+            pl.dirX = pl.nextDirX;
+            pl.dirY = pl.nextDirY;
+          }
+        }
+      }
+
+      if (pl.dirX === 0 && pl.dirY === 0) return;
+
+      /* 2. Desliza suavemente para o centro do trilho perpendicular (Corner Sliding fluido!) */
+      if (pl.dirX !== 0) {
+        pl.y = moveTowardsValue(pl.y, cy, step * 2.2);
+      } else if (pl.dirY !== 0) {
+        pl.x = moveTowardsValue(pl.x, rawRoundX, step * 2.2);
+      }
+
+      /* 3. Avança na direção atual */
+      var nx = pl.x + pl.dirX * step;
+      var ny = pl.y + pl.dirY * step;
+
+      /* 4. Teleporte do Túnel Lateral (Linha 6) */
+      if (nx < -0.35) {
+        pl.x = MAZE_COLS - 0.65;
+        return;
+      }
+      if (nx > MAZE_COLS - 0.65) {
+        pl.x = -0.35;
+        return;
+      }
+
+      /* 5. Colisão suave com parede à frente */
+      if (!isWalkable(cx + pl.dirX, cy + pl.dirY)) {
+        if (pl.dirX > 0 && nx > rawRoundX) { nx = rawRoundX; pl.dirX = 0; pl.dirY = 0; }
+        else if (pl.dirX < 0 && nx < rawRoundX) { nx = rawRoundX; pl.dirX = 0; pl.dirY = 0; }
+        else if (pl.dirY > 0 && ny > cy) { ny = cy; pl.dirX = 0; pl.dirY = 0; }
+        else if (pl.dirY < 0 && ny < cy) { ny = cy; pl.dirX = 0; pl.dirY = 0; }
+      }
+
+      pl.x = nx;
+      pl.y = ny;
+
+      /* 6. Coleta Pastilhas */
+      var curCol = wrapColIndex(Math.round(pl.x));
+      var curRow = Math.round(pl.y);
+      if (mazeGrid[curRow] && mazeGrid[curRow][curCol] === 0) {
+        mazeGrid[curRow][curCol] = 2;
+        GameState.pelletsRemaining--;
+        GameState.score += 10;
+        SoundFX.playPellet();
+        updateHUD();
+        checkVictoryCondition();
+      }
+
+      /* 7. Verifica Baús de Dados */
+      for (var i = 0; i < chestsList.length; i++) {
+        var ch = chestsList[i];
+        if (!ch.opened && ch.cooldown <= 0 && ch.col === curCol && ch.row === curRow) {
+          ch.cooldown = 2.5;
+          handlePlayerTouchChest(ch);
+          break;
+        }
+      }
+    }
+
+    function handlePlayerTouchChest(chest) {
+      if (GameState.chestMode === 'so_abrir') {
+        chest.opened = true;
+        GameState.chestsOpened++;
+        GameState.score += 500;
+        GameState.ghostFreezeTimer = 6.0;
+        GameState.timeLeft = Math.min(GameState.maxTime + 30, GameState.timeLeft + 10);
+        SoundFX.playSuccess();
+        showToast('🎁 BAÚ ABERTO! +500 PTS E 6s DE GELO!', '#00c853');
+        updateHUD();
+        checkVictoryCondition();
+        return;
+      }
+
+      if (GameState.chestMode === 'so_contas') {
+        GameState.isPausedForModal = true;
+        GameState.activeChest = chest;
+        SoundFX.playChestOpen();
+        addClass(document.getElementById('chestModal'), 'active');
+        openSchoolQuestionStage();
+        return;
+      }
+
+      openChestAuthenticationModal(chest);
+    }
+
+    /* ==========================================================================
+       MOVIMENTAÇÃO SUAVE DOS FANTASMAS
+       ========================================================================== */
+    function moveSingleGhostSmooth(g, dt) {
+      var rawRoundX = Math.round(g.x);
+      var cx = wrapColIndex(rawRoundX);
+      var cy = Math.round(g.y);
+      if (cy < 1) cy = 1;
+      if (cy > MAZE_ROWS - 2) cy = MAZE_ROWS - 2;
+
+      var step = g.speed * dt;
+      var distCenter = Math.abs(g.x - rawRoundX) + Math.abs(g.y - cy);
+
+      if ((distCenter <= step * 1.1 && (g.lastTurnCol !== cx || g.lastTurnRow !== cy)) ||
+          (g.dirX === 0 && g.dirY === 0) ||
+          (!isWalkable(cx + g.dirX, cy + g.dirY) && distCenter <= 0.25)) {
+        g.x = rawRoundX;
+        g.y = cy;
+        g.lastTurnCol = cx;
+        g.lastTurnRow = cy;
+        pickGhostDirectionAtIntersection(g, cx, cy);
+      }
+
+      if (g.dirX !== 0) g.y = moveTowardsValue(g.y, cy, step * 2.0);
+      if (g.dirY !== 0) g.x = moveTowardsValue(g.x, rawRoundX, step * 2.0);
+
+      g.x += g.dirX * step;
+      g.y += g.dirY * step;
+
+      if (g.x < -0.35) { g.x = MAZE_COLS - 0.65; g.lastTurnCol = -1; }
+      else if (g.x > MAZE_COLS - 0.65) { g.x = -0.35; g.lastTurnCol = -1; }
+    }
+
+    function pickGhostDirectionAtIntersection(g, cx, cy) {
+      var dirs = [
+        { x: 0, y: -1 },
+        { x: 0, y: 1 },
+        { x: -1, y: 0 },
+        { x: 1, y: 0 }
+      ];
+
+      var valid = [];
+      for (var i = 0; i < dirs.length; i++) {
+        var d = dirs[i];
+        if (isWalkable(cx + d.x, cy + d.y)) {
+          valid.push(d);
+        }
+      }
+
+      if (valid.length === 0) {
+        g.dirX = 0;
+        g.dirY = 0;
+        return;
+      }
+
+      var candidates = valid;
+      if (valid.length > 1 && (g.dirX !== 0 || g.dirY !== 0)) {
+        var nonRev = [];
+        for (var j = 0; j < valid.length; j++) {
+          if (!(valid[j].x === -g.dirX && valid[j].y === -g.dirY)) {
+            nonRev.push(valid[j]);
+          }
+        }
+        if (nonRev.length > 0) candidates = nonRev;
+      }
+
+      var aimX = p1.x;
+      var aimY = p1.y;
+      if (GameState.playersCount === 2 && g.role === 'flanker') {
+        aimX = p2.x;
+        aimY = p2.y;
+      }
+
+      var chosen = candidates[0];
+      if (Math.random() < 0.25) {
+        chosen = candidates[Math.floor(Math.random() * candidates.length)];
+      } else {
+        var bestDist = 999999;
+        for (var k = 0; k < candidates.length; k++) {
+          var c = candidates[k];
+          var dist = calcDist(aimX - (cx + c.x), aimY - (cy + c.y));
+          if (dist < bestDist) {
+            bestDist = dist;
+            chosen = c;
+          }
+        }
+      }
+
+      g.dirX = chosen.x;
+      g.dirY = chosen.y;
+    }
+
+    function updateHackerGhosts(dt) {
+      var unfreezeBtn = document.getElementById('btnUnfreezeGhosts');
+      if (GameState.ghostFreezeTimer > 0) {
+        GameState.ghostFreezeTimer = Math.max(0, GameState.ghostFreezeTimer - dt);
+        unfreezeBtn.style.display = 'inline-block';
+        return;
+      } else {
+        unfreezeBtn.style.display = 'none';
+      }
+
+      for (var i = 0; i < hackerGhosts.length; i++) {
+        moveSingleGhostSmooth(hackerGhosts[i], dt);
+      }
+    }
+
+    function checkGhostPlayerCollisions() {
+      if (GameState.ghostFreezeTimer > 0) return;
+      var activePlayers = (GameState.playersCount === 2) ? [p1, p2] : [p1];
+      for (var pIdx = 0; pIdx < activePlayers.length; pIdx++) {
+        var pl = activePlayers[pIdx];
+        if (pl.invulnTimer > 0) continue;
+        for (var gIdx = 0; gIdx < hackerGhosts.length; gIdx++) {
+          var g = hackerGhosts[gIdx];
+          if (calcDist(pl.x - g.x, pl.y - g.y) < 0.62) {
+            handlePlayerCaughtByGhost(pl, g);
+            break;
+          }
+        }
+      }
+    }
+
+    function handlePlayerCaughtByGhost(pl, ghost) {
+      SoundFX.playShock();
+      resetPlayerToSpawn(pl);
+
+      if (GameState.inclusionMode === 'tea') {
+        showToast('💙 ' + pl.label + ' voltou para a base (Sem perder tempo!)', '#00b0ff');
+      } else {
+        var penalty = (GameState.inclusionMode === 'assisted') ? 5 : 10;
+        GameState.timeLeft = Math.max(0, GameState.timeLeft - penalty);
+        showToast('⚠️ ' + ghost.name + ' pegou ' + pl.label + '! (-' + penalty + 's)', '#d50000');
+      }
+      updateHUD();
+    }
+
+    /* ==========================================================================
+       FASE 3: MODAL DE AUTENTICAÇÃO E PERGUNTAS
+       ========================================================================== */
+    function formatCurrentPasswordReadable() {
+      if (isUsingVisualPassword()) {
+        var parts = [];
+        for (var i = 0; i < GameState.visualPassword.length; i++) {
+          var b = findBlockById(GameState.visualPassword[i]);
+          parts.push(b.emoji + ' ' + b.label);
+        }
+        return parts.join(' -> ');
+      }
+      return GameState.textPassword;
+    }
+
+    function openChestAuthenticationModal(chest) {
+      GameState.isPausedForModal = true;
+      GameState.activeChest = chest;
+      GameState.authAttemptsLeft = 2;
+      GameState.authVisualAttempt = [];
+      SoundFX.playChestOpen();
+
+      addClass(document.getElementById('chestModal'), 'active');
+      document.getElementById('modalStageAuth').style.display = 'block';
+      document.getElementById('modalStageQuestion').style.display = 'none';
+      document.getElementById('authFeedbackBanner').style.display = 'none';
+      document.getElementById('authAttemptsInfo').textContent = 'Tentativas restantes neste baú: 2';
+
+      var hintBox = document.getElementById('authPasswordHintBox');
+      if (GameState.inclusionMode === 'tea' || GameState.inclusionMode === 'assisted') {
+        hintBox.style.display = 'block';
+        hintBox.textContent = '💡 Lembrete da Senha: ' + formatCurrentPasswordReadable();
+      } else {
+        hintBox.style.display = 'none';
+      }
+
+      var isVisual = isUsingVisualPassword();
+      document.getElementById('authVisualContainer').style.display = isVisual ? 'block' : 'none';
+      document.getElementById('authTextContainer').style.display = isVisual ? 'none' : 'block';
+
+      if (isVisual) {
+        renderAuthVisualModal();
+      } else {
+        var inp = document.getElementById('inputAuthText');
+        inp.value = '';
+        inp.type = 'password';
+        document.getElementById('btnToggleAuthMask').textContent = '👁️ Mostrar';
+      }
+    }
+
+    document.getElementById('btnShowPasswordHint').onclick = function() {
+      var hintBox = document.getElementById('authPasswordHintBox');
+      hintBox.style.display = 'block';
+      hintBox.textContent = '💡 Lembrete da Senha: ' + formatCurrentPasswordReadable();
+      SoundFX.playPellet();
+    };
+
+    function createAuthBlockHandler(blockId, targetLen) {
+      return function() {
+        if (GameState.authVisualAttempt.length < targetLen) {
+          GameState.authVisualAttempt.push(blockId);
+          SoundFX.playPellet();
+          renderAuthVisualModal();
+        }
+      };
+    }
+
+    function renderAuthVisualModal() {
+      var slotsWrap = document.getElementById('authVisualSlots');
+      slotsWrap.innerHTML = '';
+      var targetLen = GameState.visualPassword.length;
+
+      for (var i = 0; i < targetLen; i++) {
+        var slot = document.createElement('div');
+        slot.className = 'password-slot';
+        if (i < GameState.authVisualAttempt.length) {
+          var b = findBlockById(GameState.authVisualAttempt[i]);
+          slot.className = 'password-slot filled';
+          slot.innerHTML = '<span style="font-size:1.4rem;">' + b.emoji + '</span><span>' + b.label + '</span>';
+        } else {
+          slot.innerHTML = '<span style="color:#64748b;">Bloco ' + (i + 1) + '</span>';
+        }
+        slotsWrap.appendChild(slot);
+      }
+
+      var grid = document.getElementById('authVisualGrid');
+      grid.innerHTML = '';
+      for (var j = 0; j < VISUAL_BLOCKS.length; j++) {
+        var blk = VISUAL_BLOCKS[j];
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'block-card' + (blk.type === 'num' ? ' num-block' : '');
+        btn.innerHTML = '<div style="font-size:1.4rem;">' + blk.emoji + '</div><div>' + blk.label + '</div>';
+        btn.onclick = createAuthBlockHandler(blk.id, targetLen);
+        grid.appendChild(btn);
+      }
+    }
+
+    document.getElementById('btnClearAuthVisual').onclick = function() {
+      GameState.authVisualAttempt = [];
+      SoundFX.playPellet();
+      renderAuthVisualModal();
+    };
+
+    document.getElementById('btnToggleAuthMask').onclick = function() {
+      var inp = document.getElementById('inputAuthText');
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        this.textContent = '🙈 Ocultar';
+      } else {
+        inp.type = 'password';
+        this.textContent = '👁️ Mostrar';
+      }
+    };
+
+    document.getElementById('btnConfirmAuth').onclick = function() {
+      var isVisual = isUsingVisualPassword();
+      var isCorrect = false;
+      var typedText = document.getElementById('inputAuthText').value.replace(/^\s+|\s+$/g, '');
+
+      if (!isVisual && typedText.toLowerCase() === 'senha123') {
+        triggerTeacherMasterBypass();
+        return;
+      }
+
+      if (isVisual) {
+        if (GameState.authVisualAttempt.length === GameState.visualPassword.length) {
+          isCorrect = true;
+          for (var i = 0; i < GameState.visualPassword.length; i++) {
+            if (GameState.authVisualAttempt[i] !== GameState.visualPassword[i]) {
+              isCorrect = false;
+              break;
+            }
+          }
+        }
+      } else {
+        isCorrect = (typedText.toLowerCase() === GameState.textPassword.toLowerCase());
+      }
+
+      var fb = document.getElementById('authFeedbackBanner');
+      fb.style.display = 'block';
+
+      if (isCorrect) {
+        SoundFX.playSuccess();
+        GameState.stats.memoryHits++;
+        GameState.timeLeft = Math.min(GameState.maxTime + 30, GameState.timeLeft + GameState.bonusTimePerAuth);
+        updateHUD();
+        showToast('🔓 SENHA CORRETA! +' + GameState.bonusTimePerAuth + 's!', '#00c853');
+        openSchoolQuestionStage();
+      } else {
+        SoundFX.playShock();
+        GameState.stats.memoryMisses++;
+        GameState.authAttemptsLeft--;
+        document.getElementById('authAttemptsInfo').textContent =
+          'Tentativas restantes neste baú: ' + GameState.authAttemptsLeft;
+
+        if (GameState.authAttemptsLeft > 0) {
+          fb.style.backgroundColor = '#5c0c16';
+          fb.style.color = '#ffcdd2';
+          fb.textContent = '❌ Senha incorreta! Clique em [💡 Ver Dica da Senha] se precisar.';
+          GameState.authVisualAttempt = [];
+          if (isVisual) renderAuthVisualModal();
+        } else {
+          var shockPenalty = (GameState.inclusionMode === 'tea') ? 0 : 10;
+          GameState.timeLeft = Math.max(0, GameState.timeLeft - shockPenalty);
+          if (GameState.activeChest) {
+            GameState.activeChest.cooldown = 3.5;
+          }
+          removeClass(document.getElementById('chestModal'), 'active');
+          GameState.isPausedForModal = false;
+          focusGameCanvas();
+          updateHUD();
+          showToast('⚡ Senha errada 2x! Afaste-se e tente novamente!', '#ff9100');
+        }
+      }
+    };
+
+    function createOptionClickHandler(idx) {
+      return function() {
+        if (!GameState.questionAnswered) {
+          answerSchoolQuestion(idx);
+        }
+      };
+    }
+
+    function openSchoolQuestionStage() {
+      document.getElementById('modalStageAuth').style.display = 'none';
+      document.getElementById('modalStageQuestion').style.display = 'block';
+      document.getElementById('questionFeedbackBanner').style.display = 'none';
+      document.getElementById('questionContinueWrap').style.display = 'none';
+      document.getElementById('btnSimplifyQuestion').disabled = false;
+
+      var bypassInput = document.getElementById('inputTeacherBypass');
+      if (bypassInput) bypassInput.value = '';
+
+      var qObj = null;
+      var subject = 'matematica';
+      var badgeTitle = '';
+
+      if (GameState.chestMode === 'senha_contas' || GameState.chestMode === 'so_contas') {
+        subject = 'matematica';
+        var pickIdx = Math.floor(Math.random() * EASY_MATH_QUESTIONS.length);
+        qObj = EASY_MATH_QUESTIONS[pickIdx];
+        badgeTitle = '🔢 CONTINHA FÁCIL DE MATEMÁTICA';
+      } else {
+        var effectiveGrade = (GameState.inclusionMode === 'tea') ? 1 : GameState.grade;
+        subject = GameState.nextSubject;
+        GameState.nextSubject = (subject === 'portugues') ? 'matematica' : 'portugues';
+        var pool = QUESTION_BANK[effectiveGrade][subject];
+        var chosenIdx = Math.floor(Math.random() * pool.length);
+        qObj = pool[chosenIdx];
+        badgeTitle = (subject === 'portugues' ? '📖 PORTUGUÊS' : '🔢 MATEMÁTICA') + ' • ' + effectiveGrade + 'º ANO';
+      }
+
+      GameState.currentQuestionObj = {
+        subject: subject,
+        q: qObj.q,
+        options: qObj.options.slice(0),
+        correct: qObj.correct
+      };
+      GameState.questionAnswered = false;
+
+      document.getElementById('questionBadge').textContent = badgeTitle;
+      document.getElementById('questionPromptText').textContent = qObj.q;
+
+      var helperBox = document.getElementById('questionVisualHelper');
+      var sumMatch = qObj.q.match(/(\d+)\s*\+\s*(\d+)/);
+      if (sumMatch && parseInt(sumMatch[1], 10) <= 10 && parseInt(sumMatch[2], 10) <= 10) {
+        var n1 = parseInt(sumMatch[1], 10);
+        var n2 = parseInt(sumMatch[2], 10);
+        helperBox.style.display = 'block';
+        helperBox.textContent = 'Apoio Visual: ' + makeDotsString(n1, '●') + ' + ' + makeDotsString(n2, '○');
+      } else {
+        helperBox.style.display = 'none';
+      }
+
+      var list = document.getElementById('questionOptionsList');
+      list.innerHTML = '';
+      for (var i = 0; i < qObj.options.length; i++) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'option-btn';
+        btn.innerHTML = '<span class="key-hint">' + (i + 1) + '</span><span>' + qObj.options[i] + '</span>';
+        btn.onclick = createOptionClickHandler(i);
+        list.appendChild(btn);
+      }
+
+      if (GameState.inclusionMode === 'tea' || GameState.inclusionMode === 'assisted') {
+        eliminateOneWrongOption();
+      }
+    }
+
+    function triggerTeacherMasterBypass() {
+      var qStage = document.getElementById('modalStageQuestion');
+      if (qStage.style.display === 'none') {
+        GameState.stats.memoryHits++;
+        openSchoolQuestionStage();
+      }
+      if (GameState.currentQuestionObj && !GameState.questionAnswered) {
+        answerSchoolQuestion(GameState.currentQuestionObj.correct);
+        showToast('🔑 SENHA123: RESPONDIDO AUTOMATICAMENTE!', '#00e676');
+      }
+    }
+
+    document.getElementById('btnApplyTeacherBypass').onclick = function() {
+      var val = document.getElementById('inputTeacherBypass').value.replace(/^\s+|\s+$/g, '').toLowerCase();
+      if (val === 'senha123') {
+        triggerTeacherMasterBypass();
+      } else {
+        showToast('❌ Digite senha123', '#d50000');
+      }
+    };
+
+    document.getElementById('inputTeacherBypass').onkeyup = function() {
+      if (this.value.replace(/^\s+|\s+$/g, '').toLowerCase() === 'senha123') {
+        triggerTeacherMasterBypass();
+      }
+    };
+
+    function eliminateOneWrongOption() {
+      if (!GameState.currentQuestionObj || GameState.questionAnswered) return;
+      var buttons = document.querySelectorAll('#questionOptionsList .option-btn');
+      for (var i = 0; i < buttons.length; i++) {
+        if (i !== GameState.currentQuestionObj.correct && buttons[i].style.display !== 'none') {
+          buttons[i].style.display = 'none';
+          document.getElementById('btnSimplifyQuestion').disabled = true;
+          break;
+        }
+      }
+    }
+
+    document.getElementById('btnSimplifyQuestion').onclick = function() {
+      SoundFX.playPellet();
+      eliminateOneWrongOption();
+    };
+
+    document.getElementById('btnSpeakQuestion').onclick = function() {
+      if (GameState.currentQuestionObj) {
+        var q = GameState.currentQuestionObj;
+        SpeechHelper.speakManual(
+          q.q + '. Opção 1: ' + q.options[0] + '. Opção 2: ' + q.options[1] + '. Opção 3: ' + q.options[2]
+        );
+      }
+    };
+
+    function answerSchoolQuestion(selectedIdx) {
+      if (GameState.questionAnswered || !GameState.currentQuestionObj) return;
+      var q = GameState.currentQuestionObj;
+      var buttons = document.querySelectorAll('#questionOptionsList .option-btn');
+      if (buttons[selectedIdx] && buttons[selectedIdx].style.display === 'none') return;
+
+      GameState.questionAnswered = true;
+      var isCorrect = (selectedIdx === q.correct);
+
+      if (q.subject === 'portugues') {
+        GameState.stats.portTotal++;
+        if (isCorrect) GameState.stats.portHits++;
+      } else {
+        GameState.stats.mathTotal++;
+        if (isCorrect) GameState.stats.mathHits++;
+      }
+
+      for (var i = 0; i < buttons.length; i++) {
+        if (i === q.correct) buttons[i].className = 'option-btn correct';
+        else if (i === selectedIdx) buttons[i].className = 'option-btn wrong';
+      }
+
+      var fb = document.getElementById('questionFeedbackBanner');
+      fb.style.display = 'block';
+
+      if (GameState.activeChest && !GameState.activeChest.opened) {
+        GameState.activeChest.opened = true;
+        GameState.chestsOpened++;
+      }
+
+      if (isCorrect) {
+        SoundFX.playSuccess();
+        GameState.score += 500;
+        GameState.ghostFreezeTimer = 6.0;
+        fb.style.backgroundColor = '#064e28';
+        fb.style.color = '#b9f6ca';
+        fb.textContent = '🎉 RESPOSTA CERTA! +500 Pontos e Fantasmas Congelados por 6 segundos!';
+      } else {
+        SoundFX.playShock();
+        GameState.score += 100;
+        fb.style.backgroundColor = '#4a1c00';
+        fb.style.color = '#ffe082';
+        fb.textContent = '💡 Quase lá! A resposta certa está em verde (+100 pts).';
+      }
+
+      updateHUD();
+      document.getElementById('questionContinueWrap').style.display = 'block';
+    }
+
+    document.getElementById('btnReturnToMaze').onclick = function() {
+      SpeechHelper.stop();
+      removeClass(document.getElementById('chestModal'), 'active');
+      GameState.isPausedForModal = false;
+      lastTickTimeMs = new Date().getTime();
+      focusGameCanvas();
+      checkVictoryCondition();
+    };
+
+    /* ==========================================================================
+       HUD E RELATÓRIO FINAL
+       ========================================================================== */
+    function updateHUD() {
+      document.getElementById('hudLevelBadge').textContent =
+        '🗺️ NÍVEL ' + GameState.currentLevel + ' / ' + GameState.maxLevels;
+      document.getElementById('hudTimeText').textContent = Math.ceil(GameState.timeLeft) + 's';
+      document.getElementById('hudScoreText').textContent = GameState.score;
+      document.getElementById('hudChestsText').textContent =
+        (GameState.chestsTotal - GameState.chestsOpened) + ' / ' + GameState.chestsTotal;
+
+      var pct = Math.max(0, Math.min(100, (GameState.timeLeft / GameState.maxTime) * 100));
+      var bar = document.getElementById('hudTimerBar');
+      bar.style.width = pct + '%';
+      if (pct > 50) bar.style.backgroundColor = '#00e676';
+      else if (pct > 25) bar.style.backgroundColor = '#ffea00';
+      else bar.style.backgroundColor = '#ff1744';
+    }
+
+    function checkVictoryCondition() {
+      if (GameState.chestsOpened >= GameState.chestsTotal && GameState.pelletsRemaining <= 0) {
+        finishLevel(true);
+      }
+    }
+
+    function finishLevel(victory) {
+      GameState.isRunning = false;
+      GameState.isPausedForModal = false;
+      SpeechHelper.stop();
+      removeClass(document.getElementById('chestModal'), 'active');
+
+      if (victory) SoundFX.playSuccess();
+      else SoundFX.playShock();
+
+      var mainTitle = document.getElementById('reportMainTitle');
+      var subTitle = document.getElementById('reportSubtitle');
+      var btnNextLvl = document.getElementById('btnAdvanceNextLevel');
+
+      if (victory) {
+        if (GameState.currentLevel < GameState.maxLevels) {
+          mainTitle.textContent = '🎉 NÍVEL ' + GameState.currentLevel + ' CONCLUÍDO!';
+          subTitle.textContent = 'Vocês abriram os 4 Baús e limparam o labirinto!';
+          btnNextLvl.style.display = 'inline-block';
+          btnNextLvl.textContent = '🚀 AVANÇAR PARA O NÍVEL ' + (GameState.currentLevel + 1);
+        } else {
+          mainTitle.textContent = '🏆 TODOS OS 5 NÍVEIS VENCIDOS!';
+          subTitle.textContent = 'Parabéns! Toda a rede escolar foi protegida!';
+          btnNextLvl.style.display = 'none';
+        }
+      } else {
+        mainTitle.textContent = '⏰ TEMPO ESGOTADO NO NÍVEL ' + GameState.currentLevel;
+        subTitle.textContent = 'Dica: Use uma Senha Forte (120s) na próxima tentativa!';
+        btnNextLvl.style.display = 'none';
+      }
+
+      document.getElementById('repPasswordStrength').textContent =
+        GameState.passwordStrength === 'strong' ? 'Forte (Aço)' :
+        (GameState.passwordStrength === 'medium' ? 'Média (Madeira)' : 'Fraca (Palha)');
+      document.getElementById('repPasswordDetail').textContent = 'Senha: ' + formatCurrentPasswordReadable();
+      document.getElementById('repMemoryScore').textContent =
+        GameState.stats.memoryHits + ' acertos / ' + GameState.stats.memoryMisses + ' erros';
+      document.getElementById('repPortScore').textContent =
+        GameState.stats.portHits + ' / ' + GameState.stats.portTotal;
+      document.getElementById('repMathScore').textContent =
+        GameState.stats.mathHits + ' / ' + GameState.stats.mathTotal;
+      document.getElementById('repTotalScore').textContent = GameState.score + ' pts';
+      document.getElementById('repTimeRemaining').textContent =
+        'Tempo restante: ' + Math.ceil(GameState.timeLeft) + 's';
+
+      document.getElementById('repTeacherSummary').textContent =
+        'Ano: ' + GameState.grade + 'º Ano | Nível: ' + GameState.currentLevel + '/' + GameState.maxLevels +
+        ' | Inclusão: ' + GameState.inclusionMode.toUpperCase();
+
+      showScreen('screenReport');
+    }
+
+    document.getElementById('btnAdvanceNextLevel').onclick = function() {
+      SoundFX.playSuccess();
+      GameState.currentLevel = Math.min(GameState.maxLevels, GameState.currentLevel + 1);
+      startMazePhase();
+    };
+
+    document.getElementById('btnNextPairReset').onclick = function() {
+      SafeStorage.clear('pac_senha_last_report');
+      GameState.currentLevel = 1;
+      SoundFX.playPellet();
+      showScreen('screenSetup');
+    };
+
+    /* ==========================================================================
+       RENDERIZAÇÃO DO CANVAS (COM SETA INDICADORA DE CURVA AGENDADA)
+       ========================================================================== */
+    var animTick = 0;
+
+    function renderMazeAndEntities() {
+      animTick++;
+      var isProj = GameState.projectorGreenMode;
+      ctx.fillStyle = isProj ? '#000000' : '#050814';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      var levelIdx = Math.min(GameState.currentLevel - 1, LEVEL_MAPS.length - 1);
+      var levelTheme = LEVEL_MAPS[levelIdx];
+
+      for (var r = 0; r < MAZE_ROWS; r++) {
+        for (var c = 0; c < MAZE_COLS; c++) {
+          var cell = mazeGrid[r] ? mazeGrid[r][c] : 1;
+          var px = c * TILE_SIZE;
+          var py = r * TILE_SIZE;
+
+          if (cell === 1) {
+            ctx.fillStyle = isProj ? '#111111' : levelTheme.wallFill;
+            ctx.fillRect(px + 2, py + 2, TILE_SIZE - 4, TILE_SIZE - 4);
+            ctx.strokeStyle = isProj ? '#ffffff' : levelTheme.wallStroke;
+            ctx.lineWidth = isProj ? 3 : 2;
+            ctx.strokeRect(px + 3, py + 3, TILE_SIZE - 6, TILE_SIZE - 6);
+          } else if (cell === 0) {
+            ctx.fillStyle = isProj ? '#ffff00' : '#ffd54f';
+            ctx.beginPath();
+            ctx.arc(px + TILE_SIZE / 2, py + TILE_SIZE / 2, isProj ? 6 : 4.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+      }
+
+      ctx.fillStyle = '#ffff00';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('◄ TÚNEL', 26, 6 * TILE_SIZE + 24);
+      ctx.fillText('TÚNEL ►', canvas.width - 26, 6 * TILE_SIZE + 24);
+
+      for (var i = 0; i < chestsList.length; i++) {
+        var ch = chestsList[i];
+        if (ch.opened) continue;
+        var bx = ch.col * TILE_SIZE + 5;
+        var by = ch.row * TILE_SIZE + 7;
+        var bw = TILE_SIZE - 10;
+        var bh = TILE_SIZE - 12;
+
+        ctx.fillStyle = isProj ? '#ffff00' : '#ffab00';
+        ctx.fillRect(bx, by, bw, bh);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(bx, by, bw, bh);
+
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(bx + bw / 2 - 4, by + bh / 2 - 3, 8, 7);
+      }
+
+      drawPacPlayer(p1, 'P1');
+      if (GameState.playersCount === 2) {
+        drawPacPlayer(p2, 'P2');
+      }
+
+      for (var gIdx = 0; gIdx < hackerGhosts.length; gIdx++) {
+        drawHackerGhost(hackerGhosts[gIdx]);
+      }
+    }
+
+    function drawPacPlayer(pl, tag) {
+      if (pl.invulnTimer > 0 && Math.floor(pl.invulnTimer * 6) % 2 === 0) {
+        return;
+      }
+
+      var cx = (pl.x + 0.5) * TILE_SIZE;
+      var cy = (pl.y + 0.5) * TILE_SIZE;
+      var radius = TILE_SIZE * 0.42;
+
+      var angle = 0;
+      if (pl.dirX === 1) angle = 0;
+      else if (pl.dirX === -1) angle = Math.PI;
+      else if (pl.dirY === -1) angle = -Math.PI / 2;
+      else if (pl.dirY === 1) angle = Math.PI / 2;
+
+      var mouth = (pl.dirX !== 0 || pl.dirY !== 0)
+        ? (Math.abs(Math.sin(animTick * 0.28)) * 0.30 + 0.05)
+        : 0.15;
+
+      if (GameState.projectorGreenMode) {
+        ctx.fillStyle = (pl.id === 1) ? '#ffff00' : '#ffffff';
+      } else {
+        ctx.fillStyle = pl.color;
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, angle + mouth, angle + Math.PI * 2 - mouth);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      /* Desenha pontinho verde indicando para qual lado a próxima curva está agendada */
+      if (pl.nextDirX !== 0 || pl.nextDirY !== 0) {
+        ctx.fillStyle = '#00e676';
+        ctx.beginPath();
+        ctx.arc(cx + pl.nextDirX * (radius + 5), cy + pl.nextDirY * (radius + 5), 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = '#ffff00';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(tag, cx, cy - radius - 4);
+    }
+
+    function drawHackerGhost(g) {
+      var cx = (g.x + 0.5) * TILE_SIZE;
+      var cy = (g.y + 0.5) * TILE_SIZE;
+      var r = TILE_SIZE * 0.42;
+
+      var isFrozen = GameState.ghostFreezeTimer > 0;
+      if (GameState.projectorGreenMode) {
+        ctx.fillStyle = isFrozen ? '#80d8ff' : '#ff9100';
+      } else {
+        ctx.fillStyle = isFrozen ? '#00b0ff' : g.color;
+      }
+
+      ctx.beginPath();
+      ctx.arc(cx, cy - 2, r, Math.PI, 0, false);
+      ctx.lineTo(cx + r, cy + r);
+      ctx.lineTo(cx - r, cy + r);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(cx - 8, cy - 6, 5, 5);
+      ctx.fillRect(cx + 3, cy - 6, 5, 5);
+
+      ctx.fillStyle = '#ffff00';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'center';
+      if (isFrozen) {
+        ctx.fillText('GELO ' + Math.ceil(GameState.ghostFreezeTimer) + 's', cx, cy - r - 4);
+      } else {
+        ctx.fillText(g.name, cx, cy - r - 4);
+      }
+    }
+
+    /* ==========================================================================
+       LOOP DE 50 FPS COM RELÓGIO UNIVERSAL (NEW DATE().GETTIME())
+       ========================================================================== */
+    var lastTickTimeMs = new Date().getTime();
+
+    function gameTick() {
+      try {
+        var nowMs = new Date().getTime();
+        var dt = (nowMs - lastTickTimeMs) / 1000.0;
+        lastTickTimeMs = nowMs;
+
+        if (isNaN(dt) || dt <= 0 || dt > 0.1) {
+          dt = 0.02;
+        }
+
+        if (GameState.isRunning && !GameState.isPausedForModal) {
+          GameState.timeLeft = Math.max(0, GameState.timeLeft - dt);
+          if (GameState.timeLeft <= 0) {
+            updateHUD();
+            finishLevel(false);
+            return;
+          }
+
+          for (var cIdx = 0; cIdx < chestsList.length; cIdx++) {
+            if (chestsList[cIdx].cooldown > 0) {
+              chestsList[cIdx].cooldown = Math.max(0, chestsList[cIdx].cooldown - dt);
+            }
+          }
+
+          movePacManSmooth(p1, dt);
+          if (GameState.playersCount === 2) {
+            movePacManSmooth(p2, dt);
+          }
+
+          updateHackerGhosts(dt);
+          checkGhostPlayerCollisions();
+          updateHUD();
+        }
+
+        if (GameState.isRunning) {
+          renderMazeAndEntities();
+        }
+      } catch (err) {}
+    }
+
+    setInterval(gameTick, 20);
+  </script>
+</body>
+</html>
